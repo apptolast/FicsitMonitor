@@ -18,17 +18,33 @@ import com.apptolast.fiscsitmonitor.data.model.FactoryBuildingDto
 import com.apptolast.fiscsitmonitor.presentation.ui.theme.FicsitTheme
 import com.apptolast.fiscsitmonitor.util.formatMW
 import com.apptolast.fiscsitmonitor.util.formatPercent
+import ficsitmonitor.composeapp.generated.resources.Res
+import ficsitmonitor.composeapp.generated.resources.fallback_building
+import ficsitmonitor.composeapp.generated.resources.label_active
+import ficsitmonitor.composeapp.generated.resources.label_paused
+import ficsitmonitor.composeapp.generated.resources.label_power
+import ficsitmonitor.composeapp.generated.resources.label_recipe
+import ficsitmonitor.composeapp.generated.resources.label_speed
+import ficsitmonitor.composeapp.generated.resources.label_stopped
+import ficsitmonitor.composeapp.generated.resources.no_data
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun MachineCard(
     building: FactoryBuildingDto,
     modifier: Modifier = Modifier,
 ) {
-    val status = when {
-        building.isPaused -> "PAUSED" to BadgeType.WARNING
-        building.isProducing -> "ACTIVE" to BadgeType.SUCCESS
-        else -> "STOPPED" to BadgeType.ERROR
+    val statusText = when {
+        building.isPaused -> stringResource(Res.string.label_paused)
+        building.isProducing -> stringResource(Res.string.label_active)
+        else -> stringResource(Res.string.label_stopped)
     }
+    val statusType = when {
+        building.isPaused -> BadgeType.WARNING
+        building.isProducing -> BadgeType.SUCCESS
+        else -> BadgeType.ERROR
+    }
+    val noData = stringResource(Res.string.no_data)
 
     Column(
         modifier = modifier
@@ -45,19 +61,19 @@ fun MachineCard(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
-                text = building.name.ifEmpty { "Building" },
+                text = building.name.ifEmpty { stringResource(Res.string.fallback_building) },
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.onBackground,
             )
-            StatusBadge(text = status.first, type = status.second)
+            StatusBadge(text = statusText, type = statusType)
         }
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
-            MachineDetail("RECIPE", building.recipe.ifEmpty { "---" })
-            MachineDetail("SPEED", (building.currentPotential * 100).formatPercent())
-            MachineDetail("POWER", building.powerConsumption.formatMW())
+            MachineDetail(stringResource(Res.string.label_recipe), building.recipe.ifEmpty { noData })
+            MachineDetail(stringResource(Res.string.label_speed), (building.currentPotential * 100).formatPercent())
+            MachineDetail(stringResource(Res.string.label_power), building.powerConsumption.formatMW())
         }
     }
 }

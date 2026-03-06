@@ -18,13 +18,21 @@ import com.apptolast.fiscsitmonitor.data.model.ExtractorDto
 import com.apptolast.fiscsitmonitor.presentation.ui.theme.FicsitTheme
 import com.apptolast.fiscsitmonitor.util.formatPercent
 import com.apptolast.fiscsitmonitor.util.formatRate
+import ficsitmonitor.composeapp.generated.resources.Res
+import ficsitmonitor.composeapp.generated.resources.label_active
+import ficsitmonitor.composeapp.generated.resources.label_current_prod
+import ficsitmonitor.composeapp.generated.resources.label_efficiency
+import ficsitmonitor.composeapp.generated.resources.label_max_prod
+import ficsitmonitor.composeapp.generated.resources.label_stopped
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun ExtractorCard(
     extractor: ExtractorDto,
     modifier: Modifier = Modifier,
 ) {
-    val status = if (extractor.isProducing) "ACTIVE" to BadgeType.SUCCESS else "STOPPED" to BadgeType.ERROR
+    val statusText = if (extractor.isProducing) stringResource(Res.string.label_active) else stringResource(Res.string.label_stopped)
+    val statusType = if (extractor.isProducing) BadgeType.SUCCESS else BadgeType.ERROR
 
     Column(
         modifier = modifier
@@ -46,22 +54,22 @@ fun ExtractorCard(
                 color = MaterialTheme.colorScheme.onBackground,
                 modifier = Modifier.weight(1f),
             )
-            StatusBadge(text = status.first, type = status.second)
+            StatusBadge(text = statusText, type = statusType)
         }
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
             Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                Text("CURRENT PROD", style = MaterialTheme.typography.labelSmall, color = FicsitTheme.colors.textMuted)
+                Text(stringResource(Res.string.label_current_prod), style = MaterialTheme.typography.labelSmall, color = FicsitTheme.colors.textMuted)
                 Text(extractor.currentProd.formatRate(), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onBackground)
             }
             Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                Text("MAX PROD", style = MaterialTheme.typography.labelSmall, color = FicsitTheme.colors.textMuted)
+                Text(stringResource(Res.string.label_max_prod), style = MaterialTheme.typography.labelSmall, color = FicsitTheme.colors.textMuted)
                 Text(extractor.maxProd.formatRate(), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onBackground)
             }
             Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                Text("EFFICIENCY", style = MaterialTheme.typography.labelSmall, color = FicsitTheme.colors.textMuted)
+                Text(stringResource(Res.string.label_efficiency), style = MaterialTheme.typography.labelSmall, color = FicsitTheme.colors.textMuted)
                 Text(extractor.prodPercent.formatPercent(), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onBackground)
             }
         }

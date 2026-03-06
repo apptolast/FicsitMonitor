@@ -17,17 +17,37 @@ import androidx.compose.ui.unit.dp
 import com.apptolast.fiscsitmonitor.data.model.TrainDto
 import com.apptolast.fiscsitmonitor.presentation.ui.theme.FicsitTheme
 import com.apptolast.fiscsitmonitor.util.formatDecimal
+import ficsitmonitor.composeapp.generated.resources.Res
+import ficsitmonitor.composeapp.generated.resources.fallback_train
+import ficsitmonitor.composeapp.generated.resources.label_speed
+import ficsitmonitor.composeapp.generated.resources.label_station
+import ficsitmonitor.composeapp.generated.resources.no_data
+import ficsitmonitor.composeapp.generated.resources.status_derailed
+import ficsitmonitor.composeapp.generated.resources.status_self_driving
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun TrainCard(
     train: TrainDto,
     modifier: Modifier = Modifier,
 ) {
-    val status = when {
-        train.isDerailed -> "DERAILED" to BadgeType.ERROR
-        train.selfDriving -> "SELF-DRIVING" to BadgeType.SUCCESS
-        else -> train.status.uppercase() to BadgeType.WARNING
+    val statusText: String
+    val statusType: BadgeType
+    when {
+        train.isDerailed -> {
+            statusText = stringResource(Res.string.status_derailed)
+            statusType = BadgeType.ERROR
+        }
+        train.selfDriving -> {
+            statusText = stringResource(Res.string.status_self_driving)
+            statusType = BadgeType.SUCCESS
+        }
+        else -> {
+            statusText = train.status.uppercase()
+            statusType = BadgeType.WARNING
+        }
     }
+    val noData = stringResource(Res.string.no_data)
 
     Column(
         modifier = modifier
@@ -43,20 +63,20 @@ fun TrainCard(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Text(train.name.ifEmpty { "Train" }, style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onBackground)
-            StatusBadge(text = status.first, type = status.second)
+            Text(train.name.ifEmpty { stringResource(Res.string.fallback_train) }, style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onBackground)
+            StatusBadge(text = statusText, type = statusType)
         }
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
             Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                Text("SPEED", style = MaterialTheme.typography.labelSmall, color = FicsitTheme.colors.textMuted)
+                Text(stringResource(Res.string.label_speed), style = MaterialTheme.typography.labelSmall, color = FicsitTheme.colors.textMuted)
                 Text("${train.forwardSpeed.formatDecimal(0)} km/h", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onBackground)
             }
             Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                Text("STATION", style = MaterialTheme.typography.labelSmall, color = FicsitTheme.colors.textMuted)
-                Text(train.currentStation.ifEmpty { "---" }, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onBackground)
+                Text(stringResource(Res.string.label_station), style = MaterialTheme.typography.labelSmall, color = FicsitTheme.colors.textMuted)
+                Text(train.currentStation.ifEmpty { noData }, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onBackground)
             }
         }
     }

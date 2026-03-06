@@ -17,6 +17,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.apptolast.fiscsitmonitor.presentation.ui.theme.FicsitTheme
+import ficsitmonitor.composeapp.generated.resources.Res
+import ficsitmonitor.composeapp.generated.resources.app_title
+import ficsitmonitor.composeapp.generated.resources.status_offline
+import ficsitmonitor.composeapp.generated.resources.status_online
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun FicsitStatusBar(
@@ -42,13 +47,13 @@ fun FicsitStatusBar(
                 )
                 Spacer(Modifier.width(8.dp))
                 Text(
-                    text = "FICSIT.monitor",
+                    text = stringResource(Res.string.app_title),
                     style = MaterialTheme.typography.titleLarge,
                     color = MaterialTheme.colorScheme.onBackground,
                 )
             }
             StatusBadge(
-                text = if (isOnline) "ONLINE" else "OFFLINE",
+                text = if (isOnline) stringResource(Res.string.status_online) else stringResource(Res.string.status_offline),
                 type = if (isOnline) BadgeType.SUCCESS else BadgeType.ERROR,
             )
         }

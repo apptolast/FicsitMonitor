@@ -23,6 +23,14 @@ import com.apptolast.fiscsitmonitor.presentation.ui.components.MetricCard
 import com.apptolast.fiscsitmonitor.presentation.ui.components.SectionHeader
 import com.apptolast.fiscsitmonitor.presentation.ui.theme.FicsitTheme
 import com.apptolast.fiscsitmonitor.util.formatMW
+import ficsitmonitor.composeapp.generated.resources.Res
+import ficsitmonitor.composeapp.generated.resources.alert_fuse_demand
+import ficsitmonitor.composeapp.generated.resources.badge_every_15s
+import ficsitmonitor.composeapp.generated.resources.label_capacity
+import ficsitmonitor.composeapp.generated.resources.label_generators
+import ficsitmonitor.composeapp.generated.resources.label_headroom
+import ficsitmonitor.composeapp.generated.resources.section_electrical_grid
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun EnergyContent(
@@ -40,15 +48,15 @@ fun EnergyContent(
         verticalArrangement = Arrangement.spacedBy(24.dp),
     ) {
         SectionHeader(
-            title = "ELECTRICAL GRID",
+            title = stringResource(Res.string.section_electrical_grid),
             icon = Icons.Default.Bolt,
             iconTint = FicsitTheme.colors.accentYellow,
-            badgeText = "EVERY 15S",
+            badgeText = stringResource(Res.string.badge_every_15s),
             badgeType = BadgeType.SUCCESS,
         )
 
         if (fuseTriggered) {
-            AlertBanner(message = "FUSE TRIGGERED! \u2014 Demand exceeds generator capacity.")
+            AlertBanner(message = stringResource(Res.string.alert_fuse_demand))
         }
 
         // Circuit cards
@@ -59,10 +67,10 @@ fun EnergyContent(
         // Generators section
         if (generators.isNotEmpty()) {
             SectionHeader(
-                title = "GENERATORS",
+                title = stringResource(Res.string.label_generators),
                 icon = Icons.Default.LocalFireDepartment,
                 iconTint = FicsitTheme.colors.accentOrange,
-                badgeText = "EVERY 15S",
+                badgeText = stringResource(Res.string.badge_every_15s),
             )
 
             val totalCapacity = generators.sumOf { it.baseProd }
@@ -74,7 +82,7 @@ fun EnergyContent(
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 MetricCard(
-                    label = "GENERATORS",
+                    label = stringResource(Res.string.label_generators),
                     value = "${generators.size}",
                     subtitle = "",
                     icon = Icons.Default.LocalFireDepartment,
@@ -82,7 +90,7 @@ fun EnergyContent(
                     modifier = Modifier.weight(1f),
                 )
                 MetricCard(
-                    label = "CAPACITY",
+                    label = stringResource(Res.string.label_capacity),
                     value = totalCapacity.formatMW(),
                     subtitle = "",
                     icon = Icons.Default.Bolt,
@@ -90,7 +98,7 @@ fun EnergyContent(
                     modifier = Modifier.weight(1f),
                 )
                 MetricCard(
-                    label = "HEADROOM",
+                    label = stringResource(Res.string.label_headroom),
                     value = headroom.formatMW(),
                     subtitle = "",
                     icon = Icons.Default.Bolt,

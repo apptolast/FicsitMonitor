@@ -21,6 +21,15 @@ import androidx.compose.ui.unit.dp
 import com.apptolast.fiscsitmonitor.data.model.PowerCircuitDto
 import com.apptolast.fiscsitmonitor.presentation.ui.theme.FicsitTheme
 import com.apptolast.fiscsitmonitor.util.formatMW
+import ficsitmonitor.composeapp.generated.resources.Res
+import ficsitmonitor.composeapp.generated.resources.badge_fuse
+import ficsitmonitor.composeapp.generated.resources.circuit_format
+import ficsitmonitor.composeapp.generated.resources.label_consumed
+import ficsitmonitor.composeapp.generated.resources.label_capacity
+import ficsitmonitor.composeapp.generated.resources.label_peak
+import ficsitmonitor.composeapp.generated.resources.label_prod
+import ficsitmonitor.composeapp.generated.resources.label_use
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun CircuitCard(
@@ -47,12 +56,12 @@ fun CircuitCard(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
-                text = "Circuit ${circuit.circuitGroupId}",
+                text = stringResource(Res.string.circuit_format, circuit.circuitGroupId),
                 style = MaterialTheme.typography.titleLarge,
                 color = MaterialTheme.colorScheme.onBackground,
             )
             if (circuit.fuseTriggered) {
-                StatusBadge(text = "FUSE", type = BadgeType.ERROR)
+                StatusBadge(text = stringResource(Res.string.badge_fuse), type = BadgeType.ERROR)
             }
         }
 
@@ -61,9 +70,9 @@ fun CircuitCard(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
-            MetricColumn("CONSUMED", circuit.powerConsumed.formatMW())
-            MetricColumn("CAPACITY", circuit.powerCapacity.formatMW())
-            MetricColumn("PROD.", circuit.powerProduction.formatMW())
+            MetricColumn(stringResource(Res.string.label_consumed), circuit.powerConsumed.formatMW())
+            MetricColumn(stringResource(Res.string.label_capacity), circuit.powerCapacity.formatMW())
+            MetricColumn(stringResource(Res.string.label_prod), circuit.powerProduction.formatMW())
         }
 
         // Peak
@@ -71,7 +80,7 @@ fun CircuitCard(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
-            Text("PEAK", style = MaterialTheme.typography.labelLarge, color = FicsitTheme.colors.textSecondary)
+            Text(stringResource(Res.string.label_peak), style = MaterialTheme.typography.labelLarge, color = FicsitTheme.colors.textSecondary)
             Text(circuit.powerMaxConsumed.formatMW(), style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onBackground)
         }
 
@@ -81,7 +90,7 @@ fun CircuitCard(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Text("USE", style = MaterialTheme.typography.labelLarge, color = FicsitTheme.colors.textSecondary)
+            Text(stringResource(Res.string.label_use), style = MaterialTheme.typography.labelLarge, color = FicsitTheme.colors.textSecondary)
             Text("${usagePercent.toInt()}%", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onBackground)
         }
         Box(

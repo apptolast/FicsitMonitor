@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Bottom Navigation -->
+    <string name="tab_home">HOME</string>
+    <string name="tab_energy">ENERGY</string>
+    <string name="tab_factory">FACTORY</string>
+    <string name="tab_logistics">LOGISTICS</string>
+    <string name="tab_live">LIVE</string>
+
+    <!-- Status Bar -->
+    <string name="app_title">FICSIT.monitor</string>
+    <string name="status_online">ONLINE</string>
+    <string name="status_offline">OFFLINE</string>
+
+    <!-- Badges -->
+    <string name="badge_live">LIVE</string>
+    <string name="badge_real_time">REAL-TIME</string>
+    <string name="badge_every_15s">EVERY 15S</string>
+    <string name="badge_every_30s">EVERY 30S</string>
+    <string name="badge_every_60s">EVERY 60S</string>
+    <string name="badge_fuse">FUSE</string>
+
+    <!-- Home Screen -->
+    <string name="section_key_metrics">KEY METRICS</string>
+    <string name="label_tech_tier">TECH TIER</string>
+    <string name="label_phase">PHASE</string>
+    <string name="label_tick_rate">TICK RATE</string>
+    <string name="label_players">PLAYERS</string>
+    <string name="label_session">SESSION</string>
+    <string name="label_energy">ENERGY</string>
+    <string name="label_circuits">CIRCUITS</string>
+    <string name="label_production">PRODUCTION</string>
+    <string name="label_trains">TRAINS</string>
+    <string name="label_extractors">EXTRACTORS</string>
+    <string name="label_generators">GENERATORS</string>
+    <string name="subtitle_peak_demand">Peak demand</string>
+    <string name="subtitle_no_energy">No energy</string>
+    <string name="subtitle_server_idle">Server idle</string>
+    <string name="subtitle_running">Running</string>
+    <string name="tier_format">Tier %1$d</string>
+    <string name="players_format">%1$d / 8</string>
+    <string name="items_format">%1$d items</string>
+    <string name="max_per_min_format">Max: %1$d/min</string>
+    <string name="fuse_triggered_format">%1$d fuse triggered</string>
+    <string name="of_max_format">of 8 max</string>
+    <string name="derailed_format">%1$d derailed</string>
+    <string name="producing_format">%1$d producing</string>
+    <string name="mw_cap_format">%1$s MW cap.</string>
+    <string name="alert_fuse_triggered">FUSE TRIGGERED \u2014 Power grid overload</string>
+
+    <!-- Energy Screen -->
+    <string name="section_electrical_grid">ELECTRICAL GRID</string>
+    <string name="alert_fuse_demand">FUSE TRIGGERED! \u2014 Demand exceeds generator capacity.</string>
+    <string name="circuit_format">Circuit %1$d</string>
+    <string name="label_consumed">CONSUMED</string>
+    <string name="label_capacity">CAPACITY</string>
+    <string name="label_prod">PROD.</string>
+    <string name="label_peak">PEAK</string>
+    <string name="label_use">USE</string>
+    <string name="label_headroom">HEADROOM</string>
+    <string name="label_output">OUTPUT</string>
+    <string name="label_fuel">FUEL</string>
+    <string name="stations_format">%1$d stations</string>
+    <string name="total_format">%1$d total</string>
+
+    <!-- Factory Screen -->
+    <string name="section_factory_status">FACTORY STATUS</string>
+    <string name="label_buildings">BUILDINGS</string>
+    <string name="label_active">ACTIVE</string>
+    <string name="label_stopped">STOPPED</string>
+    <string name="label_paused">PAUSED</string>
+    <string name="label_recipe">RECIPE</string>
+    <string name="label_speed">SPEED</string>
+    <string name="label_power">POWER</string>
+    <string name="label_current_prod">CURRENT PROD</string>
+    <string name="label_max_prod">MAX PROD</string>
+    <string name="label_efficiency">EFFICIENCY</string>
+    <string name="section_extractors">EXTRACTORS (%1$d)</string>
+    <string name="section_world_inventory">WORLD INVENTORY</string>
+    <string name="fallback_building">Building</string>
+    <string name="fallback_generator">Generator</string>
+
+    <!-- Logistics Screen -->
+    <string name="section_logistics">LOGISTICS</string>
+    <string name="label_drones">Drones</string>
+    <string name="label_trains_section">Trains</string>
+    <string name="section_players">PLAYERS (%1$d)</string>
+    <string name="empty_trains">No trains registered</string>
+    <string name="empty_drones">No drones registered</string>
+    <string name="empty_players">No player online</string>
+    <string name="fallback_train">Train</string>
+    <string name="fallback_drone_station">Drone Station</string>
+    <string name="status_self_driving">SELF-DRIVING</string>
+    <string name="status_derailed">DERAILED</string>
+    <string name="label_station">STATION</string>
+    <string name="label_paired">PAIRED</string>
+    <string name="label_round_trip">ROUND TRIP</string>
+    <string name="idle">IDLE</string>
+
+    <!-- Live Screen -->
+    <string name="section_live_events">LIVE EVENTS</string>
+    <string name="section_summary">SUMMARY</string>
+    <string name="empty_events">No events yet</string>
+    <string name="summary_players_online">Players Online</string>
+    <string name="summary_active_circuits">Active Circuits</string>
+    <string name="summary_active_trains">Active Trains</string>
+    <string name="summary_items_in_production">Items in Production</string>
+    <string name="summary_fuses_triggered">Fuses Triggered</string>
+
+    <!-- Common -->
+    <string name="no_data">---</string>
+    <string name="satisfactory_server">Satisfactory Server</string>
+</resources>

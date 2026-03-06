@@ -24,6 +24,17 @@ import com.apptolast.fiscsitmonitor.presentation.ui.components.SummaryRow
 import com.apptolast.fiscsitmonitor.presentation.ui.theme.FicsitTheme
 import com.apptolast.fiscsitmonitor.presentation.viewmodel.LiveEvent
 import com.apptolast.fiscsitmonitor.presentation.viewmodel.LiveSummary
+import ficsitmonitor.composeapp.generated.resources.Res
+import ficsitmonitor.composeapp.generated.resources.badge_real_time
+import ficsitmonitor.composeapp.generated.resources.empty_events
+import ficsitmonitor.composeapp.generated.resources.section_live_events
+import ficsitmonitor.composeapp.generated.resources.section_summary
+import ficsitmonitor.composeapp.generated.resources.summary_active_circuits
+import ficsitmonitor.composeapp.generated.resources.summary_active_trains
+import ficsitmonitor.composeapp.generated.resources.summary_fuses_triggered
+import ficsitmonitor.composeapp.generated.resources.summary_items_in_production
+import ficsitmonitor.composeapp.generated.resources.summary_players_online
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun LiveContent(
@@ -39,10 +50,10 @@ fun LiveContent(
         verticalArrangement = Arrangement.spacedBy(24.dp),
     ) {
         SectionHeader(
-            title = "LIVE EVENTS",
+            title = stringResource(Res.string.section_live_events),
             icon = Icons.Default.Notifications,
             iconTint = FicsitTheme.colors.accentCyan,
-            badgeText = "REAL-TIME",
+            badgeText = stringResource(Res.string.badge_real_time),
             badgeType = BadgeType.INFO,
         )
 
@@ -58,7 +69,7 @@ fun LiveContent(
             ) {
                 EmptyState(
                     icon = Icons.Default.SentimentDissatisfied,
-                    message = "No events yet",
+                    message = stringResource(Res.string.empty_events),
                 )
             }
         } else {
@@ -71,7 +82,7 @@ fun LiveContent(
 
         // Summary
         SectionHeader(
-            title = "SUMMARY",
+            title = stringResource(Res.string.section_summary),
             icon = Icons.Default.Notifications,
             iconTint = FicsitTheme.colors.accentPurple,
         )
@@ -85,26 +96,26 @@ fun LiveContent(
                 .padding(16.dp),
         ) {
             SummaryRow(
-                label = "Players Online",
+                label = stringResource(Res.string.summary_players_online),
                 value = "${summary.playersOnline}",
                 valueColor = FicsitTheme.colors.accentGreen,
             )
             SummaryRow(
-                label = "Active Circuits",
+                label = stringResource(Res.string.summary_active_circuits),
                 value = "${summary.activeCircuits}",
                 valueColor = FicsitTheme.colors.accentCyan,
             )
             SummaryRow(
-                label = "Active Trains",
+                label = stringResource(Res.string.summary_active_trains),
                 value = "${summary.activeTrains}",
                 valueColor = FicsitTheme.colors.accentOrange,
             )
             SummaryRow(
-                label = "Items in Production",
+                label = stringResource(Res.string.summary_items_in_production),
                 value = "${summary.itemsInProduction}",
             )
             SummaryRow(
-                label = "Fuses Triggered",
+                label = stringResource(Res.string.summary_fuses_triggered),
                 value = "${summary.fusesTriggered}",
                 valueColor = if (summary.fusesTriggered > 0) FicsitTheme.colors.accentRed else MaterialTheme.colorScheme.onBackground,
                 showDivider = false,

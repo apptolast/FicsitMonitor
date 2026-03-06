@@ -17,13 +17,23 @@ import androidx.compose.ui.unit.dp
 import com.apptolast.fiscsitmonitor.data.model.ExtractorDto
 import com.apptolast.fiscsitmonitor.data.model.FactoryBuildingDto
 import com.apptolast.fiscsitmonitor.data.model.WorldInventoryItemDto
-import com.apptolast.fiscsitmonitor.presentation.ui.components.BadgeType
 import com.apptolast.fiscsitmonitor.presentation.ui.components.ExtractorCard
 import com.apptolast.fiscsitmonitor.presentation.ui.components.InventoryItem
 import com.apptolast.fiscsitmonitor.presentation.ui.components.MachineCard
 import com.apptolast.fiscsitmonitor.presentation.ui.components.MetricCard
 import com.apptolast.fiscsitmonitor.presentation.ui.components.SectionHeader
 import com.apptolast.fiscsitmonitor.presentation.ui.theme.FicsitTheme
+import ficsitmonitor.composeapp.generated.resources.Res
+import ficsitmonitor.composeapp.generated.resources.badge_every_30s
+import ficsitmonitor.composeapp.generated.resources.badge_every_60s
+import ficsitmonitor.composeapp.generated.resources.label_active
+import ficsitmonitor.composeapp.generated.resources.label_buildings
+import ficsitmonitor.composeapp.generated.resources.label_paused
+import ficsitmonitor.composeapp.generated.resources.label_stopped
+import ficsitmonitor.composeapp.generated.resources.section_extractors
+import ficsitmonitor.composeapp.generated.resources.section_factory_status
+import ficsitmonitor.composeapp.generated.resources.section_world_inventory
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun FactoryContent(
@@ -44,10 +54,10 @@ fun FactoryContent(
         verticalArrangement = Arrangement.spacedBy(24.dp),
     ) {
         SectionHeader(
-            title = "FACTORY STATUS",
+            title = stringResource(Res.string.section_factory_status),
             icon = Icons.Default.PrecisionManufacturing,
             iconTint = FicsitTheme.colors.accentCyan,
-            badgeText = "EVERY 60S",
+            badgeText = stringResource(Res.string.badge_every_60s),
         )
 
         // Summary
@@ -55,10 +65,10 @@ fun FactoryContent(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            MetricCard("BUILDINGS", "${buildings.size}", "", Icons.Default.PrecisionManufacturing, modifier = Modifier.weight(1f))
-            MetricCard("ACTIVE", "$active", "", Icons.Default.PrecisionManufacturing, iconTint = FicsitTheme.colors.accentGreen, modifier = Modifier.weight(1f))
-            MetricCard("STOPPED", "$stopped", "", Icons.Default.PrecisionManufacturing, iconTint = FicsitTheme.colors.accentRed, modifier = Modifier.weight(1f))
-            MetricCard("PAUSED", "$paused", "", Icons.Default.PrecisionManufacturing, iconTint = FicsitTheme.colors.accentOrange, modifier = Modifier.weight(1f))
+            MetricCard(stringResource(Res.string.label_buildings), "${buildings.size}", "", Icons.Default.PrecisionManufacturing, modifier = Modifier.weight(1f))
+            MetricCard(stringResource(Res.string.label_active), "$active", "", Icons.Default.PrecisionManufacturing, iconTint = FicsitTheme.colors.accentGreen, modifier = Modifier.weight(1f))
+            MetricCard(stringResource(Res.string.label_stopped), "$stopped", "", Icons.Default.PrecisionManufacturing, iconTint = FicsitTheme.colors.accentRed, modifier = Modifier.weight(1f))
+            MetricCard(stringResource(Res.string.label_paused), "$paused", "", Icons.Default.PrecisionManufacturing, iconTint = FicsitTheme.colors.accentOrange, modifier = Modifier.weight(1f))
         }
 
         // Machine list
@@ -69,10 +79,10 @@ fun FactoryContent(
         // Extractors
         if (extractors.isNotEmpty()) {
             SectionHeader(
-                title = "EXTRACTORS (${extractors.size})",
+                title = stringResource(Res.string.section_extractors, extractors.size),
                 icon = Icons.Default.Hardware,
                 iconTint = FicsitTheme.colors.accentOrange,
-                badgeText = "EVERY 30S",
+                badgeText = stringResource(Res.string.badge_every_30s),
             )
             extractors.forEach { extractor ->
                 ExtractorCard(extractor = extractor)
@@ -82,9 +92,9 @@ fun FactoryContent(
         // World Inventory
         if (worldInventory.isNotEmpty()) {
             SectionHeader(
-                title = "WORLD INVENTORY",
+                title = stringResource(Res.string.section_world_inventory),
                 icon = Icons.Default.Inventory2,
-                badgeText = "EVERY 30S",
+                badgeText = stringResource(Res.string.badge_every_30s),
             )
             worldInventory.forEach { item ->
                 InventoryItem(item = item)

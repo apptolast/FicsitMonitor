@@ -19,6 +19,12 @@ import com.apptolast.fiscsitmonitor.presentation.ui.theme.FicsitTheme
 import com.apptolast.fiscsitmonitor.util.formatDecimal
 import com.apptolast.fiscsitmonitor.util.formatMW
 import com.apptolast.fiscsitmonitor.util.formatPercent
+import ficsitmonitor.composeapp.generated.resources.Res
+import ficsitmonitor.composeapp.generated.resources.fallback_generator
+import ficsitmonitor.composeapp.generated.resources.label_capacity
+import ficsitmonitor.composeapp.generated.resources.label_fuel
+import ficsitmonitor.composeapp.generated.resources.label_output
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun GeneratorCard(
@@ -44,7 +50,7 @@ fun GeneratorCard(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
-                text = generator.name.ifEmpty { "Generator" },
+                text = generator.name.ifEmpty { stringResource(Res.string.fallback_generator) },
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.onBackground,
             )
@@ -58,9 +64,9 @@ fun GeneratorCard(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
-            SmallLabel("OUTPUT", generator.dynamicProd.formatMW())
-            SmallLabel("CAPACITY", generator.baseProd.formatMW())
-            SmallLabel("FUEL", generator.fuelAmount.formatDecimal(1))
+            SmallLabel(stringResource(Res.string.label_output), generator.dynamicProd.formatMW())
+            SmallLabel(stringResource(Res.string.label_capacity), generator.baseProd.formatMW())
+            SmallLabel(stringResource(Res.string.label_fuel), generator.fuelAmount.formatDecimal(1))
         }
     }
 }

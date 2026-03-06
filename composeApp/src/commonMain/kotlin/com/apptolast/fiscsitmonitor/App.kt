@@ -22,14 +22,13 @@ import com.apptolast.fiscsitmonitor.presentation.navigation.Route
 import com.apptolast.fiscsitmonitor.presentation.ui.components.BottomBarTab
 import com.apptolast.fiscsitmonitor.presentation.ui.components.FicsitBottomBar
 import com.apptolast.fiscsitmonitor.presentation.ui.theme.FicsitMonitorTheme
-
-private val tabs = listOf(
-    BottomBarTab("HOME", Icons.Default.Dashboard),
-    BottomBarTab("ENERGY", Icons.Default.Bolt),
-    BottomBarTab("FACTORY", Icons.Default.PrecisionManufacturing),
-    BottomBarTab("LOGISTICS", Icons.Default.LocalShipping),
-    BottomBarTab("LIVE", Icons.Default.Stream),
-)
+import ficsitmonitor.composeapp.generated.resources.Res
+import ficsitmonitor.composeapp.generated.resources.tab_energy
+import ficsitmonitor.composeapp.generated.resources.tab_factory
+import ficsitmonitor.composeapp.generated.resources.tab_home
+import ficsitmonitor.composeapp.generated.resources.tab_live
+import ficsitmonitor.composeapp.generated.resources.tab_logistics
+import org.jetbrains.compose.resources.stringResource
 
 private val routes: List<Route> = listOf(
     Route.Home,
@@ -44,6 +43,14 @@ fun App() {
     FicsitMonitorTheme {
         val navController = rememberNavController()
         var selectedTab by rememberSaveable { mutableIntStateOf(0) }
+
+        val tabs = listOf(
+            BottomBarTab(stringResource(Res.string.tab_home), Icons.Default.Dashboard),
+            BottomBarTab(stringResource(Res.string.tab_energy), Icons.Default.Bolt),
+            BottomBarTab(stringResource(Res.string.tab_factory), Icons.Default.PrecisionManufacturing),
+            BottomBarTab(stringResource(Res.string.tab_logistics), Icons.Default.LocalShipping),
+            BottomBarTab(stringResource(Res.string.tab_live), Icons.Default.Stream),
+        )
 
         Column(
             modifier = Modifier

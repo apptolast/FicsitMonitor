@@ -15,6 +15,10 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import com.apptolast.fiscsitmonitor.data.model.PlayerDto
 import com.apptolast.fiscsitmonitor.presentation.ui.theme.FicsitTheme
+import ficsitmonitor.composeapp.generated.resources.Res
+import ficsitmonitor.composeapp.generated.resources.status_offline
+import ficsitmonitor.composeapp.generated.resources.status_online
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun PlayerCard(
@@ -37,7 +41,7 @@ fun PlayerCard(
             color = MaterialTheme.colorScheme.onBackground,
         )
         StatusBadge(
-            text = if (player.isOnline) "ONLINE" else "OFFLINE",
+            text = if (player.isOnline) stringResource(Res.string.status_online) else stringResource(Res.string.status_offline),
             type = if (player.isOnline) BadgeType.SUCCESS else BadgeType.ERROR,
         )
     }

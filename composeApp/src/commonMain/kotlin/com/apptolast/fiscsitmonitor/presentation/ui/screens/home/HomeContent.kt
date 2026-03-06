@@ -38,6 +38,37 @@ import com.apptolast.fiscsitmonitor.presentation.ui.theme.FicsitTheme
 import com.apptolast.fiscsitmonitor.util.formatDuration
 import com.apptolast.fiscsitmonitor.util.formatMW
 import com.apptolast.fiscsitmonitor.util.formatTPS
+import ficsitmonitor.composeapp.generated.resources.Res
+import ficsitmonitor.composeapp.generated.resources.alert_fuse_triggered
+import ficsitmonitor.composeapp.generated.resources.badge_live
+import ficsitmonitor.composeapp.generated.resources.derailed_format
+import ficsitmonitor.composeapp.generated.resources.fuse_triggered_format
+import ficsitmonitor.composeapp.generated.resources.items_format
+import ficsitmonitor.composeapp.generated.resources.label_circuits
+import ficsitmonitor.composeapp.generated.resources.label_energy
+import ficsitmonitor.composeapp.generated.resources.label_extractors
+import ficsitmonitor.composeapp.generated.resources.label_generators
+import ficsitmonitor.composeapp.generated.resources.label_phase
+import ficsitmonitor.composeapp.generated.resources.label_players
+import ficsitmonitor.composeapp.generated.resources.label_production
+import ficsitmonitor.composeapp.generated.resources.label_session
+import ficsitmonitor.composeapp.generated.resources.label_tech_tier
+import ficsitmonitor.composeapp.generated.resources.label_tick_rate
+import ficsitmonitor.composeapp.generated.resources.label_trains
+import ficsitmonitor.composeapp.generated.resources.max_per_min_format
+import ficsitmonitor.composeapp.generated.resources.mw_cap_format
+import ficsitmonitor.composeapp.generated.resources.no_data
+import ficsitmonitor.composeapp.generated.resources.of_max_format
+import ficsitmonitor.composeapp.generated.resources.players_format
+import ficsitmonitor.composeapp.generated.resources.producing_format
+import ficsitmonitor.composeapp.generated.resources.satisfactory_server
+import ficsitmonitor.composeapp.generated.resources.section_key_metrics
+import ficsitmonitor.composeapp.generated.resources.subtitle_no_energy
+import ficsitmonitor.composeapp.generated.resources.subtitle_peak_demand
+import ficsitmonitor.composeapp.generated.resources.subtitle_running
+import ficsitmonitor.composeapp.generated.resources.subtitle_server_idle
+import ficsitmonitor.composeapp.generated.resources.tier_format
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun HomeContent(
@@ -49,6 +80,7 @@ fun HomeContent(
     modifier: Modifier = Modifier,
 ) {
     val fuseTriggered = circuits.any { it.fuseTriggered }
+    val noData = stringResource(Res.string.no_data)
 
     Column(
         modifier = modifier
@@ -60,12 +92,12 @@ fun HomeContent(
         // Header
         FicsitStatusBar(
             isOnline = server?.status == "online",
-            serverAddress = "${server?.host ?: "..."} \u00B7 ${server?.name ?: "Satisfactory Server"}",
+            serverAddress = "${server?.host ?: "..."} \u00B7 ${server?.name ?: stringResource(Res.string.satisfactory_server)}",
         )
 
         // Alert
         if (fuseTriggered) {
-            AlertBanner(message = "FUSE TRIGGERED \u2014 Power grid overload")
+            AlertBanner(message = stringResource(Res.string.alert_fuse_triggered))
         }
 
         // Server Info Card
@@ -77,23 +109,22 @@ fun HomeContent(
                 .border(1.dp, FicsitTheme.colors.border, MaterialTheme.shapes.medium)
                 .padding(horizontal = 16.dp),
         ) {
-            InfoRow("TECH TIER", "Tier ${metrics?.techTier ?: 0}")
-            InfoRow("PHASE", metrics?.gamePhase ?: "---")
-            InfoRow("TICK RATE", metrics?.tickRate?.formatTPS() ?: "0.0 TPS")
-            InfoRow("PLAYERS", "${metrics?.playerCount ?: 0} / 8")
-            InfoRow("SESSION", metrics?.totalDuration?.formatDuration() ?: "0h 00m")
+            InfoRow(stringResource(Res.string.label_tech_tier), stringResource(Res.string.tier_format, metrics?.techTier ?: 0))
+            InfoRow(stringResource(Res.string.label_phase), metrics?.gamePhase ?: noData)
+            InfoRow(stringResource(Res.string.label_tick_rate), metrics?.tickRate?.formatTPS() ?: "0.0 TPS")
+            InfoRow(stringResource(Res.string.label_players), stringResource(Res.string.players_format, metrics?.playerCount ?: 0))
+            InfoRow(stringResource(Res.string.label_session), metrics?.totalDuration?.formatDuration() ?: "0h 00m")
         }
 
         // Metrics Grid
         SectionHeader(
-            title = "KEY METRICS",
+            title = stringResource(Res.string.section_key_metrics),
             icon = Icons.Default.Analytics,
-            badgeText = "LIVE",
+            badgeText = stringResource(Res.string.badge_live),
             badgeType = BadgeType.SUCCESS,
         )
 
         val totalConsumed = circuits.sumOf { it.powerConsumed }
-        val totalProduction = circuits.sumOf { it.powerMaxConsumed }
         val fusesCount = circuits.count { it.fuseTriggered }
         val onlinePlayers = players.count { it.isOnline }
         val producingItems = production.count { it.currentProd > 0 }
@@ -108,29 +139,29 @@ fun HomeContent(
                 verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 MetricCard(
-                    label = "ENERGY",
+                    label = stringResource(Res.string.label_energy),
                     value = totalConsumed.formatMW(),
-                    subtitle = "Peak demand",
+                    subtitle = stringResource(Res.string.subtitle_peak_demand),
                     icon = Icons.Default.Bolt,
                     iconTint = FicsitTheme.colors.accentYellow,
                 )
                 MetricCard(
-                    label = "PRODUCTION",
-                    value = if (producingItems > 0) "$producingItems items" else "No energy",
-                    subtitle = "Max: ${maxProd.toInt()}/min",
+                    label = stringResource(Res.string.label_production),
+                    value = if (producingItems > 0) stringResource(Res.string.items_format, producingItems) else stringResource(Res.string.subtitle_no_energy),
+                    subtitle = stringResource(Res.string.max_per_min_format, maxProd.toInt()),
                     icon = Icons.Default.PrecisionManufacturing,
                     iconTint = FicsitTheme.colors.accentCyan,
                 )
                 MetricCard(
-                    label = "TICK RATE",
+                    label = stringResource(Res.string.label_tick_rate),
                     value = metrics?.tickRate?.formatTPS() ?: "0.0 TPS",
-                    subtitle = if (metrics?.playerCount == 0) "Server idle" else "Running",
+                    subtitle = if (metrics?.playerCount == 0) stringResource(Res.string.subtitle_server_idle) else stringResource(Res.string.subtitle_running),
                     icon = Icons.Default.Speed,
                 )
                 MetricCard(
-                    label = "EXTRACTORS",
-                    value = "---",
-                    subtitle = "0 producing",
+                    label = stringResource(Res.string.label_extractors),
+                    value = noData,
+                    subtitle = stringResource(Res.string.producing_format, 0),
                     icon = Icons.Default.Hardware,
                     iconTint = FicsitTheme.colors.accentOrange,
                 )
@@ -140,30 +171,30 @@ fun HomeContent(
                 verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 MetricCard(
-                    label = "CIRCUITS",
+                    label = stringResource(Res.string.label_circuits),
                     value = "${circuits.size}",
-                    subtitle = "$fusesCount fuse triggered",
+                    subtitle = stringResource(Res.string.fuse_triggered_format, fusesCount),
                     icon = Icons.Default.Bolt,
                     iconTint = FicsitTheme.colors.accentRed,
                 )
                 MetricCard(
-                    label = "PLAYERS",
+                    label = stringResource(Res.string.label_players),
                     value = "$onlinePlayers",
-                    subtitle = "of 8 max",
+                    subtitle = stringResource(Res.string.of_max_format),
                     icon = Icons.Default.Group,
                     iconTint = FicsitTheme.colors.accentPurple,
                 )
                 MetricCard(
-                    label = "TRAINS",
+                    label = stringResource(Res.string.label_trains),
                     value = "0",
-                    subtitle = "0 derailed",
+                    subtitle = stringResource(Res.string.derailed_format, 0),
                     icon = Icons.Default.LocalShipping,
                     iconTint = FicsitTheme.colors.accentCyan,
                 )
                 MetricCard(
-                    label = "GENERATORS",
-                    value = "---",
-                    subtitle = "--- MW cap.",
+                    label = stringResource(Res.string.label_generators),
+                    value = noData,
+                    subtitle = stringResource(Res.string.mw_cap_format, noData),
                     icon = Icons.Default.LocalFireDepartment,
                     iconTint = FicsitTheme.colors.accentOrange,
                 )

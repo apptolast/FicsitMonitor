@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Flight
 import androidx.compose.material.icons.filled.Group
@@ -22,15 +24,25 @@ import androidx.compose.ui.unit.dp
 import com.apptolast.fiscsitmonitor.data.model.DroneStationDto
 import com.apptolast.fiscsitmonitor.data.model.PlayerDto
 import com.apptolast.fiscsitmonitor.data.model.TrainDto
-import com.apptolast.fiscsitmonitor.presentation.ui.components.BadgeType
 import com.apptolast.fiscsitmonitor.presentation.ui.components.DroneCard
 import com.apptolast.fiscsitmonitor.presentation.ui.components.EmptyState
 import com.apptolast.fiscsitmonitor.presentation.ui.components.PlayerCard
 import com.apptolast.fiscsitmonitor.presentation.ui.components.SectionHeader
 import com.apptolast.fiscsitmonitor.presentation.ui.components.TrainCard
 import com.apptolast.fiscsitmonitor.presentation.ui.theme.FicsitTheme
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import ficsitmonitor.composeapp.generated.resources.Res
+import ficsitmonitor.composeapp.generated.resources.badge_every_15s
+import ficsitmonitor.composeapp.generated.resources.badge_every_30s
+import ficsitmonitor.composeapp.generated.resources.empty_drones
+import ficsitmonitor.composeapp.generated.resources.empty_players
+import ficsitmonitor.composeapp.generated.resources.empty_trains
+import ficsitmonitor.composeapp.generated.resources.label_drones
+import ficsitmonitor.composeapp.generated.resources.label_trains_section
+import ficsitmonitor.composeapp.generated.resources.section_logistics
+import ficsitmonitor.composeapp.generated.resources.section_players
+import ficsitmonitor.composeapp.generated.resources.stations_format
+import ficsitmonitor.composeapp.generated.resources.total_format
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun LogisticsContent(
@@ -47,9 +59,9 @@ fun LogisticsContent(
         verticalArrangement = Arrangement.spacedBy(24.dp),
     ) {
         SectionHeader(
-            title = "LOGISTICS",
+            title = stringResource(Res.string.section_logistics),
             icon = Icons.Default.LocalShipping,
-            badgeText = "EVERY 30S",
+            badgeText = stringResource(Res.string.badge_every_30s),
         )
 
         // Trains
@@ -66,13 +78,11 @@ fun LogisticsContent(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
             ) {
-                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    Text("Trains", style = MaterialTheme.typography.titleLarge, color = MaterialTheme.colorScheme.onBackground)
-                }
-                Text("${trains.size} total", style = MaterialTheme.typography.bodyMedium, color = FicsitTheme.colors.textSecondary)
+                Text(stringResource(Res.string.label_trains_section), style = MaterialTheme.typography.titleLarge, color = MaterialTheme.colorScheme.onBackground)
+                Text(stringResource(Res.string.total_format, trains.size), style = MaterialTheme.typography.bodyMedium, color = FicsitTheme.colors.textSecondary)
             }
             if (trains.isEmpty()) {
-                EmptyState(icon = Icons.Default.Train, message = "No trains registered")
+                EmptyState(icon = Icons.Default.Train, message = stringResource(Res.string.empty_trains))
             } else {
                 trains.forEach { train -> TrainCard(train = train) }
             }
@@ -92,11 +102,11 @@ fun LogisticsContent(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
             ) {
-                Text("Drones", style = MaterialTheme.typography.titleLarge, color = MaterialTheme.colorScheme.onBackground)
-                Text("${drones.size} stations", style = MaterialTheme.typography.bodyMedium, color = FicsitTheme.colors.textSecondary)
+                Text(stringResource(Res.string.label_drones), style = MaterialTheme.typography.titleLarge, color = MaterialTheme.colorScheme.onBackground)
+                Text(stringResource(Res.string.stations_format, drones.size), style = MaterialTheme.typography.bodyMedium, color = FicsitTheme.colors.textSecondary)
             }
             if (drones.isEmpty()) {
-                EmptyState(icon = Icons.Default.Flight, message = "No drones registered")
+                EmptyState(icon = Icons.Default.Flight, message = stringResource(Res.string.empty_drones))
             } else {
                 drones.forEach { drone -> DroneCard(station = drone) }
             }
@@ -105,10 +115,10 @@ fun LogisticsContent(
         // Players
         val onlineCount = players.count { it.isOnline }
         SectionHeader(
-            title = "PLAYERS ($onlineCount)",
+            title = stringResource(Res.string.section_players, onlineCount),
             icon = Icons.Default.Group,
             iconTint = FicsitTheme.colors.accentPurple,
-            badgeText = "EVERY 15S",
+            badgeText = stringResource(Res.string.badge_every_15s),
         )
 
         if (players.isEmpty()) {
@@ -120,7 +130,7 @@ fun LogisticsContent(
                     .border(1.dp, FicsitTheme.colors.border, MaterialTheme.shapes.medium)
                     .padding(16.dp),
             ) {
-                EmptyState(icon = Icons.Default.SentimentDissatisfied, message = "No player online")
+                EmptyState(icon = Icons.Default.SentimentDissatisfied, message = stringResource(Res.string.empty_players))
             }
         } else {
             players.forEach { player ->

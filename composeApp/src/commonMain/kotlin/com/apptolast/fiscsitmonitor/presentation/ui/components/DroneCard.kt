@@ -17,12 +17,21 @@ import androidx.compose.ui.unit.dp
 import com.apptolast.fiscsitmonitor.data.model.DroneStationDto
 import com.apptolast.fiscsitmonitor.presentation.ui.theme.FicsitTheme
 import com.apptolast.fiscsitmonitor.util.formatDecimal
+import ficsitmonitor.composeapp.generated.resources.Res
+import ficsitmonitor.composeapp.generated.resources.fallback_drone_station
+import ficsitmonitor.composeapp.generated.resources.idle
+import ficsitmonitor.composeapp.generated.resources.label_paired
+import ficsitmonitor.composeapp.generated.resources.label_round_trip
+import ficsitmonitor.composeapp.generated.resources.no_data
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun DroneCard(
     station: DroneStationDto,
     modifier: Modifier = Modifier,
 ) {
+    val noData = stringResource(Res.string.no_data)
+
     Column(
         modifier = modifier
             .fillMaxWidth()
@@ -37,19 +46,19 @@ fun DroneCard(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Text(station.name.ifEmpty { "Drone Station" }, style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onBackground)
-            StatusBadge(text = station.droneStatus.uppercase().ifEmpty { "IDLE" }, type = BadgeType.INFO)
+            Text(station.name.ifEmpty { stringResource(Res.string.fallback_drone_station) }, style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onBackground)
+            StatusBadge(text = station.droneStatus.uppercase().ifEmpty { stringResource(Res.string.idle) }, type = BadgeType.INFO)
         }
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
             Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                Text("PAIRED", style = MaterialTheme.typography.labelSmall, color = FicsitTheme.colors.textMuted)
-                Text(station.pairedStation.ifEmpty { "---" }, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onBackground)
+                Text(stringResource(Res.string.label_paired), style = MaterialTheme.typography.labelSmall, color = FicsitTheme.colors.textMuted)
+                Text(station.pairedStation.ifEmpty { noData }, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onBackground)
             }
             Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                Text("ROUND TRIP", style = MaterialTheme.typography.labelSmall, color = FicsitTheme.colors.textMuted)
+                Text(stringResource(Res.string.label_round_trip), style = MaterialTheme.typography.labelSmall, color = FicsitTheme.colors.textMuted)
                 Text("${station.avgRoundTripSecs.formatDecimal(0)}s", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onBackground)
             }
         }
