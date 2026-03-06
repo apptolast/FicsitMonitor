@@ -1,16 +1,22 @@
 package com.apptolast.fiscsitmonitor.presentation.ui.screens.factory
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
+import androidx.compose.runtime.getValue
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.apptolast.fiscsitmonitor.presentation.viewmodel.FactoryViewModel
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
-fun FactoryScreen() {
-    Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        Text("FACTORY", style = MaterialTheme.typography.headlineLarge, color = MaterialTheme.colorScheme.primary)
-    }
+fun FactoryScreen(
+    viewModel: FactoryViewModel = koinViewModel(),
+) {
+    val buildings by viewModel.buildings.collectAsStateWithLifecycle()
+    val extractors by viewModel.extractors.collectAsStateWithLifecycle()
+    val worldInventory by viewModel.worldInventory.collectAsStateWithLifecycle()
+
+    FactoryContent(
+        buildings = buildings,
+        extractors = extractors,
+        worldInventory = worldInventory,
+    )
 }
