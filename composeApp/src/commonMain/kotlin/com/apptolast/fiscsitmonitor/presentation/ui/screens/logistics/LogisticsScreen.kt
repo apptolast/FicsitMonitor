@@ -1,16 +1,22 @@
 package com.apptolast.fiscsitmonitor.presentation.ui.screens.logistics
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
+import androidx.compose.runtime.getValue
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.apptolast.fiscsitmonitor.presentation.viewmodel.LogisticsViewModel
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
-fun LogisticsScreen() {
-    Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        Text("LOGISTICS", style = MaterialTheme.typography.headlineLarge, color = MaterialTheme.colorScheme.primary)
-    }
+fun LogisticsScreen(
+    viewModel: LogisticsViewModel = koinViewModel(),
+) {
+    val trains by viewModel.trains.collectAsStateWithLifecycle()
+    val drones by viewModel.drones.collectAsStateWithLifecycle()
+    val players by viewModel.players.collectAsStateWithLifecycle()
+
+    LogisticsContent(
+        trains = trains,
+        drones = drones,
+        players = players,
+    )
 }
