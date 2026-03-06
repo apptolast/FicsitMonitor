@@ -2,6 +2,8 @@ package com.apptolast.fiscsitmonitor.di
 
 import com.apptolast.fiscsitmonitor.data.remote.api.SatisfactoryApiService
 import com.apptolast.fiscsitmonitor.data.remote.createHttpClient
+import com.apptolast.fiscsitmonitor.data.remote.websocket.ReverbWebSocketClient
+import com.apptolast.fiscsitmonitor.data.remote.websocket.WebSocketEventDispatcher
 import com.apptolast.fiscsitmonitor.data.repository.EnergyRepositoryImpl
 import com.apptolast.fiscsitmonitor.data.repository.FactoryRepositoryImpl
 import com.apptolast.fiscsitmonitor.data.repository.LogisticsRepositoryImpl
@@ -15,6 +17,7 @@ import org.koin.dsl.module
 val dataModule = module {
     single { createHttpClient() }
     single { SatisfactoryApiService(get()) }
+    single { ReverbWebSocketClient(get()) }
     single { ServerRepositoryImpl(get()) }
     single<ServerRepository> { get<ServerRepositoryImpl>() }
     single { EnergyRepositoryImpl(get()) }
@@ -23,4 +26,13 @@ val dataModule = module {
     single<FactoryRepository> { get<FactoryRepositoryImpl>() }
     single { LogisticsRepositoryImpl(get(), get()) }
     single<LogisticsRepository> { get<LogisticsRepositoryImpl>() }
+    single {
+        WebSocketEventDispatcher(
+            webSocketClient = get(),
+            serverRepository = get(),
+            energyRepository = get(),
+            factoryRepository = get(),
+            logisticsRepository = get(),
+        )
+    }
 }

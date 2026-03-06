@@ -7,7 +7,11 @@ import com.apptolast.fiscsitmonitor.data.model.PowerCircuitDto
 import com.apptolast.fiscsitmonitor.data.model.ProductionItemDto
 import com.apptolast.fiscsitmonitor.data.model.ServerDto
 import com.apptolast.fiscsitmonitor.data.model.ServerMetricsDto
+import com.apptolast.fiscsitmonitor.data.remote.websocket.ConnectionState
+import com.apptolast.fiscsitmonitor.data.remote.websocket.ReverbWebSocketClient
+import com.apptolast.fiscsitmonitor.data.remote.websocket.WebSocketEventDispatcher
 import com.apptolast.fiscsitmonitor.domain.repository.ServerRepository
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -17,6 +21,8 @@ import kotlinx.coroutines.launch
 
 class HomeViewModel(
     private val serverRepository: ServerRepository,
+    private val webSocketClient: ReverbWebSocketClient,
+    private val webSocketEventDispatcher: WebSocketEventDispatcher,
 ) : ViewModel() {
 
     val server: StateFlow<ServerDto?> = serverRepository.server
@@ -34,6 +40,8 @@ class HomeViewModel(
     val productionItems: StateFlow<List<ProductionItemDto>> = serverRepository.productionItems
         .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
+    val connectionState: StateFlow<ConnectionState> = webSocketClient.connectionState
+
     private val _isLoading = MutableStateFlow(true)
     val isLoading: StateFlow<Boolean> = _isLoading.asStateFlow()
 
@@ -41,6 +49,7 @@ class HomeViewModel(
     val error: StateFlow<String?> = _error.asStateFlow()
 
     init {
+        webSocketEventDispatcher.start()
         loadData()
     }
 
@@ -50,6 +59,11 @@ class HomeViewModel(
             _error.value = null
             try {
                 serverRepository.loadInitialData()
+                val serverId = serverRepository.server.value?.id
+                if (serverId != null) {
+                    webSocketClient.connect(serverId)
+                    startFallbackPolling()
+                }
             } catch (e: Exception) {
                 _error.value = e.message ?: "Unknown error"
             } finally {
@@ -67,5 +81,23 @@ class HomeViewModel(
                 serverRepository.refreshProduction()
             } catch (_: Exception) { }
         }
+    }
+
+    private fun startFallbackPolling() {
+        viewModelScope.launch {
+            while (true) {
+                delay(30_000L)
+                if (webSocketClient.connectionState.value != ConnectionState.CONNECTED) {
+                    try {
+                        refresh()
+                    } catch (_: Exception) { }
+                }
+            }
+        }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        webSocketClient.disconnect()
     }
 }
