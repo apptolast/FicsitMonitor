@@ -1,16 +1,20 @@
 package com.apptolast.fiscsitmonitor.presentation.ui.screens.energy
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
+import androidx.compose.runtime.getValue
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.apptolast.fiscsitmonitor.presentation.viewmodel.EnergyViewModel
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
-fun EnergyScreen() {
-    Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        Text("ENERGY", style = MaterialTheme.typography.headlineLarge, color = MaterialTheme.colorScheme.primary)
-    }
+fun EnergyScreen(
+    viewModel: EnergyViewModel = koinViewModel(),
+) {
+    val circuits by viewModel.circuits.collectAsStateWithLifecycle()
+    val generators by viewModel.generators.collectAsStateWithLifecycle()
+
+    EnergyContent(
+        circuits = circuits,
+        generators = generators,
+    )
 }
