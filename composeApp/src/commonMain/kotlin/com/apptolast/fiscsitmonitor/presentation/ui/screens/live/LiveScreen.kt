@@ -1,16 +1,20 @@
 package com.apptolast.fiscsitmonitor.presentation.ui.screens.live
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
+import androidx.compose.runtime.getValue
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.apptolast.fiscsitmonitor.presentation.viewmodel.LiveViewModel
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
-fun LiveScreen() {
-    Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        Text("LIVE", style = MaterialTheme.typography.headlineLarge, color = MaterialTheme.colorScheme.primary)
-    }
+fun LiveScreen(
+    viewModel: LiveViewModel = koinViewModel(),
+) {
+    val events by viewModel.events.collectAsStateWithLifecycle()
+    val summary by viewModel.summary.collectAsStateWithLifecycle()
+
+    LiveContent(
+        events = events,
+        summary = summary,
+    )
 }
