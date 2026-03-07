@@ -11,8 +11,4 @@ interface FactoryRepository {
     val extractors: StateFlow<List<ExtractorDto>>
     val worldInventory: StateFlow<List<WorldInventoryItemDto>>
     val resourceSink: StateFlow<ResourceSinkDto?>
-
-    suspend fun refreshBuildings()
-    suspend fun refreshExtractors()
-    suspend fun refreshWorldInventory()
 }

@@ -46,8 +46,8 @@ fun CircuitCard(
             .clip(MaterialTheme.shapes.medium)
             .background(FicsitTheme.colors.bgCard)
             .border(1.dp, FicsitTheme.colors.border, MaterialTheme.shapes.medium)
-            .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
+            .padding(12.dp),
+        verticalArrangement = Arrangement.spacedBy(10.dp),
     ) {
         // Header
         Row(
@@ -57,7 +57,7 @@ fun CircuitCard(
         ) {
             Text(
                 text = stringResource(Res.string.circuit_format, circuit.circuitGroupId ?: 0),
-                style = MaterialTheme.typography.titleLarge,
+                style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.onBackground,
             )
             if (circuit.fuseTriggered) {
@@ -80,8 +80,16 @@ fun CircuitCard(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
-            Text(stringResource(Res.string.label_peak), style = MaterialTheme.typography.labelLarge, color = FicsitTheme.colors.textSecondary)
-            Text(circuit.powerMaxConsumed.formatMW(), style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onBackground)
+            Text(
+                stringResource(Res.string.label_peak),
+                style = MaterialTheme.typography.labelSmall,
+                color = FicsitTheme.colors.textSecondary
+            )
+            Text(
+                circuit.powerMaxConsumed.formatMW(),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onBackground
+            )
         }
 
         // Usage bar
@@ -90,8 +98,16 @@ fun CircuitCard(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Text(stringResource(Res.string.label_use), style = MaterialTheme.typography.labelLarge, color = FicsitTheme.colors.textSecondary)
-            Text("${usagePercent.toInt()}%", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onBackground)
+            Text(
+                stringResource(Res.string.label_use),
+                style = MaterialTheme.typography.labelSmall,
+                color = FicsitTheme.colors.textSecondary
+            )
+            Text(
+                "${usagePercent.toInt()}%",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onBackground
+            )
         }
         Box(
             modifier = Modifier
@@ -116,8 +132,8 @@ fun CircuitCard(
 
 @Composable
 private fun MetricColumn(label: String, value: String) {
-    Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-        Text(label, style = MaterialTheme.typography.labelLarge, color = FicsitTheme.colors.textSecondary)
-        Text(value, style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onBackground)
+    Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
+        Text(label, style = MaterialTheme.typography.labelSmall, color = FicsitTheme.colors.textSecondary)
+        Text(value, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onBackground)
     }
 }

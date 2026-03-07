@@ -53,7 +53,7 @@ fun MachineCard(
             .clip(MaterialTheme.shapes.medium)
             .background(FicsitTheme.colors.bgCard)
             .border(1.dp, FicsitTheme.colors.border, MaterialTheme.shapes.medium)
-            .padding(16.dp),
+            .padding(12.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         Row(
@@ -63,8 +63,9 @@ fun MachineCard(
         ) {
             Text(
                 text = building.name.ifEmpty { stringResource(Res.string.fallback_building) },
-                style = MaterialTheme.typography.titleMedium,
+                style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onBackground,
+                modifier = Modifier.weight(1f),
             )
             StatusBadge(text = statusText, type = statusType)
         }

@@ -9,22 +9,13 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 class EnergyRepositoryImpl(
-    private val serverRepository: ServerRepository,
+    serverRepository: ServerRepository,
 ) : EnergyRepository {
 
     override val circuits: StateFlow<List<PowerCircuitDto>> = serverRepository.powerCircuits
 
     private val _generators = MutableStateFlow<List<GeneratorDto>>(emptyList())
     override val generators: StateFlow<List<GeneratorDto>> = _generators.asStateFlow()
-
-    override suspend fun refreshCircuits() {
-        serverRepository.refreshPower()
-    }
-
-    override suspend fun refreshGenerators() {
-        // Generators come from WebSocket or dashboard bulk endpoint
-        // REST polling fallback handled by ViewModel
-    }
 
     fun updateGenerators(generators: List<GeneratorDto>) { _generators.value = generators }
 }

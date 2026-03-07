@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.apptolast.fiscsitmonitor.data.model.ExtractorDto
 import com.apptolast.fiscsitmonitor.presentation.ui.theme.FicsitTheme
@@ -40,7 +41,7 @@ fun ExtractorCard(
             .clip(MaterialTheme.shapes.medium)
             .background(FicsitTheme.colors.bgCard)
             .border(1.dp, FicsitTheme.colors.border, MaterialTheme.shapes.medium)
-            .padding(16.dp),
+            .padding(12.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         Row(
@@ -50,8 +51,10 @@ fun ExtractorCard(
         ) {
             Text(
                 text = "${extractor.name} \u2014 ${extractor.prodName}",
-                style = MaterialTheme.typography.titleMedium,
+                style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onBackground,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
                 modifier = Modifier.weight(1f),
             )
             StatusBadge(text = statusText, type = statusType)

@@ -80,15 +80,52 @@ fun FactoryContent(
             badgeText = stringResource(Res.string.badge_every_60s),
         )
 
-        // Summary
-        Row(
+        // Summary 2x2 grid
+        Column(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            MetricCard(stringResource(Res.string.label_buildings), "${buildings.size}", "", Icons.Default.PrecisionManufacturing, modifier = Modifier.weight(1f))
-            MetricCard(stringResource(Res.string.label_active), "$active", "", Icons.Default.PrecisionManufacturing, iconTint = FicsitTheme.colors.accentGreen, modifier = Modifier.weight(1f))
-            MetricCard(stringResource(Res.string.label_stopped), "$stopped", "", Icons.Default.PrecisionManufacturing, iconTint = FicsitTheme.colors.accentRed, modifier = Modifier.weight(1f))
-            MetricCard(stringResource(Res.string.label_paused), "$paused", "", Icons.Default.PrecisionManufacturing, iconTint = FicsitTheme.colors.accentOrange, modifier = Modifier.weight(1f))
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
+                MetricCard(
+                    stringResource(Res.string.label_buildings),
+                    "${buildings.size}",
+                    "",
+                    Icons.Default.PrecisionManufacturing,
+                    modifier = Modifier.weight(1f)
+                )
+                MetricCard(
+                    stringResource(Res.string.label_active),
+                    "$active",
+                    "",
+                    Icons.Default.PrecisionManufacturing,
+                    iconTint = FicsitTheme.colors.accentGreen,
+                    modifier = Modifier.weight(1f)
+                )
+            }
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
+                MetricCard(
+                    stringResource(Res.string.label_stopped),
+                    "$stopped",
+                    "",
+                    Icons.Default.PrecisionManufacturing,
+                    iconTint = FicsitTheme.colors.accentRed,
+                    modifier = Modifier.weight(1f)
+                )
+                MetricCard(
+                    stringResource(Res.string.label_paused),
+                    "$paused",
+                    "",
+                    Icons.Default.PrecisionManufacturing,
+                    iconTint = FicsitTheme.colors.accentOrange,
+                    modifier = Modifier.weight(1f)
+                )
+            }
         }
 
         // Machine list

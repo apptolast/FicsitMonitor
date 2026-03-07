@@ -23,18 +23,6 @@ class FactoryRepositoryImpl : FactoryRepository {
     private val _resourceSink = MutableStateFlow<ResourceSinkDto?>(null)
     override val resourceSink: StateFlow<ResourceSinkDto?> = _resourceSink.asStateFlow()
 
-    override suspend fun refreshBuildings() {
-        // Data comes from WebSocket
-    }
-
-    override suspend fun refreshExtractors() {
-        // Data comes from WebSocket
-    }
-
-    override suspend fun refreshWorldInventory() {
-        // Data comes from WebSocket
-    }
-
     fun updateBuildings(buildings: List<FactoryBuildingDto>) { _buildings.value = buildings }
     fun updateExtractors(extractors: List<ExtractorDto>) { _extractors.value = extractors }
     fun updateWorldInventory(inventory: List<WorldInventoryItemDto>) { _worldInventory.value = inventory }

@@ -31,13 +31,13 @@ fun PlayerCard(
             .clip(MaterialTheme.shapes.medium)
             .background(FicsitTheme.colors.bgCard)
             .border(1.dp, FicsitTheme.colors.border, MaterialTheme.shapes.medium)
-            .padding(16.dp),
+            .padding(12.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
             text = player.name,
-            style = MaterialTheme.typography.titleMedium,
+            style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onBackground,
         )
         StatusBadge(

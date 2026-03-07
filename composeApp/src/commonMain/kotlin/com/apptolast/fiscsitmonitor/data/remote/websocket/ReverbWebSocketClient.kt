@@ -40,6 +40,7 @@ class ReverbWebSocketClient(
 ) {
     private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
     private val json = Json { ignoreUnknownKeys = true }
+    private val tag = "WS_CLIENT"
 
     private var session: WebSocketSession? = null
     private var connectionJob: Job? = null
@@ -57,17 +58,20 @@ class ReverbWebSocketClient(
             val channel = "servers.$serverId"
             subscribedChannel = channel
             var retryDelay = 1000L
+            println("[$tag] Connecting to channel: $channel")
 
             while (isActive) {
                 try {
                     _connectionState.value = ConnectionState.RECONNECTING
                     openConnection(channel)
-                    retryDelay = 1000L // Reset on successful connection
-                } catch (_: Exception) {
+                    retryDelay = 1000L
+                } catch (e: Exception) {
+                    println("[$tag] Connection error: ${e.message}")
                     _connectionState.value = ConnectionState.DISCONNECTED
                 }
 
                 if (!isActive) break
+                println("[$tag] Reconnecting in ${retryDelay}ms...")
                 delay(retryDelay)
                 retryDelay = (retryDelay * 2).coerceAtMost(30_000L)
             }
@@ -75,6 +79,7 @@ class ReverbWebSocketClient(
     }
 
     fun disconnect() {
+        println("[$tag] Disconnecting...")
         connectionJob?.cancel()
         connectionJob = null
         scope.launch {
@@ -86,16 +91,21 @@ class ReverbWebSocketClient(
 
     private suspend fun openConnection(channel: String) {
         val wsUrl = buildWsUrl()
+        println("[$tag] Opening WebSocket: $wsUrl")
 
         session = httpClient.webSocketSession(wsUrl)
         val currentSession = session ?: return
+        println("[$tag] WebSocket session opened")
 
         try {
             for (frame in currentSession.incoming) {
                 if (frame is Frame.Text) {
-                    handleFrame(frame.readText(), channel)
+                    val text = frame.readText()
+                    println("[$tag] Frame received: ${text.take(200)}")
+                    handleFrame(text, channel)
                 }
             }
+            println("[$tag] Incoming channel closed")
         } finally {
             session = null
             _connectionState.value = ConnectionState.DISCONNECTED
@@ -105,7 +115,8 @@ class ReverbWebSocketClient(
     private suspend fun handleFrame(text: String, channel: String) {
         val jsonObj = try {
             json.parseToJsonElement(text).jsonObject
-        } catch (_: Exception) {
+        } catch (e: Exception) {
+            println("[$tag] Failed to parse frame JSON: ${e.message}")
             return
         }
 
@@ -113,13 +124,16 @@ class ReverbWebSocketClient(
 
         when (event) {
             "pusher:connection_established" -> {
+                val data = jsonObj["data"]?.jsonPrimitive?.content ?: ""
+                println("[$tag] Connection established: $data")
                 _connectionState.value = ConnectionState.CONNECTED
                 subscribe(channel)
             }
             "pusher_internal:subscription_succeeded" -> {
-                // Successfully subscribed
+                println("[$tag] Subscription succeeded for channel: $channel")
             }
             "pusher:ping" -> {
+                println("[$tag] Ping received, sending pong")
                 sendPong()
             }
             else -> {
@@ -127,15 +141,18 @@ class ReverbWebSocketClient(
                 val dataStr = jsonObj["data"]?.jsonPrimitive?.content ?: return
                 val dataObj = try {
                     json.parseToJsonElement(dataStr).jsonObject
-                } catch (_: Exception) {
+                } catch (e: Exception) {
+                    println("[$tag] Failed to parse event data for '$event': ${e.message}")
                     return
                 }
+                println("[$tag] Event: $event | channel: $eventChannel | keys: ${dataObj.keys}")
                 _events.emit(WebSocketEvent(event, eventChannel, dataObj))
             }
         }
     }
 
     private suspend fun subscribe(channel: String) {
+        println("[$tag] Subscribing to channel: $channel")
         val message = buildJsonObject {
             put("event", "pusher:subscribe")
             put("data", buildJsonObject {

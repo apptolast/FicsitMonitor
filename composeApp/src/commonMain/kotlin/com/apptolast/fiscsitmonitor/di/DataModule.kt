@@ -24,7 +24,7 @@ val dataModule = module {
     single<EnergyRepository> { get<EnergyRepositoryImpl>() }
     single { FactoryRepositoryImpl() }
     single<FactoryRepository> { get<FactoryRepositoryImpl>() }
-    single { LogisticsRepositoryImpl(get(), get()) }
+    single { LogisticsRepositoryImpl(get()) }
     single<LogisticsRepository> { get<LogisticsRepositoryImpl>() }
     single {
         WebSocketEventDispatcher(

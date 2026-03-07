@@ -17,7 +17,6 @@ import com.apptolast.fiscsitmonitor.domain.repository.EnergyRepository
 import com.apptolast.fiscsitmonitor.domain.repository.FactoryRepository
 import com.apptolast.fiscsitmonitor.domain.repository.LogisticsRepository
 import com.apptolast.fiscsitmonitor.domain.repository.ServerRepository
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -80,36 +79,11 @@ class HomeViewModel(
                 val serverId = serverRepository.server.value?.id
                 if (serverId != null) {
                     webSocketClient.connect(serverId)
-                    startFallbackPolling()
                 }
             } catch (e: Exception) {
                 _error.value = e.message ?: "Unknown error"
             } finally {
                 _isLoading.value = false
-            }
-        }
-    }
-
-    fun refresh() {
-        viewModelScope.launch {
-            try {
-                serverRepository.refreshMetrics()
-                serverRepository.refreshPlayers()
-                serverRepository.refreshPower()
-                serverRepository.refreshProduction()
-            } catch (_: Exception) { }
-        }
-    }
-
-    private fun startFallbackPolling() {
-        viewModelScope.launch {
-            while (true) {
-                delay(30_000L)
-                if (webSocketClient.connectionState.value != ConnectionState.CONNECTED) {
-                    try {
-                        refresh()
-                    } catch (_: Exception) { }
-                }
             }
         }
     }

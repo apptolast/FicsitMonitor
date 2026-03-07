@@ -9,8 +9,4 @@ interface LogisticsRepository {
     val trains: StateFlow<List<TrainDto>>
     val drones: StateFlow<List<DroneStationDto>>
     val players: StateFlow<List<PlayerDto>>
-
-    suspend fun refreshTrains()
-    suspend fun refreshDrones()
-    suspend fun refreshPlayers()
 }

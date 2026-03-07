@@ -123,7 +123,7 @@ buildkonfig {
         buildConfigField(
             STRING,
             "WS_APP_KEY",
-            localProperties.getProperty("WS_APP_KEY", "app-key")
+            localProperties.getProperty("WS_APP_KEY", "satisfactory-key")
         )
     }
 }

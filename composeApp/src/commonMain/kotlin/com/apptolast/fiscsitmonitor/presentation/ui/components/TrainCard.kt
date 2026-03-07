@@ -55,7 +55,7 @@ fun TrainCard(
             .clip(MaterialTheme.shapes.medium)
             .background(FicsitTheme.colors.bgCard)
             .border(1.dp, FicsitTheme.colors.border, MaterialTheme.shapes.medium)
-            .padding(16.dp),
+            .padding(12.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         Row(
@@ -63,7 +63,12 @@ fun TrainCard(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Text(train.name.ifEmpty { stringResource(Res.string.fallback_train) }, style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onBackground)
+            Text(
+                train.name.ifEmpty { stringResource(Res.string.fallback_train) },
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onBackground,
+                modifier = Modifier.weight(1f)
+            )
             StatusBadge(text = statusText, type = statusType)
         }
         Row(

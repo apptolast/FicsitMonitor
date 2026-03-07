@@ -51,37 +51,6 @@ fun LiveContent(
             .padding(bottom = 20.dp),
         verticalArrangement = Arrangement.spacedBy(24.dp),
     ) {
-        SectionHeader(
-            title = stringResource(Res.string.section_live_events),
-            icon = Icons.Default.Notifications,
-            iconTint = FicsitTheme.colors.accentCyan,
-            badgeText = stringResource(Res.string.badge_real_time),
-            badgeType = BadgeType.INFO,
-        )
-
-        // Activity feed
-        if (events.isEmpty()) {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clip(MaterialTheme.shapes.medium)
-                    .background(FicsitTheme.colors.bgCard)
-                    .border(1.dp, FicsitTheme.colors.border, MaterialTheme.shapes.medium)
-                    .padding(16.dp),
-            ) {
-                EmptyState(
-                    icon = Icons.Default.SentimentDissatisfied,
-                    message = stringResource(Res.string.empty_events),
-                )
-            }
-        } else {
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                events.forEach { event ->
-                    EventCard(event = event)
-                }
-            }
-        }
-
         // Summary
         SectionHeader(
             title = stringResource(Res.string.section_summary),
@@ -122,6 +91,37 @@ fun LiveContent(
                 valueColor = if (summary.fusesTriggered > 0) FicsitTheme.colors.accentRed else MaterialTheme.colorScheme.onBackground,
                 showDivider = false,
             )
+        }
+
+        // Activity feed
+        SectionHeader(
+            title = stringResource(Res.string.section_live_events),
+            icon = Icons.Default.Notifications,
+            iconTint = FicsitTheme.colors.accentCyan,
+            badgeText = stringResource(Res.string.badge_real_time),
+            badgeType = BadgeType.INFO,
+        )
+
+        if (events.isEmpty()) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(MaterialTheme.shapes.medium)
+                    .background(FicsitTheme.colors.bgCard)
+                    .border(1.dp, FicsitTheme.colors.border, MaterialTheme.shapes.medium)
+                    .padding(16.dp),
+            ) {
+                EmptyState(
+                    icon = Icons.Default.SentimentDissatisfied,
+                    message = stringResource(Res.string.empty_events),
+                )
+            }
+        } else {
+            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                events.forEach { event ->
+                    EventCard(event = event)
+                }
+            }
         }
     }
 }

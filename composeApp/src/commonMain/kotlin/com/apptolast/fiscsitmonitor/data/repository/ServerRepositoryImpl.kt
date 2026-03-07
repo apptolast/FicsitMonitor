@@ -32,36 +32,11 @@ class ServerRepositoryImpl(
 
     override suspend fun loadInitialData() {
         val servers = api.getServers()
-        val server = servers.firstOrNull() ?: return
-        _server.value = server
-        refreshMetrics()
-        refreshPlayers()
-        refreshPower()
-        refreshProduction()
-    }
-
-    override suspend fun refreshMetrics() {
-        val serverId = _server.value?.id ?: return
-        _metrics.value = api.getServerMetrics(serverId)
-    }
-
-    override suspend fun refreshPlayers() {
-        val serverId = _server.value?.id ?: return
-        _players.value = api.getPlayers(serverId)
-    }
-
-    override suspend fun refreshPower() {
-        val serverId = _server.value?.id ?: return
-        _powerCircuits.value = deduplicateCircuits(api.getPowerMetrics(serverId))
+        _server.value = servers.firstOrNull()
     }
 
     private fun deduplicateCircuits(circuits: List<PowerCircuitDto>): List<PowerCircuitDto> {
         return circuits.associateBy { it.circuitGroupId }.values.toList()
-    }
-
-    override suspend fun refreshProduction() {
-        val serverId = _server.value?.id ?: return
-        _productionItems.value = api.getProductionMetrics(serverId)
     }
 
     fun updateServer(server: ServerDto) { _server.value = server }

@@ -15,8 +15,4 @@ interface ServerRepository {
     val productionItems: StateFlow<List<ProductionItemDto>>
 
     suspend fun loadInitialData()
-    suspend fun refreshMetrics()
-    suspend fun refreshPlayers()
-    suspend fun refreshPower()
-    suspend fun refreshProduction()
 }

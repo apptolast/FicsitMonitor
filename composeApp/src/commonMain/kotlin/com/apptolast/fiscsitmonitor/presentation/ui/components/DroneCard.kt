@@ -38,7 +38,7 @@ fun DroneCard(
             .clip(MaterialTheme.shapes.medium)
             .background(FicsitTheme.colors.bgCard)
             .border(1.dp, FicsitTheme.colors.border, MaterialTheme.shapes.medium)
-            .padding(16.dp),
+            .padding(12.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         Row(
@@ -46,7 +46,12 @@ fun DroneCard(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Text(station.name.ifEmpty { stringResource(Res.string.fallback_drone_station) }, style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onBackground)
+            Text(
+                station.name.ifEmpty { stringResource(Res.string.fallback_drone_station) },
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onBackground,
+                modifier = Modifier.weight(1f)
+            )
             StatusBadge(text = station.droneStatus?.uppercase()?.ifEmpty { stringResource(Res.string.idle) }
                 ?: stringResource(Res.string.idle), type = BadgeType.INFO)
         }
