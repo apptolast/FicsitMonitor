@@ -2,14 +2,20 @@ package com.apptolast.fiscsitmonitor.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.apptolast.fiscsitmonitor.data.model.ExtractorDto
+import com.apptolast.fiscsitmonitor.data.model.GeneratorDto
 import com.apptolast.fiscsitmonitor.data.model.PlayerDto
 import com.apptolast.fiscsitmonitor.data.model.PowerCircuitDto
 import com.apptolast.fiscsitmonitor.data.model.ProductionItemDto
 import com.apptolast.fiscsitmonitor.data.model.ServerDto
 import com.apptolast.fiscsitmonitor.data.model.ServerMetricsDto
+import com.apptolast.fiscsitmonitor.data.model.TrainDto
 import com.apptolast.fiscsitmonitor.data.remote.websocket.ConnectionState
 import com.apptolast.fiscsitmonitor.data.remote.websocket.ReverbWebSocketClient
 import com.apptolast.fiscsitmonitor.data.remote.websocket.WebSocketEventDispatcher
+import com.apptolast.fiscsitmonitor.domain.repository.EnergyRepository
+import com.apptolast.fiscsitmonitor.domain.repository.FactoryRepository
+import com.apptolast.fiscsitmonitor.domain.repository.LogisticsRepository
 import com.apptolast.fiscsitmonitor.domain.repository.ServerRepository
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,6 +27,9 @@ import kotlinx.coroutines.launch
 
 class HomeViewModel(
     private val serverRepository: ServerRepository,
+    private val energyRepository: EnergyRepository,
+    private val factoryRepository: FactoryRepository,
+    private val logisticsRepository: LogisticsRepository,
     private val webSocketClient: ReverbWebSocketClient,
     private val webSocketEventDispatcher: WebSocketEventDispatcher,
 ) : ViewModel() {
@@ -38,6 +47,15 @@ class HomeViewModel(
         .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
     val productionItems: StateFlow<List<ProductionItemDto>> = serverRepository.productionItems
+        .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
+
+    val extractors: StateFlow<List<ExtractorDto>> = factoryRepository.extractors
+        .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
+
+    val generators: StateFlow<List<GeneratorDto>> = energyRepository.generators
+        .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
+
+    val trains: StateFlow<List<TrainDto>> = logisticsRepository.trains
         .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
     val connectionState: StateFlow<ConnectionState> = webSocketClient.connectionState

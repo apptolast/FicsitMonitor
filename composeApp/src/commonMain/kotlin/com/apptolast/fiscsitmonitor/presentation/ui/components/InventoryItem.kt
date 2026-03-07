@@ -26,7 +26,7 @@ fun InventoryItem(
     item: WorldInventoryItemDto,
     modifier: Modifier = Modifier,
 ) {
-    val fillPercent = if (item.max > 0) (item.amount.toFloat() / item.max).coerceIn(0f, 1f) else 0f
+    val fillPercent = if (item.maxAmount > 0) (item.amount.toFloat() / item.maxAmount).coerceIn(0f, 1f) else 0f
 
     Column(
         modifier = modifier

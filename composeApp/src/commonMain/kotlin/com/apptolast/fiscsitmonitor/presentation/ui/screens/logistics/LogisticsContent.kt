@@ -29,6 +29,7 @@ import com.apptolast.fiscsitmonitor.presentation.ui.components.EmptyState
 import com.apptolast.fiscsitmonitor.presentation.ui.components.PlayerCard
 import com.apptolast.fiscsitmonitor.presentation.ui.components.SectionHeader
 import com.apptolast.fiscsitmonitor.presentation.ui.components.TrainCard
+import com.apptolast.fiscsitmonitor.presentation.ui.theme.FicsitMonitorTheme
 import com.apptolast.fiscsitmonitor.presentation.ui.theme.FicsitTheme
 import ficsitmonitor.composeapp.generated.resources.Res
 import ficsitmonitor.composeapp.generated.resources.badge_every_15s
@@ -43,6 +44,7 @@ import ficsitmonitor.composeapp.generated.resources.section_players
 import ficsitmonitor.composeapp.generated.resources.stations_format
 import ficsitmonitor.composeapp.generated.resources.total_format
 import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun LogisticsContent(
@@ -137,5 +139,42 @@ fun LogisticsContent(
                 PlayerCard(player = player)
             }
         }
+    }
+}
+
+@Preview
+@Composable
+private fun LogisticsContentPreview() {
+    FicsitMonitorTheme {
+        LogisticsContent(
+            trains = listOf(
+                TrainDto(
+                    frmId = "train1",
+                    name = "Iron Express",
+                    selfDriving = true,
+                    currentStation = "Iron Depot",
+                    forwardSpeed = 120.0,
+                ),
+                TrainDto(
+                    frmId = "train2",
+                    name = "Coal Runner",
+                    isDerailed = true,
+                    forwardSpeed = 0.0,
+                ),
+            ),
+            drones = listOf(
+                DroneStationDto(
+                    frmId = "drone1",
+                    name = "Copper Outpost",
+                    droneStatus = "En Route",
+                    pairedStation = "Main Base",
+                    avgRoundTripSecs = 45.0,
+                ),
+            ),
+            players = listOf(
+                PlayerDto(id = 1, name = "Pioneer_1", isOnline = true, health = 100.0),
+                PlayerDto(id = 2, name = "Pioneer_2", isOnline = false, health = 50.0),
+            ),
+        )
     }
 }

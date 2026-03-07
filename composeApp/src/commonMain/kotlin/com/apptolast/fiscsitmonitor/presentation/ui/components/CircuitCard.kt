@@ -24,8 +24,8 @@ import com.apptolast.fiscsitmonitor.util.formatMW
 import ficsitmonitor.composeapp.generated.resources.Res
 import ficsitmonitor.composeapp.generated.resources.badge_fuse
 import ficsitmonitor.composeapp.generated.resources.circuit_format
-import ficsitmonitor.composeapp.generated.resources.label_consumed
 import ficsitmonitor.composeapp.generated.resources.label_capacity
+import ficsitmonitor.composeapp.generated.resources.label_consumed
 import ficsitmonitor.composeapp.generated.resources.label_peak
 import ficsitmonitor.composeapp.generated.resources.label_prod
 import ficsitmonitor.composeapp.generated.resources.label_use
@@ -56,7 +56,7 @@ fun CircuitCard(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
-                text = stringResource(Res.string.circuit_format, circuit.circuitGroupId),
+                text = stringResource(Res.string.circuit_format, circuit.circuitGroupId ?: 0),
                 style = MaterialTheme.typography.titleLarge,
                 color = MaterialTheme.colorScheme.onBackground,
             )

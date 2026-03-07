@@ -13,10 +13,12 @@ fun FactoryScreen(
     val buildings by viewModel.buildings.collectAsStateWithLifecycle()
     val extractors by viewModel.extractors.collectAsStateWithLifecycle()
     val worldInventory by viewModel.worldInventory.collectAsStateWithLifecycle()
+    val resourceSink by viewModel.resourceSink.collectAsStateWithLifecycle()
 
     FactoryContent(
         buildings = buildings,
         extractors = extractors,
         worldInventory = worldInventory,
+        resourceSink = resourceSink,
     )
 }

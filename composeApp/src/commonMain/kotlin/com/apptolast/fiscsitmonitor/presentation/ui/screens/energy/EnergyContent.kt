@@ -21,6 +21,7 @@ import com.apptolast.fiscsitmonitor.presentation.ui.components.CircuitCard
 import com.apptolast.fiscsitmonitor.presentation.ui.components.GeneratorCard
 import com.apptolast.fiscsitmonitor.presentation.ui.components.MetricCard
 import com.apptolast.fiscsitmonitor.presentation.ui.components.SectionHeader
+import com.apptolast.fiscsitmonitor.presentation.ui.theme.FicsitMonitorTheme
 import com.apptolast.fiscsitmonitor.presentation.ui.theme.FicsitTheme
 import com.apptolast.fiscsitmonitor.util.formatMW
 import ficsitmonitor.composeapp.generated.resources.Res
@@ -31,6 +32,7 @@ import ficsitmonitor.composeapp.generated.resources.label_generators
 import ficsitmonitor.composeapp.generated.resources.label_headroom
 import ficsitmonitor.composeapp.generated.resources.section_electrical_grid
 import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun EnergyContent(
@@ -73,8 +75,8 @@ fun EnergyContent(
                 badgeText = stringResource(Res.string.badge_every_15s),
             )
 
-            val totalCapacity = generators.sumOf { it.baseProd }
-            val totalOutput = generators.sumOf { it.dynamicProd }
+            val totalCapacity = generators.sumOf { it.capacityMw }
+            val totalOutput = generators.sumOf { it.regulatedDemandMw }
             val headroom = totalCapacity - totalOutput
 
             Row(
@@ -110,5 +112,45 @@ fun EnergyContent(
                 GeneratorCard(generator = generator)
             }
         }
+    }
+}
+
+@Preview
+@Composable
+private fun EnergyContentPreview() {
+    FicsitMonitorTheme {
+        EnergyContent(
+            circuits = listOf(
+                PowerCircuitDto(
+                    circuitGroupId = 0,
+                    powerProduction = 450.0,
+                    powerConsumed = 380.5,
+                    powerCapacity = 500.0,
+                    powerMaxConsumed = 420.0,
+                    fuseTriggered = false,
+                ),
+            ),
+            generators = listOf(
+                GeneratorDto(
+                    id = "gen1",
+                    name = "Coal Generator",
+                    capacityMw = 75.0,
+                    loadPct = 80.0,
+                    regulatedDemandMw = 60.0,
+                    fuelResource = "Coal",
+                    fuelAmount = 45.0,
+                ),
+                GeneratorDto(
+                    id = "gen2",
+                    name = "Fuel Generator",
+                    capacityMw = 250.0,
+                    loadPct = 95.0,
+                    regulatedDemandMw = 237.5,
+                    fuelResource = "Fuel",
+                    fuelAmount = 80.0,
+                    isFullSpeed = true,
+                ),
+            ),
+        )
     }
 }

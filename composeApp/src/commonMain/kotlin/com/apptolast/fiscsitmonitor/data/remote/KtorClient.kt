@@ -18,6 +18,7 @@ fun createHttpClient(): HttpClient = HttpClient {
                 ignoreUnknownKeys = true
                 isLenient = true
                 encodeDefaults = true
+                coerceInputValues = true
             },
         )
     }

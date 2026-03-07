@@ -2,6 +2,7 @@ package com.apptolast.fiscsitmonitor.data.repository
 
 import com.apptolast.fiscsitmonitor.data.model.ExtractorDto
 import com.apptolast.fiscsitmonitor.data.model.FactoryBuildingDto
+import com.apptolast.fiscsitmonitor.data.model.ResourceSinkDto
 import com.apptolast.fiscsitmonitor.data.model.WorldInventoryItemDto
 import com.apptolast.fiscsitmonitor.domain.repository.FactoryRepository
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,19 +20,25 @@ class FactoryRepositoryImpl : FactoryRepository {
     private val _worldInventory = MutableStateFlow<List<WorldInventoryItemDto>>(emptyList())
     override val worldInventory: StateFlow<List<WorldInventoryItemDto>> = _worldInventory.asStateFlow()
 
+    private val _resourceSink = MutableStateFlow<ResourceSinkDto?>(null)
+    override val resourceSink: StateFlow<ResourceSinkDto?> = _resourceSink.asStateFlow()
+
     override suspend fun refreshBuildings() {
-        // Data comes from WebSocket or dashboard bulk endpoint
+        // Data comes from WebSocket
     }
 
     override suspend fun refreshExtractors() {
-        // Data comes from WebSocket or dashboard bulk endpoint
+        // Data comes from WebSocket
     }
 
     override suspend fun refreshWorldInventory() {
-        // Data comes from WebSocket or dashboard bulk endpoint
+        // Data comes from WebSocket
     }
 
     fun updateBuildings(buildings: List<FactoryBuildingDto>) { _buildings.value = buildings }
     fun updateExtractors(extractors: List<ExtractorDto>) { _extractors.value = extractors }
     fun updateWorldInventory(inventory: List<WorldInventoryItemDto>) { _worldInventory.value = inventory }
+    fun updateResourceSink(sink: ResourceSinkDto) {
+        _resourceSink.value = sink
+    }
 }

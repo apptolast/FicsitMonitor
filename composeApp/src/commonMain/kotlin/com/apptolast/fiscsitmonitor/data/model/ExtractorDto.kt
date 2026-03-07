@@ -5,12 +5,19 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class ExtractorDto(
-    @SerialName("Name") val name: String = "",
-    @SerialName("ClassName") val className: String = "",
-    @SerialName("location") val location: LocationDto? = null,
-    @SerialName("ItemName") val itemName: String = "",
-    @SerialName("CurrentProd") val currentProd: Double = 0.0,
-    @SerialName("MaxProd") val maxProd: Double = 0.0,
-    @SerialName("ProdPercent") val prodPercent: Double = 0.0,
-    @SerialName("IsProducing") val isProducing: Boolean = false,
+    val id: String = "",
+    val name: String = "",
+    @SerialName("class_name") val className: String = "",
+    val recipe: String = "",
+    @SerialName("manu_speed") val manuSpeed: Int = 100,
+    @SerialName("is_producing") val isProducing: Boolean = false,
+    @SerialName("is_paused") val isPaused: Boolean = false,
+    @SerialName("is_configured") val isConfigured: Boolean = false,
+    @SerialName("power_consumed") val powerConsumed: Double = 0.0,
+    @SerialName("max_power") val maxPower: Double = 0.0,
+    @SerialName("circuit_group_id") val circuitGroupId: Int? = null,
+    @SerialName("prod_name") val prodName: String = "",
+    @SerialName("prod_current") val prodCurrent: Double = 0.0,
+    @SerialName("prod_max") val prodMax: Double = 0.0,
+    @SerialName("prod_percent") val prodPercent: Double = 0.0,
 )

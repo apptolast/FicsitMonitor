@@ -21,6 +21,7 @@ import com.apptolast.fiscsitmonitor.presentation.ui.components.EmptyState
 import com.apptolast.fiscsitmonitor.presentation.ui.components.EventCard
 import com.apptolast.fiscsitmonitor.presentation.ui.components.SectionHeader
 import com.apptolast.fiscsitmonitor.presentation.ui.components.SummaryRow
+import com.apptolast.fiscsitmonitor.presentation.ui.theme.FicsitMonitorTheme
 import com.apptolast.fiscsitmonitor.presentation.ui.theme.FicsitTheme
 import com.apptolast.fiscsitmonitor.presentation.viewmodel.LiveEvent
 import com.apptolast.fiscsitmonitor.presentation.viewmodel.LiveSummary
@@ -35,6 +36,7 @@ import ficsitmonitor.composeapp.generated.resources.summary_fuses_triggered
 import ficsitmonitor.composeapp.generated.resources.summary_items_in_production
 import ficsitmonitor.composeapp.generated.resources.summary_players_online
 import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun LiveContent(
@@ -121,5 +123,47 @@ fun LiveContent(
                 showDivider = false,
             )
         }
+    }
+}
+
+@Preview
+@Composable
+private fun LiveContentPreview() {
+    FicsitMonitorTheme {
+        LiveContent(
+            events = listOf(
+                LiveEvent(
+                    icon = "\u26A1",
+                    title = "Power",
+                    subtitle = "Fuse triggered (1 circuits)",
+                    timestamp = "+00:01:23"
+                ),
+                LiveEvent(
+                    icon = "\uD83C\uDFED",
+                    title = "Factory",
+                    subtitle = "Factory buildings updated",
+                    timestamp = "+00:01:20"
+                ),
+                LiveEvent(
+                    icon = "\uD83D\uDE82",
+                    title = "Trains",
+                    subtitle = "Trains updated",
+                    timestamp = "+00:01:15"
+                ),
+                LiveEvent(
+                    icon = "\uD83D\uDC64",
+                    title = "Players",
+                    subtitle = "2 players online",
+                    timestamp = "+00:01:10"
+                ),
+            ),
+            summary = LiveSummary(
+                playersOnline = 2,
+                activeCircuits = 1,
+                activeTrains = 3,
+                itemsInProduction = 15,
+                fusesTriggered = 1,
+            ),
+        )
     }
 }

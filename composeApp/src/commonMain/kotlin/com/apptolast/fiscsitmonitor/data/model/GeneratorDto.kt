@@ -5,22 +5,28 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class GeneratorDto(
-    @SerialName("Name") val name: String = "",
-    @SerialName("ClassName") val className: String = "",
-    @SerialName("location") val location: LocationDto? = null,
-    @SerialName("BaseProd") val baseProd: Double = 0.0,
-    @SerialName("DynamicProd") val dynamicProd: Double = 0.0,
-    @SerialName("RegulatedDemandProd") val regulatedDemandProd: Double = 0.0,
-    @SerialName("FuelAmount") val fuelAmount: Double = 0.0,
-    @SerialName("PowerProduction") val powerProduction: Double = 0.0,
-    @SerialName("IsProducing") val isProducing: Boolean = false,
-    @SerialName("IsConsumed") val isConsumed: Boolean = false,
+    val id: String = "",
+    val name: String = "",
+    @SerialName("class_name") val className: String = "",
+    @SerialName("capacity_mw") val capacityMw: Double = 0.0,
+    @SerialName("load_pct") val loadPct: Double = 0.0,
+    @SerialName("regulated_demand_mw") val regulatedDemandMw: Double = 0.0,
+    @SerialName("fuel_amount") val fuelAmount: Double = 0.0,
+    @SerialName("fuel_resource") val fuelResource: String = "",
+    @SerialName("can_start") val canStart: Boolean = false,
+    @SerialName("is_full_speed") val isFullSpeed: Boolean = false,
+    val somersloops: Int = 0,
+    @SerialName("circuit_group_id") val circuitGroupId: Int? = null,
+    @SerialName("fuel_inv_name") val fuelInvName: String? = null,
+    @SerialName("fuel_inv_class") val fuelInvClass: String? = null,
+    @SerialName("fuel_inv_amount") val fuelInvAmount: Int = 0,
+    @SerialName("fuel_inv_max") val fuelInvMax: Int = 0,
+    @SerialName("available_fuel") val availableFuel: List<FuelEntryDto> = emptyList(),
 )
 
 @Serializable
-data class LocationDto(
-    val x: Double = 0.0,
-    val y: Double = 0.0,
-    val z: Double = 0.0,
-    val rotation: Double = 0.0,
+data class FuelEntryDto(
+    val name: String = "",
+    @SerialName("class") val className: String = "",
+    val amount: Int = 0,
 )

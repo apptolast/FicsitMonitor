@@ -47,7 +47,8 @@ fun DroneCard(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(station.name.ifEmpty { stringResource(Res.string.fallback_drone_station) }, style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onBackground)
-            StatusBadge(text = station.droneStatus.uppercase().ifEmpty { stringResource(Res.string.idle) }, type = BadgeType.INFO)
+            StatusBadge(text = station.droneStatus?.uppercase()?.ifEmpty { stringResource(Res.string.idle) }
+                ?: stringResource(Res.string.idle), type = BadgeType.INFO)
         }
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -55,11 +56,17 @@ fun DroneCard(
         ) {
             Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
                 Text(stringResource(Res.string.label_paired), style = MaterialTheme.typography.labelSmall, color = FicsitTheme.colors.textMuted)
-                Text(station.pairedStation.ifEmpty { noData }, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onBackground)
+                Text(station.pairedStation?.ifEmpty { noData } ?: noData,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onBackground)
             }
             Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
                 Text(stringResource(Res.string.label_round_trip), style = MaterialTheme.typography.labelSmall, color = FicsitTheme.colors.textMuted)
-                Text("${station.avgRoundTripSecs.formatDecimal(0)}s", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onBackground)
+                Text(
+                    "${(station.avgRoundTripSecs ?: 0.0).formatDecimal(0)}s",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onBackground
+                )
             }
         }
     }

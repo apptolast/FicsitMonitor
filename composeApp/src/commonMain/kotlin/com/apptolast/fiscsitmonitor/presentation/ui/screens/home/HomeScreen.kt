@@ -22,6 +22,9 @@ fun HomeScreen(
     val players by viewModel.players.collectAsStateWithLifecycle()
     val circuits by viewModel.powerCircuits.collectAsStateWithLifecycle()
     val production by viewModel.productionItems.collectAsStateWithLifecycle()
+    val extractors by viewModel.extractors.collectAsStateWithLifecycle()
+    val generators by viewModel.generators.collectAsStateWithLifecycle()
+    val trains by viewModel.trains.collectAsStateWithLifecycle()
     val isLoading by viewModel.isLoading.collectAsStateWithLifecycle()
     val error by viewModel.error.collectAsStateWithLifecycle()
 
@@ -47,6 +50,9 @@ fun HomeScreen(
                     players = players,
                     circuits = circuits,
                     production = production,
+                    extractors = extractors,
+                    generators = generators,
+                    trains = trains,
                 )
             }
         }

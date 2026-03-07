@@ -16,7 +16,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import com.apptolast.fiscsitmonitor.data.model.GeneratorDto
 import com.apptolast.fiscsitmonitor.presentation.ui.theme.FicsitTheme
-import com.apptolast.fiscsitmonitor.util.formatDecimal
 import com.apptolast.fiscsitmonitor.util.formatMW
 import com.apptolast.fiscsitmonitor.util.formatPercent
 import ficsitmonitor.composeapp.generated.resources.Res
@@ -31,10 +30,6 @@ fun GeneratorCard(
     generator: GeneratorDto,
     modifier: Modifier = Modifier,
 ) {
-    val loadPercent = if (generator.baseProd > 0) {
-        (generator.dynamicProd / generator.baseProd * 100)
-    } else 0.0
-
     Column(
         modifier = modifier
             .fillMaxWidth()
@@ -55,7 +50,7 @@ fun GeneratorCard(
                 color = MaterialTheme.colorScheme.onBackground,
             )
             Text(
-                text = loadPercent.formatPercent(),
+                text = generator.loadPct.formatPercent(),
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.primary,
             )
@@ -64,9 +59,14 @@ fun GeneratorCard(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
-            SmallLabel(stringResource(Res.string.label_output), generator.dynamicProd.formatMW())
-            SmallLabel(stringResource(Res.string.label_capacity), generator.baseProd.formatMW())
-            SmallLabel(stringResource(Res.string.label_fuel), generator.fuelAmount.formatDecimal(1))
+            SmallLabel(stringResource(Res.string.label_output), generator.regulatedDemandMw.formatMW())
+            SmallLabel(stringResource(Res.string.label_capacity), generator.capacityMw.formatMW())
+            SmallLabel(
+                stringResource(Res.string.label_fuel),
+                if (generator.fuelResource.isNotEmpty()) {
+                    "${generator.fuelResource} ${generator.fuelInvAmount}/${generator.fuelInvMax}"
+                } else "---",
+            )
         }
     }
 }

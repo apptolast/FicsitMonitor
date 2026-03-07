@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.apptolast.fiscsitmonitor.data.model.ExtractorDto
 import com.apptolast.fiscsitmonitor.data.model.FactoryBuildingDto
+import com.apptolast.fiscsitmonitor.data.model.ResourceSinkDto
 import com.apptolast.fiscsitmonitor.data.model.WorldInventoryItemDto
 import com.apptolast.fiscsitmonitor.domain.repository.FactoryRepository
 import kotlinx.coroutines.flow.SharingStarted
@@ -22,4 +23,7 @@ class FactoryViewModel(
 
     val worldInventory: StateFlow<List<WorldInventoryItemDto>> = factoryRepository.worldInventory
         .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
+
+    val resourceSink: StateFlow<ResourceSinkDto?> = factoryRepository.resourceSink
+        .stateIn(viewModelScope, SharingStarted.Lazily, null)
 }

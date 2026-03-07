@@ -49,7 +49,7 @@ fun ExtractorCard(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
-                text = "${extractor.name} \u2014 ${extractor.itemName}",
+                text = "${extractor.name} \u2014 ${extractor.prodName}",
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.onBackground,
                 modifier = Modifier.weight(1f),
@@ -62,11 +62,19 @@ fun ExtractorCard(
         ) {
             Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
                 Text(stringResource(Res.string.label_current_prod), style = MaterialTheme.typography.labelSmall, color = FicsitTheme.colors.textMuted)
-                Text(extractor.currentProd.formatRate(), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onBackground)
+                Text(
+                    extractor.prodCurrent.formatRate(),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onBackground
+                )
             }
             Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
                 Text(stringResource(Res.string.label_max_prod), style = MaterialTheme.typography.labelSmall, color = FicsitTheme.colors.textMuted)
-                Text(extractor.maxProd.formatRate(), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onBackground)
+                Text(
+                    extractor.prodMax.formatRate(),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onBackground
+                )
             }
             Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
                 Text(stringResource(Res.string.label_efficiency), style = MaterialTheme.typography.labelSmall, color = FicsitTheme.colors.textMuted)

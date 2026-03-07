@@ -18,6 +18,7 @@ import com.apptolast.fiscsitmonitor.data.model.FactoryBuildingDto
 import com.apptolast.fiscsitmonitor.presentation.ui.theme.FicsitTheme
 import com.apptolast.fiscsitmonitor.util.formatMW
 import com.apptolast.fiscsitmonitor.util.formatPercent
+import com.apptolast.fiscsitmonitor.util.formatRate
 import ficsitmonitor.composeapp.generated.resources.Res
 import ficsitmonitor.composeapp.generated.resources.fallback_building
 import ficsitmonitor.composeapp.generated.resources.label_active
@@ -71,9 +72,18 @@ fun MachineCard(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
-            MachineDetail(stringResource(Res.string.label_recipe), building.recipe.ifEmpty { noData })
-            MachineDetail(stringResource(Res.string.label_speed), (building.currentPotential * 100).formatPercent())
-            MachineDetail(stringResource(Res.string.label_power), building.powerConsumption.formatMW())
+            MachineDetail(stringResource(Res.string.label_recipe), building.recipe ?: noData)
+            MachineDetail(stringResource(Res.string.label_speed), "${building.manuSpeed.toInt()}%")
+            MachineDetail(stringResource(Res.string.label_power), building.powerConsumed.formatMW())
+        }
+
+        // Production details
+        building.production.forEach { prod ->
+            Text(
+                text = "${prod.name}: ${prod.currentProd.formatRate()}/${prod.maxProd.formatRate()} (${prod.prodPercent.formatPercent()})",
+                style = MaterialTheme.typography.bodySmall,
+                color = FicsitTheme.colors.textMuted,
+            )
         }
     }
 }

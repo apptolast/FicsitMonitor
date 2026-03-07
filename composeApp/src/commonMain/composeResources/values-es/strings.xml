@@ -41,6 +41,7 @@
     <string name="players_format">%1$d / 8</string>
     <string name="items_format">%1$d elementos</string>
     <string name="max_per_min_format">Máx: %1$d/min</string>
+    <string name="current_per_min_format">Actual: %1$d/min</string>
     <string name="fuse_triggered_format">%1$d fusible activado</string>
     <string name="of_max_format">de 8 máx.</string>
     <string name="derailed_format">%1$d descarrilado</string>
@@ -77,6 +78,10 @@
     <string name="label_efficiency">EFICIENCIA</string>
     <string name="section_extractors">EXTRACTORES (%1$d)</string>
     <string name="section_world_inventory">INVENTARIO MUNDIAL</string>
+    <string name="section_resource_sink">AWESOME SINK</string>
+    <string name="label_coupons">CUPONES</string>
+    <string name="label_total_points">PUNTOS TOTALES</string>
+    <string name="label_next_coupon">Siguiente cupón:</string>
     <string name="fallback_building">Edificio</string>
     <string name="fallback_generator">Generador</string>
 

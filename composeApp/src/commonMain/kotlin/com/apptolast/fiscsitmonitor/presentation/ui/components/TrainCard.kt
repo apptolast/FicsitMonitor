@@ -38,12 +38,12 @@ fun TrainCard(
             statusText = stringResource(Res.string.status_derailed)
             statusType = BadgeType.ERROR
         }
-        train.selfDriving -> {
+        train.selfDriving == true -> {
             statusText = stringResource(Res.string.status_self_driving)
             statusType = BadgeType.SUCCESS
         }
         else -> {
-            statusText = train.status.uppercase()
+            statusText = train.status?.uppercase() ?: ""
             statusType = BadgeType.WARNING
         }
     }
@@ -76,7 +76,9 @@ fun TrainCard(
             }
             Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
                 Text(stringResource(Res.string.label_station), style = MaterialTheme.typography.labelSmall, color = FicsitTheme.colors.textMuted)
-                Text(train.currentStation.ifEmpty { noData }, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onBackground)
+                Text(train.currentStation?.ifEmpty { noData } ?: noData,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onBackground)
             }
         }
     }

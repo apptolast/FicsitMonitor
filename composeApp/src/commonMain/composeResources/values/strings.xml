@@ -41,6 +41,7 @@
     <string name="players_format">%1$d / 8</string>
     <string name="items_format">%1$d items</string>
     <string name="max_per_min_format">Max: %1$d/min</string>
+    <string name="current_per_min_format">Current: %1$d/min</string>
     <string name="fuse_triggered_format">%1$d fuse triggered</string>
     <string name="of_max_format">of 8 max</string>
     <string name="derailed_format">%1$d derailed</string>
@@ -77,6 +78,10 @@
     <string name="label_efficiency">EFFICIENCY</string>
     <string name="section_extractors">EXTRACTORS (%1$d)</string>
     <string name="section_world_inventory">WORLD INVENTORY</string>
+    <string name="section_resource_sink">AWESOME SINK</string>
+    <string name="label_coupons">COUPONS</string>
+    <string name="label_total_points">TOTAL POINTS</string>
+    <string name="label_next_coupon">Next coupon:</string>
     <string name="fallback_building">Building</string>
     <string name="fallback_generator">Generator</string>
 

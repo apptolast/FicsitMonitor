@@ -52,7 +52,11 @@ class ServerRepositoryImpl(
 
     override suspend fun refreshPower() {
         val serverId = _server.value?.id ?: return
-        _powerCircuits.value = api.getPowerMetrics(serverId)
+        _powerCircuits.value = deduplicateCircuits(api.getPowerMetrics(serverId))
+    }
+
+    private fun deduplicateCircuits(circuits: List<PowerCircuitDto>): List<PowerCircuitDto> {
+        return circuits.associateBy { it.circuitGroupId }.values.toList()
     }
 
     override suspend fun refreshProduction() {
@@ -63,6 +67,8 @@ class ServerRepositoryImpl(
     fun updateServer(server: ServerDto) { _server.value = server }
     fun updateMetrics(metrics: ServerMetricsDto) { _metrics.value = metrics }
     fun updatePlayers(players: List<PlayerDto>) { _players.value = players }
-    fun updatePowerCircuits(circuits: List<PowerCircuitDto>) { _powerCircuits.value = circuits }
+    fun updatePowerCircuits(circuits: List<PowerCircuitDto>) {
+        _powerCircuits.value = deduplicateCircuits(circuits)
+    }
     fun updateProductionItems(items: List<ProductionItemDto>) { _productionItems.value = items }
 }

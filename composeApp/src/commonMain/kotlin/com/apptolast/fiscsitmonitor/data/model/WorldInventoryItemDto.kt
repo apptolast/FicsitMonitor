@@ -5,8 +5,8 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class WorldInventoryItemDto(
-    @SerialName("Name") val name: String = "",
-    @SerialName("ClassName") val className: String = "",
-    @SerialName("Amount") val amount: Int = 0,
-    @SerialName("Max") val max: Int = 0,
+    val name: String = "",
+    @SerialName("class_name") val className: String = "",
+    val amount: Int = 0,
+    @SerialName("max_amount") val maxAmount: Int = 0,
 )
