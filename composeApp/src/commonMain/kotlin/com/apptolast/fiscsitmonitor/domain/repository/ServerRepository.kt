@@ -13,6 +13,4 @@ interface ServerRepository {
     val players: StateFlow<List<PlayerDto>>
     val powerCircuits: StateFlow<List<PowerCircuitDto>>
     val productionItems: StateFlow<List<ProductionItemDto>>
-
-    suspend fun loadInitialData()
 }

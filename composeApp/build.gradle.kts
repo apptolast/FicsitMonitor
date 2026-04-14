@@ -64,12 +64,17 @@ kotlin {
             implementation(libs.ktor.client.content.negotiation)
             implementation(libs.ktor.client.logging)
             implementation(libs.ktor.client.websockets)
+            implementation(libs.ktor.client.auth)
             implementation(libs.ktor.serialization.kotlinx.json)
 
             // Kotlinx
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.kotlinx.serialization.json)
             implementation(libs.kotlinx.datetime)
+
+            // Multiplatform Settings
+            implementation(libs.multiplatform.settings.no.arg)
+            implementation(libs.multiplatform.settings.coroutines)
         }
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)
@@ -136,11 +141,6 @@ buildkonfig {
             STRING,
             "API_BASE_URL",
             localProperties.getProperty("API_BASE_URL", "https://satisfactory-dashboard.pablohgdev.com")
-        )
-        buildConfigField(
-            STRING,
-            "WS_APP_KEY",
-            localProperties.getProperty("WS_APP_KEY", "satisfactory-key")
         )
     }
 }

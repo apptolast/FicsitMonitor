@@ -29,4 +29,11 @@ class FactoryRepositoryImpl : FactoryRepository {
     fun updateResourceSink(sink: ResourceSinkDto) {
         _resourceSink.value = sink
     }
+
+    fun clear() {
+        _buildings.value = emptyList()
+        _extractors.value = emptyList()
+        _worldInventory.value = emptyList()
+        _resourceSink.value = null
+    }
 }

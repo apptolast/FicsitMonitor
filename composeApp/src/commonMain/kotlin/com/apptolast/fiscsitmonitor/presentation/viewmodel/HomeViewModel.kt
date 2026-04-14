@@ -2,6 +2,7 @@ package com.apptolast.fiscsitmonitor.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.apptolast.fiscsitmonitor.data.bootstrap.ServerBootstrapper
 import com.apptolast.fiscsitmonitor.data.model.ExtractorDto
 import com.apptolast.fiscsitmonitor.data.model.GeneratorDto
 import com.apptolast.fiscsitmonitor.data.model.PlayerDto
@@ -12,25 +13,22 @@ import com.apptolast.fiscsitmonitor.data.model.ServerMetricsDto
 import com.apptolast.fiscsitmonitor.data.model.TrainDto
 import com.apptolast.fiscsitmonitor.data.remote.websocket.ConnectionState
 import com.apptolast.fiscsitmonitor.data.remote.websocket.ReverbWebSocketClient
-import com.apptolast.fiscsitmonitor.data.remote.websocket.WebSocketEventDispatcher
 import com.apptolast.fiscsitmonitor.domain.repository.EnergyRepository
 import com.apptolast.fiscsitmonitor.domain.repository.FactoryRepository
 import com.apptolast.fiscsitmonitor.domain.repository.LogisticsRepository
 import com.apptolast.fiscsitmonitor.domain.repository.ServerRepository
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
-    private val serverRepository: ServerRepository,
-    private val energyRepository: EnergyRepository,
-    private val factoryRepository: FactoryRepository,
-    private val logisticsRepository: LogisticsRepository,
-    private val webSocketClient: ReverbWebSocketClient,
-    private val webSocketEventDispatcher: WebSocketEventDispatcher,
+    serverRepository: ServerRepository,
+    energyRepository: EnergyRepository,
+    factoryRepository: FactoryRepository,
+    logisticsRepository: LogisticsRepository,
+    webSocketClient: ReverbWebSocketClient,
+    private val bootstrapper: ServerBootstrapper,
 ) : ViewModel() {
 
     val server: StateFlow<ServerDto?> = serverRepository.server
@@ -59,37 +57,10 @@ class HomeViewModel(
 
     val connectionState: StateFlow<ConnectionState> = webSocketClient.connectionState
 
-    private val _isLoading = MutableStateFlow(true)
-    val isLoading: StateFlow<Boolean> = _isLoading.asStateFlow()
+    val isLoading: StateFlow<Boolean> = bootstrapper.isSnapshotLoading
+    val error: StateFlow<String?> = bootstrapper.lastError
 
-    private val _error = MutableStateFlow<String?>(null)
-    val error: StateFlow<String?> = _error.asStateFlow()
-
-    init {
-        webSocketEventDispatcher.start()
-        loadData()
-    }
-
-    fun loadData() {
-        viewModelScope.launch {
-            _isLoading.value = true
-            _error.value = null
-            try {
-                serverRepository.loadInitialData()
-                val serverId = serverRepository.server.value?.id
-                if (serverId != null) {
-                    webSocketClient.connect(serverId)
-                }
-            } catch (e: Exception) {
-                _error.value = e.message ?: "Unknown error"
-            } finally {
-                _isLoading.value = false
-            }
-        }
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        webSocketClient.disconnect()
+    fun refresh() {
+        viewModelScope.launch { bootstrapper.refreshSnapshot() }
     }
 }
