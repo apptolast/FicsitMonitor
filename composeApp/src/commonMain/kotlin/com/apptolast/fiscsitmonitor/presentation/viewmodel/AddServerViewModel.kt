@@ -21,7 +21,7 @@ class AddServerViewModel(
     private val session: AuthSession,
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow(ServerFormState())
+    private val _state = MutableStateFlow(ServerFormState(requireAdminPassword = true))
     val state: StateFlow<ServerFormState> = _state.asStateFlow()
 
     private val _events = MutableStateFlow<AddServerEvent?>(null)
@@ -42,7 +42,8 @@ class AddServerViewModel(
     fun onFrmWsPortChange(value: String) =
         update { it.copy(frmWsPort = value, error = null, fieldErrors = it.fieldErrors - "frm_ws_port") }
 
-    fun onApiTokenChange(value: String) = update { it.copy(apiToken = value) }
+    fun onAdminPasswordChange(value: String) =
+        update { it.copy(adminPassword = value, error = null, fieldErrors = it.fieldErrors - "admin_password") }
 
     fun consumeEvent() {
         _events.value = null
@@ -65,16 +66,22 @@ class AddServerViewModel(
                     apiPort = current.apiPortInt ?: 7777,
                     frmHttpPort = current.frmHttpPortInt ?: 8080,
                     frmWsPort = current.frmWsPortInt ?: 8081,
-                    apiToken = current.apiToken.ifBlank { null },
+                    adminPassword = current.adminPassword,
                 )
                 session.onServerSelected(created.id)
-                _state.value = _state.value.copy(isSubmitting = false)
+                _state.value = _state.value.copy(isSubmitting = false, adminPassword = "")
                 _events.value = AddServerEvent.Created
             } catch (e: AuthError.Validation) {
+                val fieldErrors = e.fieldErrors.mapValues { it.value.firstOrNull().orEmpty() }
+                val topLevelError = when {
+                    fieldErrors["admin_password"] == "provisioning_failed" -> ServerFormError.ProvisioningFailed
+                    fieldErrors.containsKey("host") -> ServerFormError.Unreachable
+                    else -> ServerFormError.Validation
+                }
                 _state.value = _state.value.copy(
                     isSubmitting = false,
-                    error = ServerFormError.Validation,
-                    fieldErrors = e.fieldErrors.mapValues { it.value.firstOrNull().orEmpty() },
+                    error = topLevelError,
+                    fieldErrors = fieldErrors,
                 )
             } catch (e: AuthError.Network) {
                 _state.value = _state.value.copy(isSubmitting = false, error = ServerFormError.Network)

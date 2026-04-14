@@ -87,8 +87,6 @@ class SettingsViewModel(
     fun onFrmWsPortChange(value: String) =
         updateForm { it.copy(frmWsPort = value, fieldErrors = it.fieldErrors - "frm_ws_port", error = null) }
 
-    fun onApiTokenChange(value: String) = updateForm { it.copy(apiToken = value) }
-
     fun onBaseUrlChange(value: String) {
         _state.value = _state.value.copy(baseUrlOverride = value, isSaved = false)
     }
@@ -127,7 +125,6 @@ class SettingsViewModel(
                     apiPort = current.form.apiPortInt ?: 7777,
                     frmHttpPort = current.form.frmHttpPortInt ?: 8080,
                     frmWsPort = current.form.frmWsPortInt ?: 8081,
-                    apiToken = current.form.apiToken.ifBlank { null },
                 )
                 webSocketClient.invalidateConfigCache()
                 bootstrapper.refreshSnapshot(updated.id)

@@ -1,19 +1,11 @@
 package com.apptolast.fiscsitmonitor.data.session
 
-data class ServerShadow(
-    val frmWsPort: Int?,
-    val apiToken: String?,
-)
-
 class ServerShadowStore(private val storage: SessionStorage) {
 
-    fun get(serverId: Int): ServerShadow = ServerShadow(
-        frmWsPort = storage.getShadowFrmWsPort(serverId),
-        apiToken = storage.getShadowApiToken(serverId),
-    )
+    fun getFrmWsPort(serverId: Int): Int? = storage.getShadowFrmWsPort(serverId)
 
-    fun put(serverId: Int, frmWsPort: Int?, apiToken: String?) {
-        storage.putShadow(serverId, frmWsPort, apiToken)
+    fun put(serverId: Int, frmWsPort: Int?) {
+        storage.putShadow(serverId, frmWsPort)
     }
 
     fun remove(serverId: Int) {

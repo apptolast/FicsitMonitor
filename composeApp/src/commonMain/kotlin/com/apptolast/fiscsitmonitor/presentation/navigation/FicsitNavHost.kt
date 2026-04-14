@@ -7,7 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.apptolast.fiscsitmonitor.presentation.ui.screens.auth.LoginScreen
 import com.apptolast.fiscsitmonitor.presentation.ui.screens.auth.RegisterScreen
-import com.apptolast.fiscsitmonitor.presentation.ui.screens.main.MainScaffold
+import com.apptolast.fiscsitmonitor.presentation.ui.screens.navigation.NavigationScreen
 import com.apptolast.fiscsitmonitor.presentation.ui.screens.onboarding.AddServerScreen
 import com.apptolast.fiscsitmonitor.presentation.ui.screens.settings.SettingsScreen
 import com.apptolast.fiscsitmonitor.presentation.ui.screens.splash.SplashScreen
@@ -79,7 +79,7 @@ fun FicsitNavHost(
         }
 
         composable<Route.Main> {
-            MainScaffold(
+            NavigationScreen(
                 onOpenSettings = { navController.navigate(Route.Settings) },
             )
         }

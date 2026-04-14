@@ -10,6 +10,5 @@ data class UpdateServerRequest(
     @SerialName("api_port") val apiPort: Int? = null,
     @SerialName("frm_http_port") val frmHttpPort: Int? = null,
     @SerialName("frm_ws_port") val frmWsPort: Int? = null,
-    @SerialName("api_token") val apiToken: String? = null,
     @SerialName("is_active") val isActive: Boolean? = null,
 )

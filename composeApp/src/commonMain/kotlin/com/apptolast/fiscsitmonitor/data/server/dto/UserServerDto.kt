@@ -15,14 +15,13 @@ data class UserServerDto(
     @SerialName("last_seen_at") val lastSeenAt: String? = null,
     @SerialName("created_at") val createdAt: String? = null,
 ) {
-    fun toDomain(frmWsPort: Int, apiToken: String?): UserServer = UserServer(
+    fun toDomain(frmWsPort: Int): UserServer = UserServer(
         id = id,
         name = name,
         host = host,
         apiPort = apiPort,
         frmHttpPort = frmHttpPort,
         frmWsPort = frmWsPort,
-        apiToken = apiToken,
         status = status ?: "offline",
         lastSeenAt = lastSeenAt,
         createdAt = createdAt,

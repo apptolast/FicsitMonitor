@@ -7,7 +7,6 @@ data class UserServer(
     val apiPort: Int,
     val frmHttpPort: Int,
     val frmWsPort: Int,
-    val apiToken: String?,
     val status: String,
     val lastSeenAt: String?,
     val createdAt: String?,

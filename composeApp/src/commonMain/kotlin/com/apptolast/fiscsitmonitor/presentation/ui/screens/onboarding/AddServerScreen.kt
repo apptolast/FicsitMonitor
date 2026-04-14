@@ -49,7 +49,7 @@ fun AddServerScreen(
             onApiPortChange = viewModel::onApiPortChange,
             onFrmHttpPortChange = viewModel::onFrmHttpPortChange,
             onFrmWsPortChange = viewModel::onFrmWsPortChange,
-            onApiTokenChange = viewModel::onApiTokenChange,
+            onAdminPasswordChange = viewModel::onAdminPasswordChange,
             onSubmit = viewModel::submit,
         ),
     )
@@ -95,14 +95,14 @@ private fun AddServerContent(
 private fun PreviewAddServerScreen() {
     FicsitMonitorTheme {
         AddServerContent(
-            state = ServerFormState(),
+            state = ServerFormState(requireAdminPassword = true),
             callbacks = ServerFormCallbacks(
                 onNameChange = {},
                 onHostChange = {},
                 onApiPortChange = {},
                 onFrmHttpPortChange = {},
                 onFrmWsPortChange = {},
-                onApiTokenChange = {},
+                onAdminPasswordChange = {},
                 onSubmit = {},
             ),
         )

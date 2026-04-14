@@ -153,11 +153,16 @@
     <string name="server_form_api_port">Puerto API</string>
     <string name="server_form_frm_http">FRM HTTP</string>
     <string name="server_form_frm_ws">FRM WebSocket</string>
-    <string name="server_form_api_token">API token (opcional)</string>
-    <string name="server_form_api_token_hint">Pégalo si ya lo has generado con server.GenerateAPIToken</string>
+    <string name="server_form_admin_password">Contraseña de admin</string>
+    <string name="server_form_admin_password_hint">Se usa una sola vez para provisionar la conexión. No se guarda en tu dispositivo.</string>
     <string name="server_form_submit_add">Guardar y empezar a monitorizar</string>
     <string name="server_form_submit_edit">Guardar cambios</string>
+    <string name="server_form_connecting">Conectando con tu servidor…</string>
     <string name="server_form_error_invalid_port">El puerto debe estar entre 1 y 65535</string>
+    <string name="server_form_error_admin_password_too_short">La contraseña debe tener al menos 8 caracteres</string>
+    <string name="server_form_error_admin_password_invalid">Contraseña incorrecta o el servidor la rechazó</string>
+    <string name="server_form_error_server_unreachable">No se pudo contactar con el servidor. Revisa host, puertos y contraseña de admin.</string>
+    <string name="server_form_error_provisioning_failed">No se pudo provisionar el servidor. Revisa la contraseña de admin y comprueba que el servidor Satisfactory está en marcha.</string>
 
     <!-- Settings -->
     <string name="settings_title">Ajustes</string>

@@ -1,5 +1,6 @@
 package com.apptolast.fiscsitmonitor.data.repository
 
+import com.apptolast.fiscsitmonitor.data.auth.dto.ValidationErrorResponse
 import com.apptolast.fiscsitmonitor.data.model.ApiResponse
 import com.apptolast.fiscsitmonitor.data.server.ServerApiService
 import com.apptolast.fiscsitmonitor.data.server.dto.CreateServerRequest
@@ -14,6 +15,7 @@ import io.ktor.client.statement.HttpResponse
 import io.ktor.http.HttpStatusCode
 
 private const val DEFAULT_FRM_WS_PORT = 8081
+private const val PROVISIONING_FAILED_CODE = "provisioning_failed"
 
 class UserServerRepositoryImpl(
     private val api: ServerApiService,
@@ -32,7 +34,7 @@ class UserServerRepositoryImpl(
         apiPort: Int,
         frmHttpPort: Int,
         frmWsPort: Int,
-        apiToken: String?,
+        adminPassword: String,
     ): UserServer {
         val response = api.create(
             CreateServerRequest(
@@ -41,12 +43,12 @@ class UserServerRepositoryImpl(
                 apiPort = apiPort,
                 frmHttpPort = frmHttpPort,
                 frmWsPort = frmWsPort,
-                apiToken = apiToken?.takeIf { it.isNotBlank() },
+                adminPassword = adminPassword,
             ),
         )
         val dto = parseServer(response)
-        shadow.put(dto.id, frmWsPort, apiToken)
-        return dto.toDomain(frmWsPort = frmWsPort, apiToken = apiToken)
+        shadow.put(dto.id, frmWsPort)
+        return dto.toDomain(frmWsPort = frmWsPort)
     }
 
     override suspend fun update(
@@ -56,7 +58,6 @@ class UserServerRepositoryImpl(
         apiPort: Int,
         frmHttpPort: Int,
         frmWsPort: Int,
-        apiToken: String?,
     ): UserServer {
         val response = api.update(
             serverId = serverId,
@@ -66,12 +67,11 @@ class UserServerRepositoryImpl(
                 apiPort = apiPort,
                 frmHttpPort = frmHttpPort,
                 frmWsPort = frmWsPort,
-                apiToken = apiToken?.takeIf { it.isNotBlank() },
             ),
         )
         val dto = parseServer(response)
-        shadow.put(dto.id, frmWsPort, apiToken)
-        return dto.toDomain(frmWsPort = frmWsPort, apiToken = apiToken)
+        shadow.put(dto.id, frmWsPort)
+        return dto.toDomain(frmWsPort = frmWsPort)
     }
 
     override suspend fun delete(serverId: Int) {
@@ -83,8 +83,15 @@ class UserServerRepositoryImpl(
     }
 
     private suspend fun parseServer(response: HttpResponse): UserServerDto {
-        if (response.status == HttpStatusCode.UnprocessableEntity) {
-            throw AuthError.Unknown("Validation error")
+        when (response.status) {
+            HttpStatusCode.UnprocessableEntity,
+            HttpStatusCode.BadGateway -> throw response.toValidationError()
+            // Backend wraps any PasswordLogin / RunCommand failure from the Satisfactory server
+            // as a 500 ProvisioningFailedException. The most common cause (by far) is a wrong
+            // admin password, so we surface it as a field error on admin_password.
+            HttpStatusCode.InternalServerError -> throw AuthError.Validation(
+                mapOf("admin_password" to listOf(PROVISIONING_FAILED_CODE)),
+            )
         }
         if (!response.status.isSuccess()) {
             throw AuthError.Unknown("HTTP ${response.status.value}")
@@ -92,12 +99,14 @@ class UserServerRepositoryImpl(
         return response.body<ApiResponse<UserServerDto>>().data
     }
 
+    private suspend fun HttpResponse.toValidationError(): AuthError.Validation {
+        val payload = runCatching { body<ValidationErrorResponse>() }.getOrNull()
+        return AuthError.Validation(payload?.errors.orEmpty())
+    }
+
     private fun UserServerDto.merge(): UserServer {
-        val cached = shadow.get(id)
-        return toDomain(
-            frmWsPort = cached.frmWsPort ?: DEFAULT_FRM_WS_PORT,
-            apiToken = cached.apiToken,
-        )
+        val cachedWsPort = shadow.getFrmWsPort(id) ?: DEFAULT_FRM_WS_PORT
+        return toDomain(frmWsPort = cachedWsPort)
     }
 
     private fun HttpStatusCode.isSuccess(): Boolean = value in 200..299

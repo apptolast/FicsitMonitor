@@ -11,7 +11,7 @@ interface UserServerRepository {
         apiPort: Int,
         frmHttpPort: Int,
         frmWsPort: Int,
-        apiToken: String?,
+        adminPassword: String,
     ): UserServer
 
     suspend fun update(
@@ -21,7 +21,6 @@ interface UserServerRepository {
         apiPort: Int,
         frmHttpPort: Int,
         frmWsPort: Int,
-        apiToken: String?,
     ): UserServer
 
     suspend fun delete(serverId: Int)

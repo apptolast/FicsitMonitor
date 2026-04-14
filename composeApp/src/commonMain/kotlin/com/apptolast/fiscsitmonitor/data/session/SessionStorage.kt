@@ -57,25 +57,18 @@ class SessionStorage(private val settings: Settings) {
         clearAllShadows()
     }
 
-    fun putShadow(serverId: Int, frmWsPort: Int?, apiToken: String?) {
-        if (frmWsPort == null) settings.remove(shadowKey(serverId, SUFFIX_FRM_WS)) else settings.putInt(
-            shadowKey(
-                serverId,
-                SUFFIX_FRM_WS
-            ), frmWsPort
-        )
-        if (apiToken.isNullOrBlank()) settings.remove(shadowKey(serverId, SUFFIX_API_TOKEN)) else settings.putString(
-            shadowKey(serverId, SUFFIX_API_TOKEN),
-            apiToken
-        )
+    fun putShadow(serverId: Int, frmWsPort: Int?) {
+        if (frmWsPort == null) {
+            settings.remove(shadowKey(serverId, SUFFIX_FRM_WS))
+        } else {
+            settings.putInt(shadowKey(serverId, SUFFIX_FRM_WS), frmWsPort)
+        }
     }
 
     fun getShadowFrmWsPort(serverId: Int): Int? = settings.getIntOrNull(shadowKey(serverId, SUFFIX_FRM_WS))
-    fun getShadowApiToken(serverId: Int): String? = settings.getStringOrNull(shadowKey(serverId, SUFFIX_API_TOKEN))
 
     fun removeShadow(serverId: Int) {
         settings.remove(shadowKey(serverId, SUFFIX_FRM_WS))
-        settings.remove(shadowKey(serverId, SUFFIX_API_TOKEN))
     }
 
     private fun clearAllShadows() {
@@ -93,6 +86,5 @@ class SessionStorage(private val settings: Settings) {
         private const val KEY_OVERRIDE_BASE_URL = "override_base_url"
         private const val PREFIX_SHADOW = "shadow_server_"
         private const val SUFFIX_FRM_WS = "frm_ws_port"
-        private const val SUFFIX_API_TOKEN = "api_token"
     }
 }

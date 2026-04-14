@@ -153,11 +153,16 @@
     <string name="server_form_api_port">API port</string>
     <string name="server_form_frm_http">FRM HTTP</string>
     <string name="server_form_frm_ws">FRM WebSocket</string>
-    <string name="server_form_api_token">API token (optional)</string>
-    <string name="server_form_api_token_hint">Paste it if you already generated it with server.GenerateAPIToken</string>
+    <string name="server_form_admin_password">Admin password</string>
+    <string name="server_form_admin_password_hint">Used once to provision the connection. Not stored on your device.</string>
     <string name="server_form_submit_add">Save and start monitoring</string>
     <string name="server_form_submit_edit">Save changes</string>
+    <string name="server_form_connecting">Connecting to your server…</string>
     <string name="server_form_error_invalid_port">Port must be between 1 and 65535</string>
+    <string name="server_form_error_admin_password_too_short">Password must be at least 8 characters</string>
+    <string name="server_form_error_admin_password_invalid">Incorrect password or the server rejected it</string>
+    <string name="server_form_error_server_unreachable">Could not reach the server. Check host, ports and admin password.</string>
+    <string name="server_form_error_provisioning_failed">Could not provision the server. Double-check the admin password and make sure the Satisfactory server is running.</string>
 
     <!-- Settings -->
     <string name="settings_title">Settings</string>
