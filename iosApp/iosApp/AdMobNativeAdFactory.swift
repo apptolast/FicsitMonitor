@@ -1,24 +1,14 @@
-import UIKit
-import GoogleMobileAds
 import ComposeApp
+import GoogleMobileAds
+import UIKit
+import UserMessagingPlatform
 
 /// Swift implementation of the Kotlin-exported `IosNativeAdFactory` protocol.
-///
-/// Creates a container UIView synchronously and starts an async [AdLoader] request. When the
-/// native ad loads, [adLoader(_:didReceive:)] builds a fully themed [NativeAdView] inside the
-/// container. The Kotlin `actual fun NativeAd` composable wraps this container in UIKitView and
-/// shows whatever the Swift side renders as the ad loads.
-///
-/// Dark-theme palette (matches FicsitMonitor Kotlin tokens):
-///   background  #141414  (BgCard)
-///   headline    #FFFFFF  (TextPrimary)
-///   body        #8A8A8A  (TextSecondary)
-///   CTA bg      #00FF88  (AccentGreen)
-///   CTA text    #0C0C0C  (TextOnAccent)
-///   label       #00FF88 @ 20% alpha
 final class AdMobNativeAdFactory: NSObject, IosNativeAdFactory {
 
-    private var containers: [ObjectIdentifier: UIView] = [:]
+    // We must retain the AdLoaders. If they are local variables, they get
+    // deallocated immediately when the function returns, cancelling the ad request.
+    private var activeLoaders: [ObjectIdentifier: AdLoader] = [:]
 
     func createNativeAdView(adUnitId: String) -> UIView {
         let container = UIView()
@@ -28,13 +18,27 @@ final class AdMobNativeAdFactory: NSObject, IosNativeAdFactory {
         container.layer.borderColor = UIColor(hex: "#2F2F2F").cgColor
         container.clipsToBounds = true
 
+        // Check if we can request ads according to the UMP consent status.
+        // If the consent form is still showing or not yet accepted, we skip the request.
+        guard ConsentInformation.shared.canRequestAds else {
+            print("[AdMobNativeAdFactory] Skipping ad request: Consent not yet gathered or SDK not started.")
+            return container
+        }
+
         let loader = AdLoader(
             adUnitID: adUnitId,
             rootViewController: Self.rootViewController(),
             adTypes: [.native],
             options: nil
         )
-        loader.delegate = NativeAdLoaderBridge(container: container)
+
+        let loaderId = ObjectIdentifier(container)
+        let bridge = NativeAdLoaderBridge(container: container) { [weak self] in
+            self?.activeLoaders.removeValue(forKey: loaderId)
+        }
+
+        loader.delegate = bridge
+        activeLoaders[loaderId] = loader
         loader.load(Request())
 
         return container
@@ -55,25 +59,31 @@ final class AdMobNativeAdFactory: NSObject, IosNativeAdFactory {
 
 // MARK: - NativeAdLoaderBridge
 
-/// Separate object used as the AdLoader delegate to avoid a retain cycle with the factory.
 private final class NativeAdLoaderBridge: NSObject, AdLoaderDelegate, NativeAdLoaderDelegate {
     private weak var container: UIView?
+    private var onCompleted: () -> Void
 
-    init(container: UIView) {
+    init(container: UIView, onCompleted: @escaping () -> Void) {
         self.container = container
+        self.onCompleted = onCompleted
     }
 
     func adLoader(_ adLoader: AdLoader, didReceive nativeAd: NativeAd) {
-        guard let container else {
+        defer {
+            onCompleted()
+        }
+        guard let container = container else {
             return
         }
+
         DispatchQueue.main.async {
             self.populate(container: container, with: nativeAd)
         }
     }
 
     func adLoader(_ adLoader: AdLoader, didFailToReceiveAdWithError error: Error) {
-        // Leave container empty — the Kotlin composable already accounts for this.
+        print("[AdMobNativeAdFactory] Ad failed to load: \(error.localizedDescription)")
+        onCompleted()
     }
 
     private func populate(container: UIView, with nativeAd: NativeAd) {
@@ -123,13 +133,14 @@ private final class NativeAdLoaderBridge: NSObject, AdLoaderDelegate, NativeAdLo
         adView.bodyView = bodyLabel
 
         // -- CTA button --
-        let ctaButton = UIButton(type: .system)
-        ctaButton.setTitle(nativeAd.callToAction, for: .normal)
-        ctaButton.backgroundColor = UIColor(hex: "#00FF88")
-        ctaButton.setTitleColor(UIColor(hex: "#0C0C0C"), for: .normal)
-        ctaButton.titleLabel?.font = .systemFont(ofSize: 11, weight: .semibold)
-        ctaButton.layer.cornerRadius = 6
-        ctaButton.contentEdgeInsets = UIEdgeInsets(top: 6, left: 12, bottom: 6, right: 12)
+        var config = UIButton.Configuration.filled()
+        config.title = nativeAd.callToAction
+        config.baseBackgroundColor = UIColor(hex: "#00FF88")
+        config.baseForegroundColor = UIColor(hex: "#0C0C0C")
+        config.contentInsets = NSDirectionalEdgeInsets(top: 6, leading: 12, bottom: 6, trailing: 12)
+        config.background.cornerRadius = 6
+
+        let ctaButton = UIButton(configuration: config)
         ctaButton.translatesAutoresizingMaskIntoConstraints = false
         ctaButton.isHidden = nativeAd.callToAction == nil
         adView.callToActionView = ctaButton
@@ -174,8 +185,8 @@ private final class NativeAdLoaderBridge: NSObject, AdLoaderDelegate, NativeAdLo
 
 // MARK: - UIColor convenience
 
-private extension UIColor {
-    convenience init(hex: String) {
+extension UIColor {
+    fileprivate convenience init(hex: String) {
         var hex = hex.trimmingCharacters(in: .whitespaces)
         if hex.hasPrefix("#") {
             hex.removeFirst()
