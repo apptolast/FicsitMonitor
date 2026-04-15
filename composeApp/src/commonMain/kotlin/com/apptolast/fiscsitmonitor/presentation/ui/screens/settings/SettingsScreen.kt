@@ -12,9 +12,11 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowBack
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -32,7 +34,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.apptolast.fiscsitmonitor.domain.model.UserServer
-import com.apptolast.fiscsitmonitor.presentation.ui.components.CustomTopBar
 import com.apptolast.fiscsitmonitor.presentation.ui.screens.onboarding.ServerForm
 import com.apptolast.fiscsitmonitor.presentation.ui.screens.onboarding.ServerFormCallbacks
 import com.apptolast.fiscsitmonitor.presentation.ui.screens.onboarding.ServerFormState
@@ -78,12 +79,12 @@ fun SettingsScreen(
         onFrmHttpPortChange = viewModel::onFrmHttpPortChange,
         onFrmWsPortChange = viewModel::onFrmWsPortChange,
         onSubmit = viewModel::saveServer,
-        onBaseUrlChange = viewModel::onBaseUrlChange,
         onLogout = viewModel::logout,
         onSelectServer = viewModel::onSelectServer,
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun SettingsContent(
     state: SettingsUiState,
@@ -94,14 +95,13 @@ private fun SettingsContent(
     onFrmHttpPortChange: (String) -> Unit = {},
     onFrmWsPortChange: (String) -> Unit = {},
     onSubmit: () -> Unit = {},
-    onBaseUrlChange: (String) -> Unit = {},
     onLogout: () -> Unit = {},
     onSelectServer: (Int) -> Unit = {},
 ) {
     Scaffold(
         topBar = {
-            CustomTopBar(
-                title = stringResource(Res.string.settings_title),
+            CenterAlignedTopAppBar(
+                title = { Text(stringResource(Res.string.settings_title)) },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
                         Icon(
@@ -255,16 +255,6 @@ private fun PreviewSettingsScreen() {
                     host = "46.224.182.211",
                 ),
             ),
-            onBack = {},
-            onNameChange = {},
-            onHostChange = {},
-            onApiPortChange = {},
-            onFrmHttpPortChange = {},
-            onFrmWsPortChange = {},
-            onSubmit = {},
-            onBaseUrlChange = {},
-            onLogout = {},
-            onSelectServer = {},
         )
     }
 }

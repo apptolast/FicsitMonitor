@@ -50,7 +50,7 @@ private fun SplashContent() {
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             Text(
-                text = "FICSIT.monitor",
+                text = "FICSIT Monitor",
                 style = MaterialTheme.typography.headlineMedium,
                 color = MaterialTheme.colorScheme.primary,
             )

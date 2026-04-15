@@ -2,9 +2,9 @@ package com.apptolast.fiscsitmonitor.presentation.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.apptolast.fiscsitmonitor.presentation.ui.screens.auth.LoginScreen
 import com.apptolast.fiscsitmonitor.presentation.ui.screens.auth.RegisterScreen
 import com.apptolast.fiscsitmonitor.presentation.ui.screens.navigation.NavigationScreen
@@ -15,9 +15,11 @@ import com.apptolast.fiscsitmonitor.presentation.viewmodel.SplashDestination
 
 @Composable
 fun FicsitNavHost(
-    navController: NavHostController,
     modifier: Modifier = Modifier,
 ) {
+
+    val navController = rememberNavController()
+
     NavHost(
         navController = navController,
         startDestination = Route.Splash,

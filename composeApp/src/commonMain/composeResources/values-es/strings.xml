@@ -8,7 +8,7 @@
     <string name="tab_live">EN VIVO</string>
 
     <!-- Status Bar -->
-    <string name="app_title">FICSIT.monitor</string>
+    <string name="app_title">FICSIT Monitor</string>
     <string name="status_online">EN LÍNEA</string>
     <string name="status_offline">DESCONECTADO</string>
 

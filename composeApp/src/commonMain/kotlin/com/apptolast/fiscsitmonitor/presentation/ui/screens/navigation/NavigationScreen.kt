@@ -7,15 +7,14 @@ import androidx.compose.material.icons.filled.Bolt
 import androidx.compose.material.icons.filled.Dashboard
 import androidx.compose.material.icons.filled.LocalShipping
 import androidx.compose.material.icons.filled.PrecisionManufacturing
-import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Stream
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -23,7 +22,6 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.apptolast.fiscsitmonitor.presentation.navigation.Route
 import com.apptolast.fiscsitmonitor.presentation.ui.components.BottomBarTab
-import com.apptolast.fiscsitmonitor.presentation.ui.components.CustomTopBar
 import com.apptolast.fiscsitmonitor.presentation.ui.components.FicsitBottomBar
 import com.apptolast.fiscsitmonitor.presentation.ui.screens.energy.EnergyScreen
 import com.apptolast.fiscsitmonitor.presentation.ui.screens.factory.FactoryScreen
@@ -31,7 +29,6 @@ import com.apptolast.fiscsitmonitor.presentation.ui.screens.home.HomeScreen
 import com.apptolast.fiscsitmonitor.presentation.ui.screens.live.LiveScreen
 import com.apptolast.fiscsitmonitor.presentation.ui.screens.logistics.LogisticsScreen
 import ficsitmonitor.composeapp.generated.resources.Res
-import ficsitmonitor.composeapp.generated.resources.settings_title
 import ficsitmonitor.composeapp.generated.resources.tab_energy
 import ficsitmonitor.composeapp.generated.resources.tab_factory
 import ficsitmonitor.composeapp.generated.resources.tab_home
@@ -54,9 +51,10 @@ private val tabDestinations: List<TabDestination> = listOf(
     TabDestination(Route.Live, Res.string.tab_live, Icons.Default.Stream),
 )
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NavigationScreen(
-    onOpenSettings: () -> Unit,
+    onOpenSettings: () -> Unit = {},
 ) {
     val navController = rememberNavController()
     val backStackEntry by navController.currentBackStackEntryAsState()
@@ -70,19 +68,20 @@ fun NavigationScreen(
     val topBarTitle = stringResource(tabDestinations[selectedIndex].titleRes)
 
     Scaffold(
-        topBar = {
-            CustomTopBar(
-                title = topBarTitle,
-                actions = {
-                    IconButton(onClick = onOpenSettings) {
-                        Icon(
-                            imageVector = Icons.Default.Settings,
-                            contentDescription = stringResource(Res.string.settings_title),
-                        )
-                    }
-                },
-            )
-        },
+//        topBar = {
+//            CenterAlignedTopAppBar(
+//                title = { Text(text = topBarTitle) },
+//                actions = {
+//                    IconButton(onClick = onOpenSettings) {
+//                        Icon(
+//                            imageVector = Icons.Default.Settings,
+//                            contentDescription = stringResource(Res.string.settings_title),
+//                            tint = MaterialTheme.colorScheme.primary
+//                        )
+//                    }
+//                },
+//            )
+//        },
         bottomBar = {
             FicsitBottomBar(
                 tabs = tabs,
@@ -100,12 +99,14 @@ fun NavigationScreen(
         },
         containerColor = MaterialTheme.colorScheme.background,
     ) { innerPadding ->
+
         NavHost(
             navController = navController,
             startDestination = Route.Home,
             modifier = Modifier
                 .fillMaxSize()
-                .padding(innerPadding),
+                .padding(innerPadding)
+                .padding(top = 8.dp),
         ) {
             composable<Route.Home> { HomeScreen() }
             composable<Route.Energy> { EnergyScreen() }
