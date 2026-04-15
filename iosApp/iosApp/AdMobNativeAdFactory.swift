@@ -33,11 +33,12 @@ final class AdMobNativeAdFactory: NSObject, IosNativeAdFactory {
 
     func createNativeAdView(adUnitId: String) -> UIView {
         let container = AdContainerView(adUnitId: adUnitId)
-        container.backgroundColor = UIColor(hex: "#141414")
-        container.layer.cornerRadius = 12
-        container.layer.borderWidth = 1
-        container.layer.borderColor = UIColor(hex: "#2F2F2F").cgColor
-        container.clipsToBounds = true
+        // Container stays transparent. UIKit's cornerRadius + clipsToBounds makes the view's
+        // background fill only the rounded path — the four corner regions outside the radius
+        // are transparent. If the container had an opaque background those corners would still
+        // be see-through (into the parent, which in Compose UIKitView is white by default).
+        // The dark fill, border and rounding are applied to the NativeAdView in populate().
+        container.backgroundColor = UIColor(hex: "#FF0C0C0C")
 
         loadAd(into: container)
         return container
@@ -150,7 +151,13 @@ private final class NativeAdLoaderBridge: NSObject, AdLoaderDelegate, NativeAdLo
     private func populate(container: UIView, with nativeAd: NativeAd) {
         let adView = NativeAdView()
         adView.translatesAutoresizingMaskIntoConstraints = false
-        adView.backgroundColor = .clear
+        // Dark background, border and rounding live here (not on the container) so they are
+        // contained within the rounded clip and don't bleed into the parent's transparent corners.
+        adView.backgroundColor = UIColor(hex: "#141414")
+        adView.layer.cornerRadius = 12
+        adView.layer.borderWidth = 1
+        adView.layer.borderColor = UIColor(hex: "#2F2F2F").cgColor
+        adView.clipsToBounds = true
 
         // -- Attribution label --
         let attributionLabel = UILabel()
