@@ -26,6 +26,7 @@ import com.apptolast.fiscsitmonitor.data.model.PlayerDto
 import com.apptolast.fiscsitmonitor.data.model.TrainDto
 import com.apptolast.fiscsitmonitor.presentation.ui.components.DroneCard
 import com.apptolast.fiscsitmonitor.presentation.ui.components.EmptyState
+import com.apptolast.fiscsitmonitor.presentation.ui.components.NativeAd
 import com.apptolast.fiscsitmonitor.presentation.ui.components.PlayerCard
 import com.apptolast.fiscsitmonitor.presentation.ui.components.SectionHeader
 import com.apptolast.fiscsitmonitor.presentation.ui.components.TrainCard
@@ -56,8 +57,8 @@ fun LogisticsContent(
     Column(
         modifier = modifier
             .verticalScroll(rememberScrollState())
-            .padding(horizontal = 20.dp)
-            .padding(bottom = 20.dp),
+            .padding(horizontal = 24.dp)
+            .padding(top = 16.dp, bottom = 24.dp),
         verticalArrangement = Arrangement.spacedBy(24.dp),
     ) {
         SectionHeader(
@@ -114,6 +115,9 @@ fun LogisticsContent(
             }
         }
 
+        // Native ad between Drones and Players — high-visibility placement.
+        NativeAd()
+
         // Players
         val onlineCount = players.count { it.isOnline }
         SectionHeader(
@@ -139,6 +143,7 @@ fun LogisticsContent(
                 PlayerCard(player = player)
             }
         }
+
     }
 }
 

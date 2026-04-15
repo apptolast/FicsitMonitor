@@ -15,6 +15,8 @@ import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun HomeScreen(
+    modifier: Modifier = Modifier,
+    onOpenSettings: () -> Unit = {},
     viewModel: HomeViewModel = koinViewModel(),
 ) {
     val server by viewModel.server.collectAsStateWithLifecycle()
@@ -28,7 +30,7 @@ fun HomeScreen(
     val isLoading by viewModel.isLoading.collectAsStateWithLifecycle()
     val error by viewModel.error.collectAsStateWithLifecycle()
 
-    Box(modifier = Modifier.fillMaxSize()) {
+    Box(modifier = modifier.fillMaxSize()) {
         when {
             isLoading && server == null -> {
                 CircularProgressIndicator(
@@ -53,6 +55,7 @@ fun HomeScreen(
                     extractors = extractors,
                     generators = generators,
                     trains = trains,
+                    onOpenSettings = onOpenSettings,
                 )
             }
         }

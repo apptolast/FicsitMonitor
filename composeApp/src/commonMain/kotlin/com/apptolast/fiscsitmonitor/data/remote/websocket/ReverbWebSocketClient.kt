@@ -1,6 +1,7 @@
 package com.apptolast.fiscsitmonitor.data.remote.websocket
 
-import com.apptolast.fiscsitmonitor.data.remote.Environment
+import com.apptolast.fiscsitmonitor.data.remote.api.ConfigApiService
+import com.apptolast.fiscsitmonitor.data.server.dto.ReverbConfigDto
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.websocket.webSocketSession
 import io.ktor.websocket.Frame
@@ -37,6 +38,8 @@ data class WebSocketEvent(
 
 class ReverbWebSocketClient(
     private val httpClient: HttpClient,
+    private val configApi: ConfigApiService,
+    private val authorizer: ReverbAuthorizer,
 ) {
     private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
     private val json = Json { ignoreUnknownKeys = true }
@@ -45,6 +48,7 @@ class ReverbWebSocketClient(
     private var session: WebSocketSession? = null
     private var connectionJob: Job? = null
     private var subscribedChannel: String? = null
+    private var cachedConfig: ReverbConfigDto? = null
 
     private val _connectionState = MutableStateFlow(ConnectionState.DISCONNECTED)
     val connectionState: StateFlow<ConnectionState> = _connectionState.asStateFlow()
@@ -55,7 +59,7 @@ class ReverbWebSocketClient(
     fun connect(serverId: Int) {
         connectionJob?.cancel()
         connectionJob = scope.launch {
-            val channel = "servers.$serverId"
+            val channel = "private-servers.$serverId"
             subscribedChannel = channel
             var retryDelay = 1000L
             println("[$tag] Connecting to channel: $channel")
@@ -82,6 +86,7 @@ class ReverbWebSocketClient(
         println("[$tag] Disconnecting...")
         connectionJob?.cancel()
         connectionJob = null
+        subscribedChannel = null
         scope.launch {
             session?.close()
             session = null
@@ -89,8 +94,13 @@ class ReverbWebSocketClient(
         }
     }
 
+    fun invalidateConfigCache() {
+        cachedConfig = null
+    }
+
     private suspend fun openConnection(channel: String) {
-        val wsUrl = buildWsUrl()
+        val config = loadConfig()
+        val wsUrl = buildWsUrl(config)
         println("[$tag] Opening WebSocket: $wsUrl")
 
         session = httpClient.webSocketSession(wsUrl)
@@ -124,13 +134,21 @@ class ReverbWebSocketClient(
 
         when (event) {
             "pusher:connection_established" -> {
-                val data = jsonObj["data"]?.jsonPrimitive?.content ?: ""
-                println("[$tag] Connection established: $data")
+                val dataStr = jsonObj["data"]?.jsonPrimitive?.content ?: ""
+                println("[$tag] Connection established: $dataStr")
                 _connectionState.value = ConnectionState.CONNECTED
-                subscribe(channel)
+                val socketId = extractSocketId(dataStr)
+                if (socketId == null) {
+                    println("[$tag] socket_id missing in connection_established payload")
+                    return
+                }
+                subscribePrivate(channel, socketId)
             }
             "pusher_internal:subscription_succeeded" -> {
                 println("[$tag] Subscription succeeded for channel: $channel")
+            }
+            "pusher:error" -> {
+                println("[$tag] Pusher error: $jsonObj")
             }
             "pusher:ping" -> {
                 println("[$tag] Ping received, sending pong")
@@ -151,13 +169,24 @@ class ReverbWebSocketClient(
         }
     }
 
-    private suspend fun subscribe(channel: String) {
-        println("[$tag] Subscribing to channel: $channel")
+    private suspend fun subscribePrivate(channel: String, socketId: String) {
+        println("[$tag] Authorizing private channel: $channel with socket: $socketId")
+        val auth = try {
+            authorizer.authorize(channelName = channel, socketId = socketId)
+        } catch (e: Exception) {
+            println("[$tag] Authorizer failed: ${e.message}")
+            session?.close()
+            return
+        }
         val message = buildJsonObject {
             put("event", "pusher:subscribe")
-            put("data", buildJsonObject {
-                put("channel", channel)
-            })
+            put(
+                "data",
+                buildJsonObject {
+                    put("auth", auth)
+                    put("channel", channel)
+                },
+            )
         }
         session?.send(Frame.Text(message.toString()))
     }
@@ -170,11 +199,21 @@ class ReverbWebSocketClient(
         session?.send(Frame.Text(message.toString()))
     }
 
-    private fun buildWsUrl(): String {
-        val baseUrl = Environment.baseUrl
-            .replace("https://", "wss://")
-            .replace("http://", "ws://")
-        val appKey = Environment.wsAppKey
-        return "$baseUrl/app/$appKey?protocol=7&client=kotlin&version=1.0.0&flash=false"
+    private fun extractSocketId(dataStr: String): String? = runCatching {
+        val inner = json.parseToJsonElement(dataStr).jsonObject
+        inner["socket_id"]?.jsonPrimitive?.content
+    }.getOrNull()
+
+    private suspend fun loadConfig(): ReverbConfigDto {
+        cachedConfig?.let { return it }
+        val config = configApi.reverbConfig()
+        cachedConfig = config
+        println("[$tag] Loaded Reverb config: host=${config.host} port=${config.port} scheme=${config.scheme}")
+        return config
+    }
+
+    private fun buildWsUrl(config: ReverbConfigDto): String {
+        val wsScheme = if (config.scheme.equals("https", ignoreCase = true)) "wss" else "ws"
+        return "$wsScheme://${config.host}:${config.port}/app/${config.key}?protocol=7&client=kotlin&version=1.0.0&flash=false"
     }
 }

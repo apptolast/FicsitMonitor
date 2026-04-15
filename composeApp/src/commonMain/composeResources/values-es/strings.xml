@@ -8,7 +8,7 @@
     <string name="tab_live">EN VIVO</string>
 
     <!-- Status Bar -->
-    <string name="app_title">FICSIT.monitor</string>
+    <string name="app_title">FICSIT Monitor</string>
     <string name="status_online">EN LÍNEA</string>
     <string name="status_offline">DESCONECTADO</string>
 
@@ -115,4 +115,63 @@
     <!-- Common -->
     <string name="no_data">---</string>
     <string name="satisfactory_server">Servidor Satisfactory</string>
+    <string name="common_saving">Guardando…</string>
+    <string name="common_retry">Reintentar</string>
+    <string name="common_required">Campo obligatorio</string>
+    <string name="common_invalid_email">Email no válido</string>
+    <string name="common_password_mismatch">Las contraseñas no coinciden</string>
+    <string name="common_password_too_short">La contraseña debe tener al menos 8 caracteres</string>
+    <string name="common_error_network">Error de red. Revisa tu conexión.</string>
+    <string name="common_error_generic">Error inesperado</string>
+    <string name="common_cancel">Cancelar</string>
+    <string name="common_confirm">Confirmar</string>
+
+    <!-- Auth: login -->
+    <string name="auth_login_title">Iniciar sesión</string>
+    <string name="auth_login_subtitle">Bienvenido de nuevo</string>
+    <string name="auth_login_email">Email</string>
+    <string name="auth_login_password">Contraseña</string>
+    <string name="auth_login_submit">Entrar</string>
+    <string name="auth_login_no_account">¿No tienes cuenta? Regístrate</string>
+    <string name="auth_login_error_invalid">Credenciales no válidas</string>
+
+    <!-- Auth: register -->
+    <string name="auth_register_title">Crear cuenta</string>
+    <string name="auth_register_name">Nombre</string>
+    <string name="auth_register_password_confirm">Confirmar contraseña</string>
+    <string name="auth_register_submit">Registrarme</string>
+    <string name="auth_register_have_account">¿Ya tienes cuenta? Inicia sesión</string>
+    <string name="auth_register_error_validation">Corrige los errores e inténtalo de nuevo</string>
+
+    <!-- Server form -->
+    <string name="server_form_title_add">Añade tu primer servidor</string>
+    <string name="server_form_title_edit">Editar servidor</string>
+    <string name="server_form_subtitle">Configura la conexión a tu servidor dedicado de Satisfactory. El dashboard empezará a hacer polling automáticamente cada pocos segundos vía la API HTTPS y el mod FicsitRemoteMonitoring.</string>
+    <string name="server_form_name">Nombre descriptivo</string>
+    <string name="server_form_host">Host o IP pública</string>
+    <string name="server_form_host_hint">p. ej. 46.224.182.211</string>
+    <string name="server_form_api_port">Puerto API</string>
+    <string name="server_form_frm_http">FRM HTTP</string>
+    <string name="server_form_frm_ws">FRM WebSocket</string>
+    <string name="server_form_admin_password">Contraseña de admin</string>
+    <string name="server_form_admin_password_hint">Se usa una sola vez para provisionar la conexión. No se guarda en tu dispositivo.</string>
+    <string name="server_form_submit_add">Guardar y empezar a monitorizar</string>
+    <string name="server_form_submit_edit">Guardar cambios</string>
+    <string name="server_form_connecting">Conectando con tu servidor…</string>
+    <string name="server_form_error_invalid_port">El puerto debe estar entre 1 y 65535</string>
+    <string name="server_form_error_admin_password_too_short">La contraseña debe tener al menos 8 caracteres</string>
+    <string name="server_form_error_admin_password_invalid">Contraseña incorrecta o el servidor la rechazó</string>
+    <string name="server_form_error_server_unreachable">No se pudo contactar con el servidor. Revisa host, puertos y contraseña de admin.</string>
+    <string name="server_form_error_provisioning_failed">No se pudo provisionar el servidor. Revisa la contraseña de admin y comprueba que el servidor Satisfactory está en marcha.</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Ajustes</string>
+    <string name="settings_server_section">Servidor Satisfactory</string>
+    <string name="settings_advanced_section">Avanzado</string>
+    <string name="settings_base_url">URL base de la API</string>
+    <string name="settings_base_url_hint">Sobrescribe la URL base del backend de FicsitMonitor (déjalo vacío para usar la predeterminada)</string>
+    <string name="settings_logout">Cerrar sesión</string>
+    <string name="settings_logout_confirm">Volverás a la pantalla de inicio de sesión.</string>
+    <string name="settings_saved">Guardado</string>
+    <string name="settings_select_server">Servidor activo</string>
 </resources>

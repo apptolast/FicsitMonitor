@@ -36,6 +36,7 @@ import com.apptolast.fiscsitmonitor.presentation.ui.components.BadgeType
 import com.apptolast.fiscsitmonitor.presentation.ui.components.FicsitStatusBar
 import com.apptolast.fiscsitmonitor.presentation.ui.components.InfoRow
 import com.apptolast.fiscsitmonitor.presentation.ui.components.MetricCard
+import com.apptolast.fiscsitmonitor.presentation.ui.components.NativeAd
 import com.apptolast.fiscsitmonitor.presentation.ui.components.SectionHeader
 import com.apptolast.fiscsitmonitor.presentation.ui.theme.FicsitMonitorTheme
 import com.apptolast.fiscsitmonitor.presentation.ui.theme.FicsitTheme
@@ -87,6 +88,7 @@ fun HomeContent(
     generators: List<GeneratorDto>,
     trains: List<TrainDto>,
     modifier: Modifier = Modifier,
+    onOpenSettings: () -> Unit = {},
 ) {
     val fuseTriggered = circuits.any { it.fuseTriggered }
     val noData = stringResource(Res.string.no_data)
@@ -94,14 +96,14 @@ fun HomeContent(
     Column(
         modifier = modifier
             .verticalScroll(rememberScrollState())
-            .padding(horizontal = 20.dp)
-            .padding(bottom = 20.dp),
-        verticalArrangement = Arrangement.spacedBy(24.dp),
+            .padding(horizontal = 16.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         // Header
         FicsitStatusBar(
             isOnline = server?.status == "online",
             serverAddress = "${server?.host ?: "..."} \u00B7 ${server?.name ?: stringResource(Res.string.satisfactory_server)}",
+            onOpenSettings = onOpenSettings,
         )
 
         // Alert
@@ -138,6 +140,8 @@ fun HomeContent(
             badgeText = stringResource(Res.string.badge_live),
             badgeType = BadgeType.SUCCESS,
         )
+
+        NativeAd()
 
         val totalConsumed = circuits.sumOf { it.powerConsumed }
         val totalCapacity = circuits.sumOf { it.powerCapacity }
@@ -226,6 +230,7 @@ fun HomeContent(
                 )
             }
         }
+
     }
 }
 

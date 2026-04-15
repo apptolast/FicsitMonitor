@@ -18,4 +18,8 @@ class EnergyRepositoryImpl(
     override val generators: StateFlow<List<GeneratorDto>> = _generators.asStateFlow()
 
     fun updateGenerators(generators: List<GeneratorDto>) { _generators.value = generators }
+
+    fun clear() {
+        _generators.value = emptyList()
+    }
 }

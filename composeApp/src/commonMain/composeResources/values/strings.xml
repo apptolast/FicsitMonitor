@@ -8,7 +8,7 @@
     <string name="tab_live">LIVE</string>
 
     <!-- Status Bar -->
-    <string name="app_title">FICSIT.monitor</string>
+    <string name="app_title">FICSIT Monitor</string>
     <string name="status_online">ONLINE</string>
     <string name="status_offline">OFFLINE</string>
 
@@ -115,4 +115,63 @@
     <!-- Common -->
     <string name="no_data">---</string>
     <string name="satisfactory_server">Satisfactory Server</string>
+    <string name="common_saving">Saving…</string>
+    <string name="common_retry">Retry</string>
+    <string name="common_required">Required field</string>
+    <string name="common_invalid_email">Invalid email</string>
+    <string name="common_password_mismatch">Passwords do not match</string>
+    <string name="common_password_too_short">Password must be at least 8 characters</string>
+    <string name="common_error_network">Network error. Check your connection.</string>
+    <string name="common_error_generic">Unexpected error</string>
+    <string name="common_cancel">Cancel</string>
+    <string name="common_confirm">Confirm</string>
+
+    <!-- Auth: login -->
+    <string name="auth_login_title">Log in</string>
+    <string name="auth_login_subtitle">Welcome back</string>
+    <string name="auth_login_email">Email</string>
+    <string name="auth_login_password">Password</string>
+    <string name="auth_login_submit">Log in</string>
+    <string name="auth_login_no_account">Don&apos;t have an account? Sign up</string>
+    <string name="auth_login_error_invalid">Invalid credentials</string>
+
+    <!-- Auth: register -->
+    <string name="auth_register_title">Create account</string>
+    <string name="auth_register_name">Name</string>
+    <string name="auth_register_password_confirm">Confirm password</string>
+    <string name="auth_register_submit">Register</string>
+    <string name="auth_register_have_account">Already have an account? Log in</string>
+    <string name="auth_register_error_validation">Please fix the errors and try again</string>
+
+    <!-- Server form -->
+    <string name="server_form_title_add">Add your first server</string>
+    <string name="server_form_title_edit">Edit server</string>
+    <string name="server_form_subtitle">Configure the connection to your Satisfactory dedicated server. The dashboard will start polling every few seconds via the HTTPS API and the FicsitRemoteMonitoring mod.</string>
+    <string name="server_form_name">Descriptive name</string>
+    <string name="server_form_host">Host or public IP</string>
+    <string name="server_form_host_hint">e.g. 46.224.182.211</string>
+    <string name="server_form_api_port">API port</string>
+    <string name="server_form_frm_http">FRM HTTP</string>
+    <string name="server_form_frm_ws">FRM WebSocket</string>
+    <string name="server_form_admin_password">Admin password</string>
+    <string name="server_form_admin_password_hint">Used once to provision the connection. Not stored on your device.</string>
+    <string name="server_form_submit_add">Save and start monitoring</string>
+    <string name="server_form_submit_edit">Save changes</string>
+    <string name="server_form_connecting">Connecting to your server…</string>
+    <string name="server_form_error_invalid_port">Port must be between 1 and 65535</string>
+    <string name="server_form_error_admin_password_too_short">Password must be at least 8 characters</string>
+    <string name="server_form_error_admin_password_invalid">Incorrect password or the server rejected it</string>
+    <string name="server_form_error_server_unreachable">Could not reach the server. Check host, ports and admin password.</string>
+    <string name="server_form_error_provisioning_failed">Could not provision the server. Double-check the admin password and make sure the Satisfactory server is running.</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_server_section">Satisfactory Server</string>
+    <string name="settings_advanced_section">Advanced</string>
+    <string name="settings_base_url">API base URL</string>
+    <string name="settings_base_url_hint">Override the FicsitMonitor backend base URL (leave empty for default)</string>
+    <string name="settings_logout">Log out</string>
+    <string name="settings_logout_confirm">You will be returned to the login screen.</string>
+    <string name="settings_saved">Saved</string>
+    <string name="settings_select_server">Active server</string>
 </resources>

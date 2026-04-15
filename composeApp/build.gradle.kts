@@ -16,6 +16,23 @@ val localProperties = Properties().apply {
     if (file.exists()) load(file.inputStream())
 }
 
+// Google test IDs (see https://developers.google.com/admob/android/test-ads and /admob/ios/test-ads).
+// These are ALWAYS used in debug builds and as a safe fallback when local.properties is missing
+// the real IDs — never ship these to production.
+private val testAdmobAppIdAndroid = "ca-app-pub-3940256099942544~3347511713"
+private val testAdmobAppIdIos = "ca-app-pub-3940256099942544~1458002511"
+// Native Advanced Ad test IDs (https://developers.google.com/admob/android/native/start)
+private val testAdmobNativeIdAndroid = "ca-app-pub-3940256099942544/2247696110"
+private val testAdmobNativeIdIos = "ca-app-pub-3940256099942544/3986624511"
+
+// Production IDs come from local.properties; if absent we fall back to the Google test IDs so
+// the project still builds on a clean checkout. A release build without real IDs in
+// local.properties will simply ship test ads — intentional, not a silent miscompilation.
+val admobAppIdAndroidProd: String = localProperties.getProperty("ADMOB_APP_ID_ANDROID", testAdmobAppIdAndroid)
+val admobAppIdIosProd: String = localProperties.getProperty("ADMOB_APP_ID_IOS", testAdmobAppIdIos)
+val admobNativeIdAndroidProd: String = localProperties.getProperty("ADMOB_NATIVE_ID_ANDROID", testAdmobNativeIdAndroid)
+val admobNativeIdIosProd: String = localProperties.getProperty("ADMOB_NATIVE_ID_IOS", testAdmobNativeIdIos)
+
 kotlin {
     androidTarget {
         compilerOptions {
@@ -38,6 +55,8 @@ kotlin {
             implementation(libs.androidx.activity.compose)
             implementation(libs.ktor.client.okhttp)
             implementation(libs.koin.android)
+            implementation(libs.play.services.ads)
+            implementation(libs.google.ump)
         }
         commonMain.dependencies {
             // Compose
@@ -64,12 +83,17 @@ kotlin {
             implementation(libs.ktor.client.content.negotiation)
             implementation(libs.ktor.client.logging)
             implementation(libs.ktor.client.websockets)
+            implementation(libs.ktor.client.auth)
             implementation(libs.ktor.serialization.kotlinx.json)
 
             // Kotlinx
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.kotlinx.serialization.json)
             implementation(libs.kotlinx.datetime)
+
+            // Multiplatform Settings
+            implementation(libs.multiplatform.settings.no.arg)
+            implementation(libs.multiplatform.settings.coroutines)
         }
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)
@@ -84,6 +108,11 @@ android {
     namespace = "com.apptolast.fiscsitmonitor"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
+    buildFeatures {
+        // Needed for `BuildConfig.DEBUG` — used by `AdIds` to pick test vs prod ad unit IDs at
+        // runtime without a separate expect/actual helper that carries a Context.
+        buildConfig = true
+    }
     defaultConfig {
         applicationId = "com.apptolast.fiscsitmonitor"
         minSdk = libs.versions.android.minSdk.get().toInt()
@@ -108,6 +137,11 @@ android {
         }
     }
     buildTypes {
+        getByName("debug") {
+            // Force the AndroidManifest `<meta-data>` to the Google test App ID so debug builds
+            // can never accidentally initialise MobileAds against the production AdMob account.
+            manifestPlaceholders["admobAppId"] = testAdmobAppIdAndroid
+        }
         getByName("release") {
             isMinifyEnabled = true
             isShrinkResources = true
@@ -116,6 +150,7 @@ android {
                 "proguard-rules.pro",
             )
             signingConfig = signingConfigs.getByName("release")
+            manifestPlaceholders["admobAppId"] = admobAppIdAndroidProd
         }
     }
     compileOptions {
@@ -137,10 +172,11 @@ buildkonfig {
             "API_BASE_URL",
             localProperties.getProperty("API_BASE_URL", "https://satisfactory-dashboard.pablohgdev.com")
         )
-        buildConfigField(
-            STRING,
-            "WS_APP_KEY",
-            localProperties.getProperty("WS_APP_KEY", "satisfactory-key")
-        )
+        // Native Advanced Ad IDs — production from local.properties, test always hardcoded.
+        // `commonMain/ads/AdIds.kt` picks between prod/test based on `isDebugBuild`.
+        buildConfigField(STRING, "ADMOB_NATIVE_ID_ANDROID", admobNativeIdAndroidProd)
+        buildConfigField(STRING, "ADMOB_NATIVE_ID_IOS", admobNativeIdIosProd)
+        buildConfigField(STRING, "ADMOB_NATIVE_ID_ANDROID_TEST", testAdmobNativeIdAndroid)
+        buildConfigField(STRING, "ADMOB_NATIVE_ID_IOS_TEST", testAdmobNativeIdIos)
     }
 }

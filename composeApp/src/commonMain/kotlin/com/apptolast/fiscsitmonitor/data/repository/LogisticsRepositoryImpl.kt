@@ -23,4 +23,9 @@ class LogisticsRepositoryImpl(
 
     fun updateTrains(trains: List<TrainDto>) { _trains.value = trains }
     fun updateDrones(drones: List<DroneStationDto>) { _drones.value = drones }
+
+    fun clear() {
+        _trains.value = emptyList()
+        _drones.value = emptyList()
+    }
 }

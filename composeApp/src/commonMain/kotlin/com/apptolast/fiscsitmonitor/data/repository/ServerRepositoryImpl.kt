@@ -5,15 +5,13 @@ import com.apptolast.fiscsitmonitor.data.model.PowerCircuitDto
 import com.apptolast.fiscsitmonitor.data.model.ProductionItemDto
 import com.apptolast.fiscsitmonitor.data.model.ServerDto
 import com.apptolast.fiscsitmonitor.data.model.ServerMetricsDto
-import com.apptolast.fiscsitmonitor.data.remote.api.SatisfactoryApiService
+import com.apptolast.fiscsitmonitor.data.server.dto.DashboardSnapshotDto
 import com.apptolast.fiscsitmonitor.domain.repository.ServerRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
-class ServerRepositoryImpl(
-    private val api: SatisfactoryApiService,
-) : ServerRepository {
+class ServerRepositoryImpl : ServerRepository {
 
     private val _server = MutableStateFlow<ServerDto?>(null)
     override val server: StateFlow<ServerDto?> = _server.asStateFlow()
@@ -30,9 +28,20 @@ class ServerRepositoryImpl(
     private val _productionItems = MutableStateFlow<List<ProductionItemDto>>(emptyList())
     override val productionItems: StateFlow<List<ProductionItemDto>> = _productionItems.asStateFlow()
 
-    override suspend fun loadInitialData() {
-        val servers = api.getServers()
-        _server.value = servers.firstOrNull()
+    fun applySnapshot(snapshot: DashboardSnapshotDto) {
+        snapshot.server?.let { _server.value = it }
+        snapshot.metrics?.let { _metrics.value = it }
+        _players.value = snapshot.players
+        _powerCircuits.value = deduplicateCircuits(snapshot.circuits)
+        _productionItems.value = snapshot.production
+    }
+
+    fun clear() {
+        _server.value = null
+        _metrics.value = null
+        _players.value = emptyList()
+        _powerCircuits.value = emptyList()
+        _productionItems.value = emptyList()
     }
 
     private fun deduplicateCircuits(circuits: List<PowerCircuitDto>): List<PowerCircuitDto> {
