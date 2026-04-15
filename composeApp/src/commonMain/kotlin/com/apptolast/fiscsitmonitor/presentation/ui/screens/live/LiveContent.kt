@@ -17,9 +17,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import com.apptolast.fiscsitmonitor.presentation.ui.components.BadgeType
-import com.apptolast.fiscsitmonitor.presentation.ui.components.BannerAd
 import com.apptolast.fiscsitmonitor.presentation.ui.components.EmptyState
 import com.apptolast.fiscsitmonitor.presentation.ui.components.EventCard
+import com.apptolast.fiscsitmonitor.presentation.ui.components.NativeAd
 import com.apptolast.fiscsitmonitor.presentation.ui.components.SectionHeader
 import com.apptolast.fiscsitmonitor.presentation.ui.components.SummaryRow
 import com.apptolast.fiscsitmonitor.presentation.ui.theme.FicsitMonitorTheme
@@ -94,6 +94,9 @@ fun LiveContent(
             )
         }
 
+        // Native ad between Summary and Events — high-visibility placement before the feed.
+        NativeAd()
+
         // Activity feed
         SectionHeader(
             title = stringResource(Res.string.section_live_events),
@@ -119,13 +122,13 @@ fun LiveContent(
             }
         } else {
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                events.forEach { event ->
+                events.forEachIndexed { index, event ->
                     EventCard(event = event)
+                    // Additional ad every 5 events for long feeds.
+                    if ((index + 1) % 5 == 0) NativeAd()
                 }
             }
         }
-
-        BannerAd()
     }
 }
 

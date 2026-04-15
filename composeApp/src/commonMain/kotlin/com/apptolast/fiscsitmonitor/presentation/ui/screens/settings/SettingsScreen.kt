@@ -29,7 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.apptolast.fiscsitmonitor.domain.model.UserServer
-import com.apptolast.fiscsitmonitor.presentation.ui.components.BannerAd
+import com.apptolast.fiscsitmonitor.presentation.ui.components.NativeAd
 import com.apptolast.fiscsitmonitor.presentation.ui.screens.onboarding.ServerForm
 import com.apptolast.fiscsitmonitor.presentation.ui.screens.onboarding.ServerFormCallbacks
 import com.apptolast.fiscsitmonitor.presentation.ui.screens.onboarding.ServerFormState
@@ -165,7 +165,7 @@ private fun SettingsContent(
                 Text(stringResource(Res.string.settings_logout))
             }
 
-        BannerAd()
+        NativeAd()
     }
 }
 

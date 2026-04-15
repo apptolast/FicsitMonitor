@@ -24,9 +24,9 @@ import androidx.compose.ui.unit.dp
 import com.apptolast.fiscsitmonitor.data.model.DroneStationDto
 import com.apptolast.fiscsitmonitor.data.model.PlayerDto
 import com.apptolast.fiscsitmonitor.data.model.TrainDto
-import com.apptolast.fiscsitmonitor.presentation.ui.components.BannerAd
 import com.apptolast.fiscsitmonitor.presentation.ui.components.DroneCard
 import com.apptolast.fiscsitmonitor.presentation.ui.components.EmptyState
+import com.apptolast.fiscsitmonitor.presentation.ui.components.NativeAd
 import com.apptolast.fiscsitmonitor.presentation.ui.components.PlayerCard
 import com.apptolast.fiscsitmonitor.presentation.ui.components.SectionHeader
 import com.apptolast.fiscsitmonitor.presentation.ui.components.TrainCard
@@ -115,6 +115,9 @@ fun LogisticsContent(
             }
         }
 
+        // Native ad between Drones and Players — high-visibility placement.
+        NativeAd()
+
         // Players
         val onlineCount = players.count { it.isOnline }
         SectionHeader(
@@ -141,7 +144,6 @@ fun LogisticsContent(
             }
         }
 
-        BannerAd()
     }
 }
 

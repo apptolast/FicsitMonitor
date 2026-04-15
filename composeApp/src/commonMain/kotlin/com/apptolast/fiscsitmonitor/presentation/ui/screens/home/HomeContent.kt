@@ -33,10 +33,10 @@ import com.apptolast.fiscsitmonitor.data.model.ServerMetricsDto
 import com.apptolast.fiscsitmonitor.data.model.TrainDto
 import com.apptolast.fiscsitmonitor.presentation.ui.components.AlertBanner
 import com.apptolast.fiscsitmonitor.presentation.ui.components.BadgeType
-import com.apptolast.fiscsitmonitor.presentation.ui.components.BannerAd
 import com.apptolast.fiscsitmonitor.presentation.ui.components.FicsitStatusBar
 import com.apptolast.fiscsitmonitor.presentation.ui.components.InfoRow
 import com.apptolast.fiscsitmonitor.presentation.ui.components.MetricCard
+import com.apptolast.fiscsitmonitor.presentation.ui.components.NativeAd
 import com.apptolast.fiscsitmonitor.presentation.ui.components.SectionHeader
 import com.apptolast.fiscsitmonitor.presentation.ui.theme.FicsitMonitorTheme
 import com.apptolast.fiscsitmonitor.presentation.ui.theme.FicsitTheme
@@ -141,6 +141,8 @@ fun HomeContent(
             badgeType = BadgeType.SUCCESS,
         )
 
+        NativeAd()
+
         val totalConsumed = circuits.sumOf { it.powerConsumed }
         val totalCapacity = circuits.sumOf { it.powerCapacity }
         val fusesCount = circuits.count { it.fuseTriggered }
@@ -229,7 +231,6 @@ fun HomeContent(
             }
         }
 
-        BannerAd()
     }
 }
 

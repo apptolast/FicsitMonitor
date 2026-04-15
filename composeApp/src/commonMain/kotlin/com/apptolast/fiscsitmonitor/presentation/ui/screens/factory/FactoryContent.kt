@@ -29,11 +29,11 @@ import com.apptolast.fiscsitmonitor.data.model.ExtractorDto
 import com.apptolast.fiscsitmonitor.data.model.FactoryBuildingDto
 import com.apptolast.fiscsitmonitor.data.model.ResourceSinkDto
 import com.apptolast.fiscsitmonitor.data.model.WorldInventoryItemDto
-import com.apptolast.fiscsitmonitor.presentation.ui.components.BannerAd
 import com.apptolast.fiscsitmonitor.presentation.ui.components.ExtractorCard
 import com.apptolast.fiscsitmonitor.presentation.ui.components.InventoryItem
 import com.apptolast.fiscsitmonitor.presentation.ui.components.MachineCard
 import com.apptolast.fiscsitmonitor.presentation.ui.components.MetricCard
+import com.apptolast.fiscsitmonitor.presentation.ui.components.NativeAd
 import com.apptolast.fiscsitmonitor.presentation.ui.components.SectionHeader
 import com.apptolast.fiscsitmonitor.presentation.ui.theme.FicsitMonitorTheme
 import com.apptolast.fiscsitmonitor.presentation.ui.theme.FicsitTheme
@@ -129,9 +129,11 @@ fun FactoryContent(
             }
         }
 
-        // Machine list
-        buildings.forEach { building ->
+        // Machine list — native ad before the list, then every 5 buildings.
+        NativeAd()
+        buildings.forEachIndexed { index, building ->
             MachineCard(building = building)
+            if ((index + 1) % 5 == 0) NativeAd()
         }
 
         // Extractors
@@ -142,8 +144,9 @@ fun FactoryContent(
                 iconTint = FicsitTheme.colors.accentOrange,
                 badgeText = stringResource(Res.string.badge_every_30s),
             )
-            extractors.forEach { extractor ->
+            extractors.forEachIndexed { index, extractor ->
                 ExtractorCard(extractor = extractor)
+                if ((index + 1) % 5 == 0) NativeAd()
             }
         }
 
@@ -223,7 +226,6 @@ fun FactoryContent(
             }
         }
 
-        BannerAd()
     }
 }
 

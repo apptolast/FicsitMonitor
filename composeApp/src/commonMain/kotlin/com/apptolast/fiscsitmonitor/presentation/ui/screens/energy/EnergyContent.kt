@@ -17,10 +17,10 @@ import com.apptolast.fiscsitmonitor.data.model.GeneratorDto
 import com.apptolast.fiscsitmonitor.data.model.PowerCircuitDto
 import com.apptolast.fiscsitmonitor.presentation.ui.components.AlertBanner
 import com.apptolast.fiscsitmonitor.presentation.ui.components.BadgeType
-import com.apptolast.fiscsitmonitor.presentation.ui.components.BannerAd
 import com.apptolast.fiscsitmonitor.presentation.ui.components.CircuitCard
 import com.apptolast.fiscsitmonitor.presentation.ui.components.GeneratorCard
 import com.apptolast.fiscsitmonitor.presentation.ui.components.MetricCard
+import com.apptolast.fiscsitmonitor.presentation.ui.components.NativeAd
 import com.apptolast.fiscsitmonitor.presentation.ui.components.SectionHeader
 import com.apptolast.fiscsitmonitor.presentation.ui.theme.FicsitMonitorTheme
 import com.apptolast.fiscsitmonitor.presentation.ui.theme.FicsitTheme
@@ -69,6 +69,9 @@ fun EnergyContent(
 
         // Generators section
         if (generators.isNotEmpty()) {
+            // Native ad between Circuits and Generators — natural content break.
+            NativeAd()
+
             SectionHeader(
                 title = stringResource(Res.string.label_generators),
                 icon = Icons.Default.LocalFireDepartment,
@@ -109,12 +112,12 @@ fun EnergyContent(
                 )
             }
 
-            generators.forEach { generator ->
+            generators.forEachIndexed { index, generator ->
                 GeneratorCard(generator = generator)
+                // Additional ad every 5 generators for long lists.
+                if ((index + 1) % 5 == 0) NativeAd()
             }
         }
-
-        BannerAd()
     }
 }
 

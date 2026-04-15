@@ -20,17 +20,18 @@ val localProperties = Properties().apply {
 // These are ALWAYS used in debug builds and as a safe fallback when local.properties is missing
 // the real IDs — never ship these to production.
 private val testAdmobAppIdAndroid = "ca-app-pub-3940256099942544~3347511713"
-private val testAdmobBannerIdAndroid = "ca-app-pub-3940256099942544/6300978111"
 private val testAdmobAppIdIos = "ca-app-pub-3940256099942544~1458002511"
-private val testAdmobBannerIdIos = "ca-app-pub-3940256099942544/2934735716"
+// Native Advanced Ad test IDs (https://developers.google.com/admob/android/native/start)
+private val testAdmobNativeIdAndroid = "ca-app-pub-3940256099942544/2247696110"
+private val testAdmobNativeIdIos = "ca-app-pub-3940256099942544/3986624511"
 
 // Production IDs come from local.properties; if absent we fall back to the Google test IDs so
 // the project still builds on a clean checkout. A release build without real IDs in
 // local.properties will simply ship test ads — intentional, not a silent miscompilation.
 val admobAppIdAndroidProd: String = localProperties.getProperty("ADMOB_APP_ID_ANDROID", testAdmobAppIdAndroid)
-val admobBannerIdAndroidProd: String = localProperties.getProperty("ADMOB_BANNER_ID_ANDROID", testAdmobBannerIdAndroid)
 val admobAppIdIosProd: String = localProperties.getProperty("ADMOB_APP_ID_IOS", testAdmobAppIdIos)
-val admobBannerIdIosProd: String = localProperties.getProperty("ADMOB_BANNER_ID_IOS", testAdmobBannerIdIos)
+val admobNativeIdAndroidProd: String = localProperties.getProperty("ADMOB_NATIVE_ID_ANDROID", testAdmobNativeIdAndroid)
+val admobNativeIdIosProd: String = localProperties.getProperty("ADMOB_NATIVE_ID_IOS", testAdmobNativeIdIos)
 
 kotlin {
     androidTarget {
@@ -171,15 +172,11 @@ buildkonfig {
             "API_BASE_URL",
             localProperties.getProperty("API_BASE_URL", "https://satisfactory-dashboard.pablohgdev.com")
         )
-        // Production (from local.properties) and test (Google-provided) ad unit IDs are both
-        // exposed; `commonMain/ads/AdIds.kt` picks between them based on `isDebugBuild`.
-        buildConfigField(STRING, "ADMOB_APP_ID_ANDROID", admobAppIdAndroidProd)
-        buildConfigField(STRING, "ADMOB_BANNER_ID_ANDROID", admobBannerIdAndroidProd)
-        buildConfigField(STRING, "ADMOB_APP_ID_IOS", admobAppIdIosProd)
-        buildConfigField(STRING, "ADMOB_BANNER_ID_IOS", admobBannerIdIosProd)
-        buildConfigField(STRING, "ADMOB_APP_ID_ANDROID_TEST", testAdmobAppIdAndroid)
-        buildConfigField(STRING, "ADMOB_BANNER_ID_ANDROID_TEST", testAdmobBannerIdAndroid)
-        buildConfigField(STRING, "ADMOB_APP_ID_IOS_TEST", testAdmobAppIdIos)
-        buildConfigField(STRING, "ADMOB_BANNER_ID_IOS_TEST", testAdmobBannerIdIos)
+        // Native Advanced Ad IDs — production from local.properties, test always hardcoded.
+        // `commonMain/ads/AdIds.kt` picks between prod/test based on `isDebugBuild`.
+        buildConfigField(STRING, "ADMOB_NATIVE_ID_ANDROID", admobNativeIdAndroidProd)
+        buildConfigField(STRING, "ADMOB_NATIVE_ID_IOS", admobNativeIdIosProd)
+        buildConfigField(STRING, "ADMOB_NATIVE_ID_ANDROID_TEST", testAdmobNativeIdAndroid)
+        buildConfigField(STRING, "ADMOB_NATIVE_ID_IOS_TEST", testAdmobNativeIdIos)
     }
 }
