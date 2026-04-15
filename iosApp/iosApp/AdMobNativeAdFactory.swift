@@ -4,44 +4,104 @@ import UIKit
 import UserMessagingPlatform
 
 /// Swift implementation of the Kotlin-exported `IosNativeAdFactory` protocol.
+@MainActor
 final class AdMobNativeAdFactory: NSObject, IosNativeAdFactory {
 
-    // We must retain the AdLoaders. If they are local variables, they get
-    // deallocated immediately when the function returns, cancelling the ad request.
-    private var activeLoaders: [ObjectIdentifier: AdLoader] = [:]
+    /// Custom UIView subclass to hold the adUnitId, allowing for delayed loading.
+    private final class AdContainerView: UIView {
+        let adUnitId: String
+
+        init(adUnitId: String) {
+            self.adUnitId = adUnitId
+            super.init(frame: .zero)
+        }
+
+        required init?(coder: NSCoder) {
+            fatalError("init(coder:) has not been implemented")
+        }
+    }
+
+    // We must retain the AdLoaders AND their delegate bridges. `AdLoader.delegate` is `weak`
+    // in the Google Mobile Ads SDK, so if the bridge is a local variable it gets deallocated
+    // immediately when the function returns — and when the ad response arrives, the callback
+    // hits a nil delegate and the container is never populated.
+    private var activeLoaders: [ObjectIdentifier: (loader: AdLoader, bridge: NativeAdLoaderBridge)] = [:]
+    // Observer tokens returned by `NotificationCenter.addObserver(forName:...:using:)`. The
+    // block-based API returns an opaque token that must be passed back to `removeObserver(_:)`
+    // — passing `self` there silently does nothing.
+    private var pendingObservers: [ObjectIdentifier: NSObjectProtocol] = [:]
 
     func createNativeAdView(adUnitId: String) -> UIView {
-        let container = UIView()
+        let container = AdContainerView(adUnitId: adUnitId)
         container.backgroundColor = UIColor(hex: "#141414")
         container.layer.cornerRadius = 12
         container.layer.borderWidth = 1
         container.layer.borderColor = UIColor(hex: "#2F2F2F").cgColor
         container.clipsToBounds = true
 
-        // Check if we can request ads according to the UMP consent status.
-        // If the consent form is still showing or not yet accepted, we skip the request.
+        loadAd(into: container)
+        return container
+    }
+
+    private func loadAd(into container: AdContainerView) {
+        // Si ya hay un anuncio cargando o cargado para este contenedor, no hacemos nada.
+        let loaderId = ObjectIdentifier(container)
+        if activeLoaders[loaderId] != nil {
+            return
+        }
+
+        // Si NO podemos pedir anuncios por consentimiento, esperamos.
+        // Pero no dependemos de 'isReady' que es una bandera nuestra, sino de la oficial del SDK.
         guard ConsentInformation.shared.canRequestAds else {
-            print("[AdMobNativeAdFactory] Skipping ad request: Consent not yet gathered or SDK not started.")
-            return container
+            // Si ya hay un observer pendiente para este container, no registrar otro.
+            if pendingObservers[loaderId] != nil {
+                return
+            }
+            print("[AdMobNativeAdFactory] Consentimiento no disponible aún. Esperando...")
+            let token = NotificationCenter.default.addObserver(
+                forName: .adsAllowed,
+                object: nil,
+                queue: .main
+            ) { [weak self, weak container] _ in
+                guard let self = self, let container = container else {
+                    return
+                }
+                if let token = self.pendingObservers.removeValue(forKey: loaderId) {
+                    NotificationCenter.default.removeObserver(token)
+                }
+                self.loadAd(into: container)
+            }
+            pendingObservers[loaderId] = token
+            return
+        }
+
+        // Intentar obtener el rootViewController. Si es nil, reintentamos en un momento.
+        guard let rootVC = Self.rootViewController() else {
+            print("[AdMobNativeAdFactory] rootViewController no disponible, reintentando en 0.5s...")
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+                self?.loadAd(into: container)
+            }
+            return
         }
 
         let loader = AdLoader(
-            adUnitID: adUnitId,
-            rootViewController: Self.rootViewController(),
+            adUnitID: container.adUnitId,
+            rootViewController: rootVC,
             adTypes: [.native],
             options: nil
         )
 
-        let loaderId = ObjectIdentifier(container)
         let bridge = NativeAdLoaderBridge(container: container) { [weak self] in
             self?.activeLoaders.removeValue(forKey: loaderId)
         }
 
         loader.delegate = bridge
-        activeLoaders[loaderId] = loader
-        loader.load(Request())
+        // Crítico: guardar tanto el loader como el bridge. El delegate del AdLoader es `weak`,
+        // así que si el bridge no se retiene aquí, ARC lo libera antes de que llegue la respuesta.
+        activeLoaders[loaderId] = (loader, bridge)
 
-        return container
+        print("[AdMobNativeAdFactory] Solicitando anuncio nativo: \(container.adUnitId)")
+        loader.load(Request())
     }
 
     private static func rootViewController() -> UIViewController? {
@@ -69,6 +129,7 @@ private final class NativeAdLoaderBridge: NSObject, AdLoaderDelegate, NativeAdLo
     }
 
     func adLoader(_ adLoader: AdLoader, didReceive nativeAd: NativeAd) {
+        print("[AdMobNativeAdFactory] Ad received: \(nativeAd.headline ?? "<no headline>")")
         defer {
             onCompleted()
         }

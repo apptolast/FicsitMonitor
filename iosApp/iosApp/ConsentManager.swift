@@ -29,6 +29,7 @@ import UserMessagingPlatform
 @MainActor
 final class ConsentManager {
     static let shared = ConsentManager()
+    private(set) var isReady = false
     private var mobileAdsStarted = false
 
     private init() {
@@ -47,27 +48,18 @@ final class ConsentManager {
         let parameters = RequestParameters()
         #if DEBUG
         let debug = DebugSettings()
-        debug.geography = .EEA
-        // Simulators are test devices by default. On a physical device, copy the hashed ID
-        // the SDK prints to the Xcode console on first run and add it here:
-        //   debug.testDeviceIdentifiers = ["YOUR-HASHED-ID"]
+        // Activa esto solo si quieres forzar la aparición del mensaje de GDPR para pruebas
+        // debug.geography = .EEA 
         parameters.debugSettings = debug
         #endif
 
         print("[ConsentManager] requestConsentInfoUpdate …")
         await withCheckedContinuation { (continuation: CheckedContinuation<Void, Never>) in
             ConsentInformation.shared.requestConsentInfoUpdate(with: parameters) { error in
-                if let error {
+                if let error = error {
                     print("[ConsentManager] info update error: \(error.localizedDescription)")
-                } else {
-                    let info = ConsentInformation.shared
-                    print(
-                        "[ConsentManager] info updated: " +
-                            "status=\(info.consentStatus.debugLabel) " +
-                            "formStatus=\(info.formStatus.debugLabel) " +
-                            "canRequestAds=\(info.canRequestAds)"
-                    )
                 }
+                // Continuamos incluso si hay error para no bloquear la app
                 continuation.resume()
             }
         }
@@ -95,8 +87,18 @@ final class ConsentManager {
         }
         mobileAdsStarted = true
         print("[ConsentManager] Starting MobileAds SDK.")
-        MobileAds.shared.start(completionHandler: nil)
+        MobileAds.shared.start { [weak self] _ in
+            DispatchQueue.main.async {
+                self?.isReady = true
+                // Notify the rest of the app that ads can now be requested
+                NotificationCenter.default.post(name: .adsAllowed, object: nil)
+            }
+        }
     }
+}
+
+extension Notification.Name {
+    static let adsAllowed = Notification.Name("AdsAllowed")
 }
 
 private extension ConsentStatus {
