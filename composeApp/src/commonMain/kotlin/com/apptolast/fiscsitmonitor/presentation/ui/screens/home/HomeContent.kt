@@ -33,6 +33,7 @@ import com.apptolast.fiscsitmonitor.data.model.ServerMetricsDto
 import com.apptolast.fiscsitmonitor.data.model.TrainDto
 import com.apptolast.fiscsitmonitor.presentation.ui.components.AlertBanner
 import com.apptolast.fiscsitmonitor.presentation.ui.components.BadgeType
+import com.apptolast.fiscsitmonitor.presentation.ui.components.BannerAd
 import com.apptolast.fiscsitmonitor.presentation.ui.components.FicsitStatusBar
 import com.apptolast.fiscsitmonitor.presentation.ui.components.InfoRow
 import com.apptolast.fiscsitmonitor.presentation.ui.components.MetricCard
@@ -87,6 +88,7 @@ fun HomeContent(
     generators: List<GeneratorDto>,
     trains: List<TrainDto>,
     modifier: Modifier = Modifier,
+    onOpenSettings: () -> Unit = {},
 ) {
     val fuseTriggered = circuits.any { it.fuseTriggered }
     val noData = stringResource(Res.string.no_data)
@@ -101,6 +103,7 @@ fun HomeContent(
         FicsitStatusBar(
             isOnline = server?.status == "online",
             serverAddress = "${server?.host ?: "..."} \u00B7 ${server?.name ?: stringResource(Res.string.satisfactory_server)}",
+            onOpenSettings = onOpenSettings,
         )
 
         // Alert
@@ -225,6 +228,8 @@ fun HomeContent(
                 )
             }
         }
+
+        BannerAd()
     }
 }
 

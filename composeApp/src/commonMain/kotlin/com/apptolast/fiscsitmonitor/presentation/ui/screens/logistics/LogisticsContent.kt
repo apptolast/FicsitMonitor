@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import com.apptolast.fiscsitmonitor.data.model.DroneStationDto
 import com.apptolast.fiscsitmonitor.data.model.PlayerDto
 import com.apptolast.fiscsitmonitor.data.model.TrainDto
+import com.apptolast.fiscsitmonitor.presentation.ui.components.BannerAd
 import com.apptolast.fiscsitmonitor.presentation.ui.components.DroneCard
 import com.apptolast.fiscsitmonitor.presentation.ui.components.EmptyState
 import com.apptolast.fiscsitmonitor.presentation.ui.components.PlayerCard
@@ -139,6 +140,8 @@ fun LogisticsContent(
                 PlayerCard(player = player)
             }
         }
+
+        BannerAd()
     }
 }
 

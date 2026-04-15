@@ -9,19 +9,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.outlined.ArrowBack
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -34,6 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.apptolast.fiscsitmonitor.domain.model.UserServer
+import com.apptolast.fiscsitmonitor.presentation.ui.components.BannerAd
 import com.apptolast.fiscsitmonitor.presentation.ui.screens.onboarding.ServerForm
 import com.apptolast.fiscsitmonitor.presentation.ui.screens.onboarding.ServerFormCallbacks
 import com.apptolast.fiscsitmonitor.presentation.ui.screens.onboarding.ServerFormState
@@ -49,14 +45,12 @@ import ficsitmonitor.composeapp.generated.resources.settings_logout
 import ficsitmonitor.composeapp.generated.resources.settings_saved
 import ficsitmonitor.composeapp.generated.resources.settings_select_server
 import ficsitmonitor.composeapp.generated.resources.settings_server_section
-import ficsitmonitor.composeapp.generated.resources.settings_title
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun SettingsScreen(
-    onBack: () -> Unit,
     onLoggedOut: () -> Unit,
     viewModel: SettingsViewModel = koinViewModel(),
 ) {
@@ -72,7 +66,6 @@ fun SettingsScreen(
 
     SettingsContent(
         state = state,
-        onBack = onBack,
         onNameChange = viewModel::onNameChange,
         onHostChange = viewModel::onHostChange,
         onApiPortChange = viewModel::onApiPortChange,
@@ -84,11 +77,9 @@ fun SettingsScreen(
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun SettingsContent(
     state: SettingsUiState,
-    onBack: () -> Unit = {},
     onNameChange: (String) -> Unit = {},
     onHostChange: (String) -> Unit = {},
     onApiPortChange: (String) -> Unit = {},
@@ -98,31 +89,17 @@ private fun SettingsContent(
     onLogout: () -> Unit = {},
     onSelectServer: (Int) -> Unit = {},
 ) {
-    Scaffold(
-        topBar = {
-            CenterAlignedTopAppBar(
-                title = { Text(stringResource(Res.string.settings_title)) },
-                navigationIcon = {
-                    IconButton(onClick = onBack) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Outlined.ArrowBack,
-                            contentDescription = null,
-                        )
-                    }
-                },
-            )
-        },
-        containerColor = MaterialTheme.colorScheme.background,
-    ) { innerPadding ->
-
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState())
-                .padding(innerPadding)
-                .padding(24.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-        ) {
+    // No Scaffold / TopAppBar here on purpose — the title "Ajustes" and back button are
+    // rendered by the root FicsitNavHost Scaffold's topBar slot, which already consumes the
+    // system insets. This Column receives the correctly-sized inner padding from that root
+    // Scaffold via the parent NavHost.
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState())
+            .padding(horizontal = 24.dp, vertical = 16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+    ) {
 
             if (state.isLoading) {
                 Box(
@@ -187,7 +164,8 @@ private fun SettingsContent(
             ) {
                 Text(stringResource(Res.string.settings_logout))
             }
-        }
+
+        BannerAd()
     }
 }
 

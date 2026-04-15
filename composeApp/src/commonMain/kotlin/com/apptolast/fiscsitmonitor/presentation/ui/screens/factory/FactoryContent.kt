@@ -29,6 +29,7 @@ import com.apptolast.fiscsitmonitor.data.model.ExtractorDto
 import com.apptolast.fiscsitmonitor.data.model.FactoryBuildingDto
 import com.apptolast.fiscsitmonitor.data.model.ResourceSinkDto
 import com.apptolast.fiscsitmonitor.data.model.WorldInventoryItemDto
+import com.apptolast.fiscsitmonitor.presentation.ui.components.BannerAd
 import com.apptolast.fiscsitmonitor.presentation.ui.components.ExtractorCard
 import com.apptolast.fiscsitmonitor.presentation.ui.components.InventoryItem
 import com.apptolast.fiscsitmonitor.presentation.ui.components.MachineCard
@@ -221,6 +222,8 @@ fun FactoryContent(
                 }
             }
         }
+
+        BannerAd()
     }
 }
 

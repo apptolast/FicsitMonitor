@@ -16,6 +16,7 @@ import org.koin.compose.viewmodel.koinViewModel
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
+    onOpenSettings: () -> Unit = {},
     viewModel: HomeViewModel = koinViewModel(),
 ) {
     val server by viewModel.server.collectAsStateWithLifecycle()
@@ -54,6 +55,7 @@ fun HomeScreen(
                     extractors = extractors,
                     generators = generators,
                     trains = trains,
+                    onOpenSettings = onOpenSettings,
                 )
             }
         }

@@ -17,6 +17,7 @@ import com.apptolast.fiscsitmonitor.data.model.GeneratorDto
 import com.apptolast.fiscsitmonitor.data.model.PowerCircuitDto
 import com.apptolast.fiscsitmonitor.presentation.ui.components.AlertBanner
 import com.apptolast.fiscsitmonitor.presentation.ui.components.BadgeType
+import com.apptolast.fiscsitmonitor.presentation.ui.components.BannerAd
 import com.apptolast.fiscsitmonitor.presentation.ui.components.CircuitCard
 import com.apptolast.fiscsitmonitor.presentation.ui.components.GeneratorCard
 import com.apptolast.fiscsitmonitor.presentation.ui.components.MetricCard
@@ -112,6 +113,8 @@ fun EnergyContent(
                 GeneratorCard(generator = generator)
             }
         }
+
+        BannerAd()
     }
 }
 

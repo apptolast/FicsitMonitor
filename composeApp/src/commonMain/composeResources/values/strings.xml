@@ -132,7 +132,7 @@
     <string name="auth_login_email">Email</string>
     <string name="auth_login_password">Password</string>
     <string name="auth_login_submit">Log in</string>
-    <string name="auth_login_no_account">Don\'t have an account? Sign up</string>
+    <string name="auth_login_no_account">Don&apos;t have an account? Sign up</string>
     <string name="auth_login_error_invalid">Invalid credentials</string>
 
     <!-- Auth: register -->

@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import com.apptolast.fiscsitmonitor.presentation.ui.components.BadgeType
+import com.apptolast.fiscsitmonitor.presentation.ui.components.BannerAd
 import com.apptolast.fiscsitmonitor.presentation.ui.components.EmptyState
 import com.apptolast.fiscsitmonitor.presentation.ui.components.EventCard
 import com.apptolast.fiscsitmonitor.presentation.ui.components.SectionHeader
@@ -123,6 +124,8 @@ fun LiveContent(
                 }
             }
         }
+
+        BannerAd()
     }
 }
 

@@ -10,13 +10,20 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.ArrowBack
 import androidx.compose.material.icons.filled.Bolt
 import androidx.compose.material.icons.filled.Dashboard
 import androidx.compose.material.icons.filled.LocalShipping
 import androidx.compose.material.icons.filled.PrecisionManufacturing
 import androidx.compose.material.icons.filled.Stream
+import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -43,6 +50,7 @@ import com.apptolast.fiscsitmonitor.presentation.ui.screens.settings.SettingsScr
 import com.apptolast.fiscsitmonitor.presentation.ui.screens.splash.SplashScreen
 import com.apptolast.fiscsitmonitor.presentation.viewmodel.SplashDestination
 import ficsitmonitor.composeapp.generated.resources.Res
+import ficsitmonitor.composeapp.generated.resources.settings_title
 import ficsitmonitor.composeapp.generated.resources.tab_energy
 import ficsitmonitor.composeapp.generated.resources.tab_factory
 import ficsitmonitor.composeapp.generated.resources.tab_home
@@ -65,6 +73,7 @@ private val tabDestinations: List<TabDestination> = listOf(
     TabDestination(Route.Live, Res.string.tab_live, Icons.Default.Stream),
 )
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FicsitNavHost(
     modifier: Modifier = Modifier,
@@ -76,6 +85,10 @@ fun FicsitNavHost(
     val isInMainGraph = currentDestination
         ?.hierarchy
         ?.any { it.hasRoute(Route.Main::class) } == true
+
+    val isSettings = currentDestination
+        ?.hierarchy
+        ?.any { it.hasRoute(Route.Settings::class) } == true
 
     val selectedIndex = tabDestinations
         .indexOfFirst { tab ->
@@ -89,6 +102,31 @@ fun FicsitNavHost(
         modifier = modifier,
         containerColor = MaterialTheme.colorScheme.background,
         contentWindowInsets = WindowInsets.safeDrawing,
+        topBar = {
+            // Centralized topBar. The tab destinations (Home / Energy / Factory / Logistics /
+            // Live) render their own in-content headers (FicsitStatusBar, SectionHeader) so
+            // the topBar slot stays empty for them. Only Settings currently needs a system
+            // topBar, and it's handled here so SettingsScreen is a plain Column — no nested
+            // Scaffold, no double insets consumption.
+            if (isSettings) {
+                CenterAlignedTopAppBar(
+                    title = { Text(text = stringResource(Res.string.settings_title)) },
+                    navigationIcon = {
+                        IconButton(onClick = { navController.popBackStack() }) {
+                            Icon(
+                                imageVector = Icons.AutoMirrored.Outlined.ArrowBack,
+                                contentDescription = null,
+                            )
+                        }
+                    },
+                    colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+                        containerColor = MaterialTheme.colorScheme.background,
+                        titleContentColor = MaterialTheme.colorScheme.onBackground,
+                        navigationIconContentColor = MaterialTheme.colorScheme.onBackground,
+                    ),
+                )
+            }
+        },
         bottomBar = {
             AnimatedVisibility(
                 visible = isInMainGraph,
@@ -173,7 +211,11 @@ fun FicsitNavHost(
             }
 
             navigation<Route.Main>(startDestination = Route.Home) {
-                composable<Route.Home> { HomeScreen() }
+                composable<Route.Home> {
+                    HomeScreen(
+                        onOpenSettings = { navController.navigate(Route.Settings) },
+                    )
+                }
                 composable<Route.Energy> { EnergyScreen() }
                 composable<Route.Factory> { FactoryScreen() }
                 composable<Route.Logistics> { LogisticsScreen() }
@@ -182,7 +224,6 @@ fun FicsitNavHost(
 
             composable<Route.Settings> {
                 SettingsScreen(
-                    onBack = { navController.popBackStack() },
                     onLoggedOut = {
                         navController.navigate(Route.Login) {
                             popUpTo(navController.graph.id) { inclusive = true }

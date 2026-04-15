@@ -16,6 +16,22 @@ val localProperties = Properties().apply {
     if (file.exists()) load(file.inputStream())
 }
 
+// Google test IDs (see https://developers.google.com/admob/android/test-ads and /admob/ios/test-ads).
+// These are ALWAYS used in debug builds and as a safe fallback when local.properties is missing
+// the real IDs — never ship these to production.
+private val testAdmobAppIdAndroid = "ca-app-pub-3940256099942544~3347511713"
+private val testAdmobBannerIdAndroid = "ca-app-pub-3940256099942544/6300978111"
+private val testAdmobAppIdIos = "ca-app-pub-3940256099942544~1458002511"
+private val testAdmobBannerIdIos = "ca-app-pub-3940256099942544/2934735716"
+
+// Production IDs come from local.properties; if absent we fall back to the Google test IDs so
+// the project still builds on a clean checkout. A release build without real IDs in
+// local.properties will simply ship test ads — intentional, not a silent miscompilation.
+val admobAppIdAndroidProd: String = localProperties.getProperty("ADMOB_APP_ID_ANDROID", testAdmobAppIdAndroid)
+val admobBannerIdAndroidProd: String = localProperties.getProperty("ADMOB_BANNER_ID_ANDROID", testAdmobBannerIdAndroid)
+val admobAppIdIosProd: String = localProperties.getProperty("ADMOB_APP_ID_IOS", testAdmobAppIdIos)
+val admobBannerIdIosProd: String = localProperties.getProperty("ADMOB_BANNER_ID_IOS", testAdmobBannerIdIos)
+
 kotlin {
     androidTarget {
         compilerOptions {
@@ -38,6 +54,8 @@ kotlin {
             implementation(libs.androidx.activity.compose)
             implementation(libs.ktor.client.okhttp)
             implementation(libs.koin.android)
+            implementation(libs.play.services.ads)
+            implementation(libs.google.ump)
         }
         commonMain.dependencies {
             // Compose
@@ -89,6 +107,11 @@ android {
     namespace = "com.apptolast.fiscsitmonitor"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
+    buildFeatures {
+        // Needed for `BuildConfig.DEBUG` — used by `AdIds` to pick test vs prod ad unit IDs at
+        // runtime without a separate expect/actual helper that carries a Context.
+        buildConfig = true
+    }
     defaultConfig {
         applicationId = "com.apptolast.fiscsitmonitor"
         minSdk = libs.versions.android.minSdk.get().toInt()
@@ -113,6 +136,11 @@ android {
         }
     }
     buildTypes {
+        getByName("debug") {
+            // Force the AndroidManifest `<meta-data>` to the Google test App ID so debug builds
+            // can never accidentally initialise MobileAds against the production AdMob account.
+            manifestPlaceholders["admobAppId"] = testAdmobAppIdAndroid
+        }
         getByName("release") {
             isMinifyEnabled = true
             isShrinkResources = true
@@ -121,6 +149,7 @@ android {
                 "proguard-rules.pro",
             )
             signingConfig = signingConfigs.getByName("release")
+            manifestPlaceholders["admobAppId"] = admobAppIdAndroidProd
         }
     }
     compileOptions {
@@ -142,5 +171,15 @@ buildkonfig {
             "API_BASE_URL",
             localProperties.getProperty("API_BASE_URL", "https://satisfactory-dashboard.pablohgdev.com")
         )
+        // Production (from local.properties) and test (Google-provided) ad unit IDs are both
+        // exposed; `commonMain/ads/AdIds.kt` picks between them based on `isDebugBuild`.
+        buildConfigField(STRING, "ADMOB_APP_ID_ANDROID", admobAppIdAndroidProd)
+        buildConfigField(STRING, "ADMOB_BANNER_ID_ANDROID", admobBannerIdAndroidProd)
+        buildConfigField(STRING, "ADMOB_APP_ID_IOS", admobAppIdIosProd)
+        buildConfigField(STRING, "ADMOB_BANNER_ID_IOS", admobBannerIdIosProd)
+        buildConfigField(STRING, "ADMOB_APP_ID_ANDROID_TEST", testAdmobAppIdAndroid)
+        buildConfigField(STRING, "ADMOB_BANNER_ID_ANDROID_TEST", testAdmobBannerIdAndroid)
+        buildConfigField(STRING, "ADMOB_APP_ID_IOS_TEST", testAdmobAppIdIos)
+        buildConfigField(STRING, "ADMOB_BANNER_ID_IOS_TEST", testAdmobBannerIdIos)
     }
 }
