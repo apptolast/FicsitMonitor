@@ -736,3 +736,4 @@ obj/
 /supabase/*
 /.mcp.json
 *.klib
+/screenshots/*
