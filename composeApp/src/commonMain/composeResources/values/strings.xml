@@ -164,6 +164,9 @@
     <string name="server_form_error_server_unreachable">Could not reach the server. Check host, ports and admin password.</string>
     <string name="server_form_error_provisioning_failed">Could not provision the server. Double-check the admin password and make sure the Satisfactory server is running.</string>
 
+    <!-- Web viewer screen -->
+    <string name="web_viewer_title">Documentation</string>
+
     <!-- Add server help sheet -->
     <string name="help_sheet_title">Configuration guide</string>
     <string name="help_sheet_fields_title">What is each field?</string>

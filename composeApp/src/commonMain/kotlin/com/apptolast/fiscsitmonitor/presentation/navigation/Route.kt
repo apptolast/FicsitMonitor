@@ -36,4 +36,7 @@ sealed interface Route {
 
     @Serializable
     data object Live : Route
+
+    @Serializable
+    data class WebViewer(val url: String) : Route
 }

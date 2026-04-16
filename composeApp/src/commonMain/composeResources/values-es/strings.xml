@@ -164,6 +164,9 @@
     <string name="server_form_error_server_unreachable">No se pudo contactar con el servidor. Revisa host, puertos y contraseña de admin.</string>
     <string name="server_form_error_provisioning_failed">No se pudo provisionar el servidor. Revisa la contraseña de admin y comprueba que el servidor Satisfactory está en marcha.</string>
 
+    <!-- Web viewer screen -->
+    <string name="web_viewer_title">Documentación</string>
+
     <!-- Add server help sheet -->
     <string name="help_sheet_title">Guía de configuración</string>
     <string name="help_sheet_fields_title">¿Qué es cada campo?</string>

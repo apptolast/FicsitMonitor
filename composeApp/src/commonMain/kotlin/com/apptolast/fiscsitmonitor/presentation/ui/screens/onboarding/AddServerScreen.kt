@@ -20,7 +20,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
@@ -64,6 +63,7 @@ private const val DOCS_URL = "https://apptolast.github.io/FicsitDocumentation/"
 @Composable
 fun AddServerScreen(
     onServerCreated: () -> Unit,
+    onOpenUrl: (String) -> Unit,
     viewModel: AddServerViewModel = koinViewModel(),
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -87,6 +87,7 @@ fun AddServerScreen(
             onAdminPasswordChange = viewModel::onAdminPasswordChange,
             onSubmit = viewModel::submit,
         ),
+        onOpenUrl = onOpenUrl,
     )
 }
 
@@ -95,6 +96,7 @@ fun AddServerScreen(
 private fun AddServerContent(
     state: ServerFormState,
     callbacks: ServerFormCallbacks,
+    onOpenUrl: (String) -> Unit,
 ) {
     val scaffoldState = rememberBottomSheetScaffoldState(
         bottomSheetState = rememberStandardBottomSheetState(
@@ -106,7 +108,7 @@ private fun AddServerContent(
     BottomSheetScaffold(
         scaffoldState = scaffoldState,
         sheetPeekHeight = 72.dp,
-        sheetContent = { AddServerHelpSheet() },
+        sheetContent = { AddServerHelpSheet(onOpenUrl = onOpenUrl) },
     ) { innerPadding ->
         Column(
             modifier = Modifier
@@ -142,9 +144,7 @@ private fun AddServerContent(
 }
 
 @Composable
-private fun AddServerHelpSheet() {
-    val uriHandler = LocalUriHandler.current
-
+private fun AddServerHelpSheet(onOpenUrl: (String) -> Unit) {
     Text(
         text = stringResource(Res.string.help_sheet_title),
         style = MaterialTheme.typography.titleMedium,
@@ -217,7 +217,7 @@ private fun AddServerHelpSheet() {
         }
 
         TextButton(
-            onClick = { uriHandler.openUri(DOCS_URL) },
+            onClick = { onOpenUrl(DOCS_URL) },
             modifier = Modifier.padding(top = 4.dp),
         ) {
             Text(
@@ -274,6 +274,7 @@ private fun PreviewAddServerScreen() {
                 onAdminPasswordChange = {},
                 onSubmit = {},
             ),
+            onOpenUrl = {},
         )
     }
 }
