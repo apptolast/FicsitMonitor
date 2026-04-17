@@ -130,10 +130,10 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
-    signingConfigs {
-        create("release") {
-            val storeFilePath = localProperties.getProperty("signing.storeFile")
-            if (storeFilePath != null) {
+    val storeFilePath = localProperties.getProperty("signing.storeFile")
+    if (storeFilePath != null) {
+        signingConfigs {
+            create("release") {
                 storeFile = file(storeFilePath)
                 storePassword = localProperties.getProperty("signing.storePassword")
                 keyAlias = localProperties.getProperty("signing.keyAlias")
@@ -154,7 +154,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro",
             )
-            signingConfig = signingConfigs.getByName("release")
+            signingConfigs.findByName("release")?.let { signingConfig = it }
             manifestPlaceholders["admobAppId"] = admobAppIdAndroidProd
         }
     }
