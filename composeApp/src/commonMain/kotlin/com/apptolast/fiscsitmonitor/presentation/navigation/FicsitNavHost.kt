@@ -27,6 +27,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hasRoute
@@ -36,6 +37,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
 import com.apptolast.fiscsitmonitor.presentation.ui.components.BottomBarTab
 import com.apptolast.fiscsitmonitor.presentation.ui.components.FicsitBottomBar
 import com.apptolast.fiscsitmonitor.presentation.ui.screens.auth.LoginScreen
@@ -48,6 +50,7 @@ import com.apptolast.fiscsitmonitor.presentation.ui.screens.logistics.LogisticsS
 import com.apptolast.fiscsitmonitor.presentation.ui.screens.onboarding.AddServerScreen
 import com.apptolast.fiscsitmonitor.presentation.ui.screens.settings.SettingsScreen
 import com.apptolast.fiscsitmonitor.presentation.ui.screens.splash.SplashScreen
+import com.apptolast.fiscsitmonitor.presentation.ui.screens.webviewer.WebViewerScreen
 import com.apptolast.fiscsitmonitor.presentation.viewmodel.SplashDestination
 import ficsitmonitor.composeapp.generated.resources.Res
 import ficsitmonitor.composeapp.generated.resources.settings_title
@@ -56,6 +59,7 @@ import ficsitmonitor.composeapp.generated.resources.tab_factory
 import ficsitmonitor.composeapp.generated.resources.tab_home
 import ficsitmonitor.composeapp.generated.resources.tab_live
 import ficsitmonitor.composeapp.generated.resources.tab_logistics
+import ficsitmonitor.composeapp.generated.resources.web_viewer_title
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 
@@ -90,6 +94,10 @@ fun FicsitNavHost(
         ?.hierarchy
         ?.any { it.hasRoute(Route.Settings::class) } == true
 
+    val isWebViewer = currentDestination
+        ?.hierarchy
+        ?.any { it.hasRoute(Route.WebViewer::class) } == true
+
     val selectedIndex = tabDestinations
         .indexOfFirst { tab ->
             currentDestination?.hierarchy?.any { it.hasRoute(tab.route::class) } == true
@@ -103,14 +111,17 @@ fun FicsitNavHost(
         containerColor = MaterialTheme.colorScheme.background,
         contentWindowInsets = WindowInsets.safeDrawing,
         topBar = {
-            // Centralized topBar. The tab destinations (Home / Energy / Factory / Logistics /
-            // Live) render their own in-content headers (FicsitStatusBar, SectionHeader) so
-            // the topBar slot stays empty for them. Only Settings currently needs a system
-            // topBar, and it's handled here so SettingsScreen is a plain Column — no nested
-            // Scaffold, no double insets consumption.
+            // Centralized topBar. Tab destinations render their own in-content headers so the
+            // topBar slot stays empty for them. Settings and WebViewer both need a back-button
+            // bar — handled here to keep those screens plain composables with no nested Scaffold.
             if (isSettings) {
                 CenterAlignedTopAppBar(
-                    title = { Text(text = stringResource(Res.string.settings_title)) },
+                    title = {
+                        Text(
+                            text = if (isSettings) stringResource(Res.string.settings_title)
+                            else stringResource(Res.string.web_viewer_title),
+                        )
+                    },
                     navigationIcon = {
                         IconButton(onClick = { navController.popBackStack() }) {
                             Icon(
@@ -119,10 +130,12 @@ fun FicsitNavHost(
                             )
                         }
                     },
-                    colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+                    colors = TopAppBarDefaults.topAppBarColors(
                         containerColor = MaterialTheme.colorScheme.background,
-                        titleContentColor = MaterialTheme.colorScheme.onBackground,
+                        scrolledContainerColor = Color.Unspecified,
                         navigationIconContentColor = MaterialTheme.colorScheme.onBackground,
+                        titleContentColor = MaterialTheme.colorScheme.onBackground,
+                        actionIconContentColor = Color.Unspecified
                     ),
                 )
             }
@@ -207,6 +220,7 @@ fun FicsitNavHost(
                             launchSingleTop = true
                         }
                     },
+                    onOpenUrl = { url -> navController.navigate(Route.WebViewer(url)) },
                 )
             }
 
@@ -231,6 +245,11 @@ fun FicsitNavHost(
                         }
                     },
                 )
+            }
+
+            composable<Route.WebViewer> { backStackEntry ->
+                val route: Route.WebViewer = backStackEntry.toRoute()
+                WebViewerScreen(url = route.url)
             }
         }
     }

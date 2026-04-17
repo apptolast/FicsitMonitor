@@ -164,6 +164,25 @@
     <string name="server_form_error_server_unreachable">No se pudo contactar con el servidor. Revisa host, puertos y contraseña de admin.</string>
     <string name="server_form_error_provisioning_failed">No se pudo provisionar el servidor. Revisa la contraseña de admin y comprueba que el servidor Satisfactory está en marcha.</string>
 
+    <!-- Web viewer screen -->
+    <string name="web_viewer_title">Documentación</string>
+
+    <!-- Add server help sheet -->
+    <string name="help_sheet_title">Guía de configuración</string>
+    <string name="help_sheet_fields_title">¿Qué es cada campo?</string>
+    <string name="help_field_name">Un alias para identificar este servidor en la app. Por ejemplo: «Mi servidor» o «Servidor de Pablo».</string>
+    <string name="help_field_host">La dirección IP pública de la máquina donde corre tu servidor. Debe ser accesible desde internet; las IPs locales (192.168.x.x) no funcionan.</string>
+    <string name="help_field_api_port">Puerto de la API oficial de Satisfactory. Por defecto 7777; cámbialo solo si lo modificaste al configurar el servidor.</string>
+    <string name="help_field_frm_http">Puerto HTTP del mod FicsitRemoteMonitoring (FRM). Por defecto 8080. Expone las métricas de tu fábrica: producción, potencia, edificios, etc.</string>
+    <string name="help_field_frm_ws">Puerto WebSocket del mismo mod FRM. Por defecto 8081. Permite que la app reciba actualizaciones en tiempo real.</string>
+    <string name="help_field_admin_password">La contraseña que configuraste al arrancar el servidor por primera vez. Se usa una sola vez para autenticar la conexión y no se guarda en tu dispositivo.</string>
+    <string name="help_sheet_intro_title">¿De qué va todo esto?</string>
+    <string name="help_sheet_intro_p1">Satisfactory es un juego de construcción de fábricas de Coffee Stain Studios donde automatizas la extracción y transformación de recursos en un planeta alienígena.</string>
+    <string name="help_sheet_intro_p2">Para jugar con amigos de forma continua, puedes arrancar un servidor dedicado: una instancia del juego que corre de forma independiente en un servidor o VPS.</string>
+    <string name="help_sheet_intro_p3">FICSIT Monitor se conecta a ese servidor a través del mod FicsitRemoteMonitoring (FRM) y te muestra en tiempo real el estado de tu fábrica: circuitos de potencia, tasas de producción, jugadores conectados, trenes, drones, extracciones y mucho más.</string>
+    <string name="help_sheet_intro_p4">Sin servidor dedicado en marcha con el mod FRM instalado, la app no puede mostrar datos.</string>
+    <string name="help_sheet_docs_link">Consulta la documentación completa</string>
+
     <!-- Settings -->
     <string name="settings_title">Ajustes</string>
     <string name="settings_server_section">Servidor Satisfactory</string>

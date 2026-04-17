@@ -164,6 +164,25 @@
     <string name="server_form_error_server_unreachable">Could not reach the server. Check host, ports and admin password.</string>
     <string name="server_form_error_provisioning_failed">Could not provision the server. Double-check the admin password and make sure the Satisfactory server is running.</string>
 
+    <!-- Web viewer screen -->
+    <string name="web_viewer_title">Documentation</string>
+
+    <!-- Add server help sheet -->
+    <string name="help_sheet_title">Configuration guide</string>
+    <string name="help_sheet_fields_title">What is each field?</string>
+    <string name="help_field_name">An alias to identify this server in the app. For example: \"My server\" or \"Pablo\'s server\".</string>
+    <string name="help_field_host">The public IP address of the machine running your server. It must be accessible from the internet; local IPs (192.168.x.x) won\'t work.</string>
+    <string name="help_field_api_port">Port for the official Satisfactory API. Default is 7777; only change this if you explicitly remapped it when setting up the server.</string>
+    <string name="help_field_frm_http">HTTP port of the FicsitRemoteMonitoring (FRM) mod. Default is 8080. This mod exposes your factory metrics: production, power, buildings, etc.</string>
+    <string name="help_field_frm_ws">WebSocket port of the same FRM mod. Default is 8081. Enables real-time metric streaming from your factory.</string>
+    <string name="help_field_admin_password">The password you set when starting the server for the first time. Used once to authenticate the connection; not stored on your device.</string>
+    <string name="help_sheet_intro_title">What is all this?</string>
+    <string name="help_sheet_intro_p1">Satisfactory is a factory-building game by Coffee Stain Studios where you automate the extraction and transformation of resources on an alien planet.</string>
+    <string name="help_sheet_intro_p2">To play with friends without depending on a host always being online, you can run a dedicated server: an independent game instance running on a server or VPS.</string>
+    <string name="help_sheet_intro_p3">FICSIT Monitor connects to your dedicated server through the FicsitRemoteMonitoring (FRM) mod and shows you the real-time state of your factory: power circuits, production rates, connected players, trains, drones, extractors and more.</string>
+    <string name="help_sheet_intro_p4">Without a dedicated server running with the FRM mod installed, the app cannot display any data.</string>
+    <string name="help_sheet_docs_link">Read the full documentation</string>
+
     <!-- Settings -->
     <string name="settings_title">Settings</string>
     <string name="settings_server_section">Satisfactory Server</string>

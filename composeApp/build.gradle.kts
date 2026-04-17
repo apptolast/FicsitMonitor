@@ -24,6 +24,9 @@ private val testAdmobAppIdIos = "ca-app-pub-3940256099942544~1458002511"
 // Native Advanced Ad test IDs (https://developers.google.com/admob/android/native/start)
 private val testAdmobNativeIdAndroid = "ca-app-pub-3940256099942544/2247696110"
 private val testAdmobNativeIdIos = "ca-app-pub-3940256099942544/3986624511"
+// Standard Banner test IDs (https://developers.google.com/admob/android/banner)
+private val testAdmobBannerIdAndroid = "ca-app-pub-3940256099942544/6300978111"
+private val testAdmobBannerIdIos = "ca-app-pub-3940256099942544/2934735716"
 
 // Production IDs come from local.properties; if absent we fall back to the Google test IDs so
 // the project still builds on a clean checkout. A release build without real IDs in
@@ -32,6 +35,8 @@ val admobAppIdAndroidProd: String = localProperties.getProperty("ADMOB_APP_ID_AN
 val admobAppIdIosProd: String = localProperties.getProperty("ADMOB_APP_ID_IOS", testAdmobAppIdIos)
 val admobNativeIdAndroidProd: String = localProperties.getProperty("ADMOB_NATIVE_ID_ANDROID", testAdmobNativeIdAndroid)
 val admobNativeIdIosProd: String = localProperties.getProperty("ADMOB_NATIVE_ID_IOS", testAdmobNativeIdIos)
+val admobBannerIdAndroidProd: String = localProperties.getProperty("ADMOB_BANNER_ID_ANDROID", testAdmobBannerIdAndroid)
+val admobBannerIdIosProd: String = localProperties.getProperty("ADMOB_BANNER_ID_IOS", testAdmobBannerIdIos)
 
 kotlin {
     androidTarget {
@@ -117,8 +122,8 @@ android {
         applicationId = "com.apptolast.fiscsitmonitor"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
-        versionCode = 1
-        versionName = "0.1.0"
+        versionCode = 2
+        versionName = "1.0.0"
     }
     packaging {
         resources {
@@ -178,5 +183,10 @@ buildkonfig {
         buildConfigField(STRING, "ADMOB_NATIVE_ID_IOS", admobNativeIdIosProd)
         buildConfigField(STRING, "ADMOB_NATIVE_ID_ANDROID_TEST", testAdmobNativeIdAndroid)
         buildConfigField(STRING, "ADMOB_NATIVE_ID_IOS_TEST", testAdmobNativeIdIos)
+        // Standard Banner Ad IDs — production from local.properties, test always hardcoded.
+        buildConfigField(STRING, "ADMOB_BANNER_ID_ANDROID", admobBannerIdAndroidProd)
+        buildConfigField(STRING, "ADMOB_BANNER_ID_IOS", admobBannerIdIosProd)
+        buildConfigField(STRING, "ADMOB_BANNER_ID_ANDROID_TEST", testAdmobBannerIdAndroid)
+        buildConfigField(STRING, "ADMOB_BANNER_ID_IOS_TEST", testAdmobBannerIdIos)
     }
 }

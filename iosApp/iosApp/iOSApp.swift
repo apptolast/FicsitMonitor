@@ -12,6 +12,10 @@ struct iOSApp: App {
         // Register the Swift-side factory that builds NativeAdView instances; the Kotlin
         // `actual fun NativeAd()` looks this up from Koin at compose time.
         KoinInitializerKt.registerNativeAdFactory(factory: AdMobNativeAdFactory())
+
+        // Register the Swift-side factory that builds BannerView instances; the Kotlin
+        // `actual fun BannerAd()` looks this up from Koin at compose time.
+        KoinInitializerKt.registerBannerAdFactory(factory: AdMobBannerAdFactory())
     }
 
     var body: some Scene {
