@@ -122,7 +122,7 @@ android {
         applicationId = "com.apptolast.fiscsitmonitor"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
-        versionCode = 1
+        versionCode = 2
         versionName = "1.0.0"
     }
     packaging {
@@ -154,7 +154,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro",
             )
-//            signingConfig = signingConfigs.getByName("release")
+            signingConfig = signingConfigs.getByName("release")
             manifestPlaceholders["admobAppId"] = admobAppIdAndroidProd
         }
     }
