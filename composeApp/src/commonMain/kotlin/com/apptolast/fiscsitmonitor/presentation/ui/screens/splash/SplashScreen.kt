@@ -18,6 +18,10 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.apptolast.fiscsitmonitor.presentation.ui.theme.FicsitMonitorTheme
 import com.apptolast.fiscsitmonitor.presentation.viewmodel.SplashDestination
 import com.apptolast.fiscsitmonitor.presentation.viewmodel.SplashViewModel
+import ficsitmonitor.composeapp.generated.resources.Res
+import ficsitmonitor.composeapp.generated.resources.app_title
+import ficsitmonitor.composeapp.generated.resources.splash_subtitle
+import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -50,12 +54,12 @@ private fun SplashContent() {
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             Text(
-                text = "FICSIT Monitor",
+                text = stringResource(Res.string.app_title),
                 style = MaterialTheme.typography.headlineMedium,
                 color = MaterialTheme.colorScheme.primary,
             )
             Text(
-                text = "SATISFACTORY DASHBOARD",
+                text = stringResource(Res.string.splash_subtitle),
                 style = MaterialTheme.typography.labelMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )

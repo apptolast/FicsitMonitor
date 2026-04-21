@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Bottom Navigation -->
+    <string name="tab_home">START</string>
+    <string name="tab_energy">ENERGIE</string>
+    <string name="tab_factory">FABRIK</string>
+    <string name="tab_logistics">LOGISTIK</string>
+    <string name="tab_live">LIVE</string>
+
+    <!-- Status Bar -->
+    <string name="app_title">FICSIT Monitor</string>
+    <string name="status_online">ONLINE</string>
+    <string name="status_offline">OFFLINE</string>
+
+    <!-- Badges -->
+    <string name="badge_live">LIVE</string>
+    <string name="badge_real_time">ECHTZEIT</string>
+    <string name="badge_every_15s">ALLE 15S</string>
+    <string name="badge_every_30s">ALLE 30S</string>
+    <string name="badge_every_60s">ALLE 60S</string>
+    <string name="badge_fuse">SICHERUNG</string>
+
+    <!-- Home Screen -->
+    <string name="section_key_metrics">KENNZAHLEN</string>
+    <string name="label_tech_tier">TECH-STUFE</string>
+    <string name="label_phase">PHASE</string>
+    <string name="label_tick_rate">TICK-RATE</string>
+    <string name="label_players">SPIELER</string>
+    <string name="label_session">SITZUNG</string>
+    <string name="label_energy">ENERGIE</string>
+    <string name="label_circuits">STROMKREISE</string>
+    <string name="label_production">PRODUKTION</string>
+    <string name="label_trains">ZÜGE</string>
+    <string name="label_extractors">FÖRDERER</string>
+    <string name="label_generators">GENERATOREN</string>
+    <string name="subtitle_peak_demand">Spitzenbedarf</string>
+    <string name="subtitle_no_energy">Keine Energie</string>
+    <string name="subtitle_server_idle">Server inaktiv</string>
+    <string name="subtitle_running">Läuft</string>
+    <string name="tier_format">Stufe %1$d</string>
+    <string name="players_format">%1$d / 8</string>
+    <string name="items_format">%1$d Objekte</string>
+    <string name="max_per_min_format">Max: %1$d/min</string>
+    <string name="current_per_min_format">Aktuell: %1$d/min</string>
+    <string name="fuse_triggered_format">%1$d Sicherung ausgelöst</string>
+    <string name="of_max_format">von 8 max.</string>
+    <string name="derailed_format">%1$d entgleist</string>
+    <string name="producing_format">%1$d produzieren</string>
+    <string name="mw_cap_format">%1$s MW Kap.</string>
+    <string name="alert_fuse_triggered">SICHERUNG AUSGELÖST — Überlastung des Stromnetzes</string>
+
+    <!-- Energy Screen -->
+    <string name="section_electrical_grid">STROMNETZ</string>
+    <string name="alert_fuse_demand">SICHERUNG AUSGELÖST! — Bedarf übersteigt die Generatorleistung.</string>
+    <string name="circuit_format">Stromkreis %1$d</string>
+    <string name="label_consumed">VERBRAUCHT</string>
+    <string name="label_capacity">KAPAZITÄT</string>
+    <string name="label_prod">PROD.</string>
+    <string name="label_peak">SPITZE</string>
+    <string name="label_use">NUTZUNG</string>
+    <string name="label_headroom">RESERVE</string>
+    <string name="label_output">LEISTUNG</string>
+    <string name="label_fuel">BRENNSTOFF</string>
+    <string name="stations_format">%1$d Stationen</string>
+    <string name="total_format">%1$d gesamt</string>
+
+    <!-- Factory Screen -->
+    <string name="section_factory_status">FABRIKSTATUS</string>
+    <string name="label_buildings">GEBÄUDE</string>
+    <string name="label_active">AKTIV</string>
+    <string name="label_stopped">GESTOPPT</string>
+    <string name="label_paused">PAUSIERT</string>
+    <string name="label_recipe">REZEPT</string>
+    <string name="label_speed">GESCHWINDIGKEIT</string>
+    <string name="label_power">LEISTUNG</string>
+    <string name="label_current_prod">AKT. PROD.</string>
+    <string name="label_max_prod">MAX. PROD.</string>
+    <string name="label_efficiency">EFFIZIENZ</string>
+    <string name="section_extractors">FÖRDERER (%1$d)</string>
+    <string name="section_world_inventory">WELT-INVENTAR</string>
+    <string name="section_resource_sink">AWESOME SINK</string>
+    <string name="label_coupons">COUPONS</string>
+    <string name="label_total_points">GESAMTPUNKTE</string>
+    <string name="label_next_coupon">Nächster Coupon:</string>
+    <string name="fallback_building">Gebäude</string>
+    <string name="fallback_generator">Generator</string>
+
+    <!-- Logistics Screen -->
+    <string name="section_logistics">LOGISTIK</string>
+    <string name="label_drones">Drohnen</string>
+    <string name="label_trains_section">Züge</string>
+    <string name="section_players">SPIELER (%1$d)</string>
+    <string name="empty_trains">Keine Züge registriert</string>
+    <string name="empty_drones">Keine Drohnen registriert</string>
+    <string name="empty_players">Kein Spieler online</string>
+    <string name="fallback_train">Zug</string>
+    <string name="fallback_drone_station">Drohnenstation</string>
+    <string name="status_self_driving">AUTONOM</string>
+    <string name="status_derailed">ENTGLEIST</string>
+    <string name="label_station">STATION</string>
+    <string name="label_paired">GEKOPPELT</string>
+    <string name="label_round_trip">RUNDREISE</string>
+    <string name="idle">INAKTIV</string>
+
+    <!-- Live Screen -->
+    <string name="section_live_events">LIVE-EREIGNISSE</string>
+    <string name="section_summary">ZUSAMMENFASSUNG</string>
+    <string name="empty_events">Noch keine Ereignisse</string>
+    <string name="summary_players_online">Spieler online</string>
+    <string name="summary_active_circuits">Aktive Stromkreise</string>
+    <string name="summary_active_trains">Aktive Züge</string>
+    <string name="summary_items_in_production">Objekte in Produktion</string>
+    <string name="summary_fuses_triggered">Ausgelöste Sicherungen</string>
+
+    <!-- Common -->
+    <string name="no_data">---</string>
+    <string name="satisfactory_server">Satisfactory-Server</string>
+    <string name="common_saving">Speichert…</string>
+    <string name="common_retry">Erneut versuchen</string>
+    <string name="common_required">Pflichtfeld</string>
+    <string name="common_invalid_email">Ungültige E-Mail</string>
+    <string name="common_password_mismatch">Passwörter stimmen nicht überein</string>
+    <string name="common_password_too_short">Passwort muss mindestens 8 Zeichen lang sein</string>
+    <string name="common_error_network">Netzwerkfehler. Überprüfe deine Verbindung.</string>
+    <string name="common_error_generic">Unerwarteter Fehler</string>
+    <string name="common_cancel">Abbrechen</string>
+    <string name="common_confirm">Bestätigen</string>
+
+    <!-- Auth: login -->
+    <string name="auth_login_title">Anmelden</string>
+    <string name="auth_login_subtitle">Willkommen zurück</string>
+    <string name="auth_login_email">E-Mail</string>
+    <string name="auth_login_password">Passwort</string>
+    <string name="auth_login_submit">Anmelden</string>
+    <string name="auth_login_no_account">Noch kein Konto? Registrieren</string>
+    <string name="auth_login_error_invalid">Ungültige Anmeldedaten</string>
+
+    <!-- Auth: register -->
+    <string name="auth_register_title">Konto erstellen</string>
+    <string name="auth_register_name">Name</string>
+    <string name="auth_register_password_confirm">Passwort bestätigen</string>
+    <string name="auth_register_submit">Registrieren</string>
+    <string name="auth_register_have_account">Schon ein Konto? Anmelden</string>
+    <string name="auth_register_error_validation">Bitte behebe die Fehler und versuche es erneut</string>
+
+    <!-- Server form -->
+    <string name="server_form_title_add">Füge deinen ersten Server hinzu</string>
+    <string name="server_form_title_edit">Server bearbeiten</string>
+    <string name="server_form_subtitle">Konfiguriere die Verbindung zu deinem dedizierten Satisfactory-Server. Das Dashboard fragt regelmäßig Daten über die HTTPS-API und das FicsitRemoteMonitoring-Mod ab.</string>
+    <string name="server_form_name">Beschreibender Name</string>
+    <string name="server_form_host">Host oder öffentliche IP</string>
+    <string name="server_form_host_hint">z. B. 46.224.182.211</string>
+    <string name="server_form_api_port">API-Port</string>
+    <string name="server_form_frm_http">FRM HTTP</string>
+    <string name="server_form_frm_ws">FRM WebSocket</string>
+    <string name="server_form_admin_password">Admin-Passwort</string>
+    <string name="server_form_admin_password_hint">Wird einmal zum Einrichten der Verbindung verwendet. Nicht auf deinem Gerät gespeichert.</string>
+    <string name="server_form_submit_add">Speichern und Überwachung starten</string>
+    <string name="server_form_submit_edit">Änderungen speichern</string>
+    <string name="server_form_connecting">Verbinde mit deinem Server…</string>
+    <string name="server_form_error_invalid_port">Port muss zwischen 1 und 65535 liegen</string>
+    <string name="server_form_error_admin_password_too_short">Passwort muss mindestens 8 Zeichen lang sein</string>
+    <string name="server_form_error_admin_password_invalid">Falsches Passwort oder vom Server abgelehnt</string>
+    <string name="server_form_error_server_unreachable">Server nicht erreichbar. Überprüfe Host, Ports und Admin-Passwort.</string>
+    <string name="server_form_error_provisioning_failed">Server konnte nicht eingerichtet werden. Prüfe das Admin-Passwort und stelle sicher, dass der Satisfactory-Server läuft.</string>
+
+    <!-- Web viewer screen -->
+    <string name="web_viewer_title">Dokumentation</string>
+
+    <!-- Add server help sheet -->
+    <string name="help_sheet_title">Einrichtungsleitfaden</string>
+    <string name="help_sheet_fields_title">Was ist jedes Feld?</string>
+    <string name="help_field_name">Ein Alias, um diesen Server in der App zu identifizieren. Zum Beispiel: \"Mein Server\" oder \"Pablos Server\".</string>
+    <string name="help_field_host">Die öffentliche IP-Adresse der Maschine, auf der dein Server läuft. Sie muss aus dem Internet erreichbar sein; lokale IPs (192.168.x.x) funktionieren nicht.</string>
+    <string name="help_field_api_port">Port der offiziellen Satisfactory-API. Standard ist 7777; ändere ihn nur, wenn du ihn beim Einrichten des Servers ausdrücklich angepasst hast.</string>
+    <string name="help_field_frm_http">HTTP-Port des FicsitRemoteMonitoring (FRM)-Mods. Standard ist 8080. Dieser Mod stellt die Metriken deiner Fabrik bereit: Produktion, Leistung, Gebäude usw.</string>
+    <string name="help_field_frm_ws">WebSocket-Port desselben FRM-Mods. Standard ist 8081. Ermöglicht das Streamen von Metriken in Echtzeit aus deiner Fabrik.</string>
+    <string name="help_field_admin_password">Das Passwort, das du beim ersten Start des Servers festgelegt hast. Wird einmal zur Authentifizierung verwendet und nicht auf deinem Gerät gespeichert.</string>
+    <string name="help_sheet_intro_title">Worum geht es hier?</string>
+    <string name="help_sheet_intro_p1">Satisfactory ist ein Fabrikbau-Spiel von Coffee Stain Studios, in dem du die Gewinnung und Verarbeitung von Ressourcen auf einem fremden Planeten automatisierst.</string>
+    <string name="help_sheet_intro_p2">Um mit Freunden zu spielen, ohne dass ein Host ständig online sein muss, kannst du einen dedizierten Server betreiben: eine eigenständige Spielinstanz, die auf einem Server oder VPS läuft.</string>
+    <string name="help_sheet_intro_p3">FICSIT Monitor verbindet sich über das FicsitRemoteMonitoring (FRM)-Mod mit deinem dedizierten Server und zeigt dir in Echtzeit den Zustand deiner Fabrik: Stromkreise, Produktionsraten, verbundene Spieler, Züge, Drohnen, Förderer und mehr.</string>
+    <string name="help_sheet_intro_p4">Ohne einen dedizierten Server mit installiertem FRM-Mod kann die App keine Daten anzeigen.</string>
+    <string name="help_sheet_docs_link">Vollständige Dokumentation lesen</string>
+
+    <!-- Splash -->
+    <string name="splash_subtitle">SATISFACTORY DASHBOARD</string>
+
+    <!-- Units -->
+    <string name="unit_speed_kmh_format">%1$s km/h</string>
+
+    <!-- Live event titles -->
+    <string name="live_event_title_power">Energie</string>
+    <string name="live_event_title_factory">Fabrik</string>
+    <string name="live_event_title_trains">Züge</string>
+    <string name="live_event_title_drones">Drohnen</string>
+    <string name="live_event_title_players">Spieler</string>
+    <string name="live_event_title_production">Produktion</string>
+    <string name="live_event_title_generators">Generatoren</string>
+    <string name="live_event_title_extractors">Förderer</string>
+    <string name="live_event_title_server">Server</string>
+    <string name="live_event_title_metrics">Metriken</string>
+    <string name="live_event_title_inventory">Inventar</string>
+    <string name="live_event_title_sink">Ressourcensenke</string>
+
+    <!-- Live event subtitles -->
+    <string name="live_event_server_status_format">Serverstatus: %1$s</string>
+    <string name="live_event_metrics_updated">Servermetriken aktualisiert</string>
+    <string name="live_event_power_updated">Stromkreise aktualisiert</string>
+    <string name="live_event_fuse_triggered_format">Sicherung ausgelöst (%1$d Stromkreise)</string>
+    <string name="live_event_production_updated">Produktionsdaten aktualisiert</string>
+    <string name="live_event_players_online_format">%1$d Spieler online</string>
+    <string name="live_event_trains_updated">Züge aktualisiert</string>
+    <string name="live_event_trains_derailed_format">%1$d Züge entgleist!</string>
+    <string name="live_event_drones_updated">Drohnenstationen aktualisiert</string>
+    <string name="live_event_generators_updated">Generatoren aktualisiert</string>
+    <string name="live_event_factory_updated">Fabrikgebäude aktualisiert</string>
+    <string name="live_event_extractors_updated">Förderer aktualisiert</string>
+    <string name="live_event_inventory_updated">Welt-Inventar aktualisiert</string>
+    <string name="live_event_sink_updated">Ressourcensenke aktualisiert</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Einstellungen</string>
+    <string name="settings_server_section">Satisfactory-Server</string>
+    <string name="settings_advanced_section">Erweitert</string>
+    <string name="settings_base_url">API-Basis-URL</string>
+    <string name="settings_base_url_hint">Überschreibt die Basis-URL des FicsitMonitor-Backends (leer lassen für Standard)</string>
+    <string name="settings_logout">Abmelden</string>
+    <string name="settings_logout_confirm">Du kehrst zum Anmeldebildschirm zurück.</string>
+    <string name="settings_saved">Gespeichert</string>
+    <string name="settings_select_server">Aktiver Server</string>
+</resources>

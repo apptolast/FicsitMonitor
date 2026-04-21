@@ -11,6 +11,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.apptolast.fiscsitmonitor.presentation.viewmodel.HomeViewModel
+import ficsitmonitor.composeapp.generated.resources.Res
+import ficsitmonitor.composeapp.generated.resources.common_error_generic
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
@@ -40,7 +43,7 @@ fun HomeScreen(
             }
             error != null && server == null -> {
                 Text(
-                    text = error ?: "Error",
+                    text = error ?: stringResource(Res.string.common_error_generic),
                     color = MaterialTheme.colorScheme.error,
                     modifier = Modifier.align(Alignment.Center),
                 )

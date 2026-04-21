@@ -27,10 +27,22 @@ import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.decodeFromJsonElement
 import kotlinx.serialization.json.jsonArray
 
-data class LiveWsEvent(
-    val type: String,
-    val summary: String,
-)
+sealed class LiveWsEvent {
+    data class ServerStatus(val status: String) : LiveWsEvent()
+    object MetricsUpdated : LiveWsEvent()
+    object PowerUpdated : LiveWsEvent()
+    data class FuseTriggered(val circuits: Int) : LiveWsEvent()
+    object ProductionUpdated : LiveWsEvent()
+    data class PlayersOnline(val online: Int) : LiveWsEvent()
+    object TrainsUpdated : LiveWsEvent()
+    data class TrainsDerailed(val count: Int) : LiveWsEvent()
+    object DronesUpdated : LiveWsEvent()
+    object GeneratorsUpdated : LiveWsEvent()
+    object FactoryUpdated : LiveWsEvent()
+    object ExtractorsUpdated : LiveWsEvent()
+    object InventoryUpdated : LiveWsEvent()
+    object SinkUpdated : LiveWsEvent()
+}
 
 class WebSocketEventDispatcher(
     private val webSocketClient: ReverbWebSocketClient,
@@ -66,67 +78,67 @@ class WebSocketEventDispatcher(
             "server.status.updated" -> {
                 handleServerStatus(event.data)
                 val status = event.data["status"]?.toString()?.trim('"') ?: "unknown"
-                LiveWsEvent("server", "Server status: $status")
+                LiveWsEvent.ServerStatus(status)
             }
 
             "server.metrics.updated" -> {
                 handleServerMetrics(event.data)
-                LiveWsEvent("metrics", "Server metrics updated")
+                LiveWsEvent.MetricsUpdated
             }
 
             "power.updated" -> {
                 handlePowerUpdated(event.data)
                 val fused = serverRepository.powerCircuits.value.count { it.fuseTriggered }
-                if (fused > 0) LiveWsEvent("power", "Fuse triggered ($fused circuits)")
-                else LiveWsEvent("power", "Power circuits updated")
+                if (fused > 0) LiveWsEvent.FuseTriggered(fused)
+                else LiveWsEvent.PowerUpdated
             }
 
             "production.updated" -> {
                 handleProductionUpdated(event.data)
-                LiveWsEvent("production", "Production data updated")
+                LiveWsEvent.ProductionUpdated
             }
 
             "players.updated" -> {
                 handlePlayersUpdated(event.data)
                 val online = serverRepository.players.value.count { it.isOnline }
-                LiveWsEvent("players", "$online players online")
+                LiveWsEvent.PlayersOnline(online)
             }
 
             "trains.updated" -> {
                 handleTrainsUpdated(event.data)
                 val derailed = logisticsRepository.trains.value.count { it.isDerailed }
-                if (derailed > 0) LiveWsEvent("trains", "$derailed trains derailed!")
-                else LiveWsEvent("trains", "Trains updated")
+                if (derailed > 0) LiveWsEvent.TrainsDerailed(derailed)
+                else LiveWsEvent.TrainsUpdated
             }
 
             "drones.updated" -> {
                 handleDronesUpdated(event.data)
-                LiveWsEvent("drones", "Drone stations updated")
+                LiveWsEvent.DronesUpdated
             }
 
             "generators.updated" -> {
                 handleGeneratorsUpdated(event.data)
-                LiveWsEvent("generators", "Generators updated")
+                LiveWsEvent.GeneratorsUpdated
             }
 
             "factory.updated" -> {
                 handleFactoryUpdated(event.data)
-                LiveWsEvent("factory", "Factory buildings updated")
+                LiveWsEvent.FactoryUpdated
             }
 
             "extractors.updated" -> {
                 handleExtractorsUpdated(event.data)
-                LiveWsEvent("extractors", "Extractors updated")
+                LiveWsEvent.ExtractorsUpdated
             }
 
             "world_inventory.updated" -> {
                 handleWorldInventoryUpdated(event.data)
-                LiveWsEvent("inventory", "World inventory updated")
+                LiveWsEvent.InventoryUpdated
             }
 
             "resource_sink.updated" -> {
                 handleResourceSinkUpdated(event.data)
-                LiveWsEvent("sink", "Resource sink updated")
+                LiveWsEvent.SinkUpdated
             }
 
             else -> null

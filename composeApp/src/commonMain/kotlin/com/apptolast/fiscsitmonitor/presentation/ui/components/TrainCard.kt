@@ -24,6 +24,7 @@ import ficsitmonitor.composeapp.generated.resources.label_station
 import ficsitmonitor.composeapp.generated.resources.no_data
 import ficsitmonitor.composeapp.generated.resources.status_derailed
 import ficsitmonitor.composeapp.generated.resources.status_self_driving
+import ficsitmonitor.composeapp.generated.resources.unit_speed_kmh_format
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
@@ -77,7 +78,11 @@ fun TrainCard(
         ) {
             Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
                 Text(stringResource(Res.string.label_speed), style = MaterialTheme.typography.labelSmall, color = FicsitTheme.colors.textMuted)
-                Text("${train.forwardSpeed.formatDecimal(0)} km/h", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onBackground)
+                Text(
+                    stringResource(Res.string.unit_speed_kmh_format, train.forwardSpeed.formatDecimal(0)),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onBackground
+                )
             }
             Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
                 Text(stringResource(Res.string.label_station), style = MaterialTheme.typography.labelSmall, color = FicsitTheme.colors.textMuted)

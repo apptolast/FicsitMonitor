@@ -183,6 +183,42 @@
     <string name="help_sheet_intro_p4">Sin servidor dedicado en marcha con el mod FRM instalado, la app no puede mostrar datos.</string>
     <string name="help_sheet_docs_link">Consulta la documentación completa</string>
 
+    <!-- Splash -->
+    <string name="splash_subtitle">PANEL DE SATISFACTORY</string>
+
+    <!-- Units -->
+    <string name="unit_speed_kmh_format">%1$s km/h</string>
+
+    <!-- Live event titles -->
+    <string name="live_event_title_power">Energía</string>
+    <string name="live_event_title_factory">Fábrica</string>
+    <string name="live_event_title_trains">Trenes</string>
+    <string name="live_event_title_drones">Drones</string>
+    <string name="live_event_title_players">Jugadores</string>
+    <string name="live_event_title_production">Producción</string>
+    <string name="live_event_title_generators">Generadores</string>
+    <string name="live_event_title_extractors">Extractores</string>
+    <string name="live_event_title_server">Servidor</string>
+    <string name="live_event_title_metrics">Métricas</string>
+    <string name="live_event_title_inventory">Inventario</string>
+    <string name="live_event_title_sink">Sumidero de recursos</string>
+
+    <!-- Live event subtitles -->
+    <string name="live_event_server_status_format">Estado del servidor: %1$s</string>
+    <string name="live_event_metrics_updated">Métricas del servidor actualizadas</string>
+    <string name="live_event_power_updated">Circuitos de potencia actualizados</string>
+    <string name="live_event_fuse_triggered_format">Fusible activado (%1$d circuitos)</string>
+    <string name="live_event_production_updated">Datos de producción actualizados</string>
+    <string name="live_event_players_online_format">%1$d jugadores en línea</string>
+    <string name="live_event_trains_updated">Trenes actualizados</string>
+    <string name="live_event_trains_derailed_format">¡%1$d trenes descarrilados!</string>
+    <string name="live_event_drones_updated">Estaciones de drones actualizadas</string>
+    <string name="live_event_generators_updated">Generadores actualizados</string>
+    <string name="live_event_factory_updated">Edificios de fábrica actualizados</string>
+    <string name="live_event_extractors_updated">Extractores actualizados</string>
+    <string name="live_event_inventory_updated">Inventario mundial actualizado</string>
+    <string name="live_event_sink_updated">Sumidero de recursos actualizado</string>
+
     <!-- Settings -->
     <string name="settings_title">Ajustes</string>
     <string name="settings_server_section">Servidor Satisfactory</string>
