@@ -1,1 +1,3 @@
-¡Primera versión de FicsitRemote! Monitoriza tus fábricas de Satisfactory en tiempo real, consulta estadísticas de producción y gestiona la red eléctrica.
+Novedades de esta versión:
+• Añadida traducción al alemán (la app se adapta automáticamente al idioma del dispositivo).
+• Corregidas varias pantallas donde los textos aparecían en inglés aun teniendo el español seleccionado (eventos en vivo, splash, mensajes de error, velocidad de trenes).

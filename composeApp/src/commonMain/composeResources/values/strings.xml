@@ -183,6 +183,42 @@
     <string name="help_sheet_intro_p4">Without a dedicated server running with the FRM mod installed, the app cannot display any data.</string>
     <string name="help_sheet_docs_link">Read the full documentation</string>
 
+    <!-- Splash -->
+    <string name="splash_subtitle">SATISFACTORY DASHBOARD</string>
+
+    <!-- Units -->
+    <string name="unit_speed_kmh_format">%1$s km/h</string>
+
+    <!-- Live event titles -->
+    <string name="live_event_title_power">Power</string>
+    <string name="live_event_title_factory">Factory</string>
+    <string name="live_event_title_trains">Trains</string>
+    <string name="live_event_title_drones">Drones</string>
+    <string name="live_event_title_players">Players</string>
+    <string name="live_event_title_production">Production</string>
+    <string name="live_event_title_generators">Generators</string>
+    <string name="live_event_title_extractors">Extractors</string>
+    <string name="live_event_title_server">Server</string>
+    <string name="live_event_title_metrics">Metrics</string>
+    <string name="live_event_title_inventory">Inventory</string>
+    <string name="live_event_title_sink">Resource sink</string>
+
+    <!-- Live event subtitles -->
+    <string name="live_event_server_status_format">Server status: %1$s</string>
+    <string name="live_event_metrics_updated">Server metrics updated</string>
+    <string name="live_event_power_updated">Power circuits updated</string>
+    <string name="live_event_fuse_triggered_format">Fuse triggered (%1$d circuits)</string>
+    <string name="live_event_production_updated">Production data updated</string>
+    <string name="live_event_players_online_format">%1$d players online</string>
+    <string name="live_event_trains_updated">Trains updated</string>
+    <string name="live_event_trains_derailed_format">%1$d trains derailed!</string>
+    <string name="live_event_drones_updated">Drone stations updated</string>
+    <string name="live_event_generators_updated">Generators updated</string>
+    <string name="live_event_factory_updated">Factory buildings updated</string>
+    <string name="live_event_extractors_updated">Extractors updated</string>
+    <string name="live_event_inventory_updated">World inventory updated</string>
+    <string name="live_event_sink_updated">Resource sink updated</string>
+
     <!-- Settings -->
     <string name="settings_title">Settings</string>
     <string name="settings_server_section">Satisfactory Server</string>

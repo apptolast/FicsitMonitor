@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
+import com.apptolast.fiscsitmonitor.data.remote.websocket.LiveWsEvent
 import com.apptolast.fiscsitmonitor.presentation.ui.components.BadgeType
 import com.apptolast.fiscsitmonitor.presentation.ui.components.EmptyState
 import com.apptolast.fiscsitmonitor.presentation.ui.components.EventCard
@@ -138,30 +139,10 @@ private fun LiveContentPreview() {
     FicsitMonitorTheme {
         LiveContent(
             events = listOf(
-                LiveEvent(
-                    icon = "\u26A1",
-                    title = "Power",
-                    subtitle = "Fuse triggered (1 circuits)",
-                    timestamp = "+00:01:23"
-                ),
-                LiveEvent(
-                    icon = "\uD83C\uDFED",
-                    title = "Factory",
-                    subtitle = "Factory buildings updated",
-                    timestamp = "+00:01:20"
-                ),
-                LiveEvent(
-                    icon = "\uD83D\uDE82",
-                    title = "Trains",
-                    subtitle = "Trains updated",
-                    timestamp = "+00:01:15"
-                ),
-                LiveEvent(
-                    icon = "\uD83D\uDC64",
-                    title = "Players",
-                    subtitle = "2 players online",
-                    timestamp = "+00:01:10"
-                ),
+                LiveEvent(icon = "⚡", kind = LiveWsEvent.FuseTriggered(1), timestamp = "+00:01:23"),
+                LiveEvent(icon = "🏭", kind = LiveWsEvent.FactoryUpdated, timestamp = "+00:01:20"),
+                LiveEvent(icon = "🚂", kind = LiveWsEvent.TrainsUpdated, timestamp = "+00:01:15"),
+                LiveEvent(icon = "👤", kind = LiveWsEvent.PlayersOnline(2), timestamp = "+00:01:10"),
             ),
             summary = LiveSummary(
                 playersOnline = 2,

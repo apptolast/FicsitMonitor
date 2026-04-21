@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Bottom Navigation -->
+    <string name="tab_home">START</string>
+    <string name="tab_energy">ENERGIE</string>
+    <string name="tab_factory">FABRIEK</string>
+    <string name="tab_logistics">LOGISTIEK</string>
+    <string name="tab_live">LIVE</string>
+
+    <!-- Status Bar -->
+    <string name="app_title">FICSIT Monitor</string>
+    <string name="status_online">ONLINE</string>
+    <string name="status_offline">OFFLINE</string>
+
+    <!-- Badges -->
+    <string name="badge_live">LIVE</string>
+    <string name="badge_real_time">REALTIME</string>
+    <string name="badge_every_15s">ELKE 15S</string>
+    <string name="badge_every_30s">ELKE 30S</string>
+    <string name="badge_every_60s">ELKE 60S</string>
+    <string name="badge_fuse">ZEKERING</string>
+
+    <!-- Home Screen -->
+    <string name="section_key_metrics">KERNCIJFERS</string>
+    <string name="label_tech_tier">TECH-NIVEAU</string>
+    <string name="label_phase">FASE</string>
+    <string name="label_tick_rate">TICK-RATE</string>
+    <string name="label_players">SPELERS</string>
+    <string name="label_session">SESSIE</string>
+    <string name="label_energy">ENERGIE</string>
+    <string name="label_circuits">CIRCUITS</string>
+    <string name="label_production">PRODUCTIE</string>
+    <string name="label_trains">TREINEN</string>
+    <string name="label_extractors">EXTRACTORS</string>
+    <string name="label_generators">GENERATOREN</string>
+    <string name="subtitle_peak_demand">Piekvraag</string>
+    <string name="subtitle_no_energy">Geen energie</string>
+    <string name="subtitle_server_idle">Server inactief</string>
+    <string name="subtitle_running">Actief</string>
+    <string name="tier_format">Niveau %1$d</string>
+    <string name="players_format">%1$d / 8</string>
+    <string name="items_format">%1$d items</string>
+    <string name="max_per_min_format">Max: %1$d/min</string>
+    <string name="current_per_min_format">Huidig: %1$d/min</string>
+    <string name="fuse_triggered_format">%1$d zekering geactiveerd</string>
+    <string name="of_max_format">van 8 max.</string>
+    <string name="derailed_format">%1$d ontspoord</string>
+    <string name="producing_format">%1$d produceren</string>
+    <string name="mw_cap_format">%1$s MW cap.</string>
+    <string name="alert_fuse_triggered">ZEKERING GEACTIVEERD — Overbelasting van het elektriciteitsnet</string>
+
+    <!-- Energy Screen -->
+    <string name="section_electrical_grid">ELEKTRICITEITSNET</string>
+    <string name="alert_fuse_demand">ZEKERING GEACTIVEERD! — Vraag overschrijdt de generatorcapaciteit.</string>
+    <string name="circuit_format">Circuit %1$d</string>
+    <string name="label_consumed">VERBRUIKT</string>
+    <string name="label_capacity">CAPACITEIT</string>
+    <string name="label_prod">PROD.</string>
+    <string name="label_peak">PIEK</string>
+    <string name="label_use">GEBRUIK</string>
+    <string name="label_headroom">MARGE</string>
+    <string name="label_output">UITVOER</string>
+    <string name="label_fuel">BRANDSTOF</string>
+    <string name="stations_format">%1$d stations</string>
+    <string name="total_format">%1$d totaal</string>
+
+    <!-- Factory Screen -->
+    <string name="section_factory_status">FABRIEKSSTATUS</string>
+    <string name="label_buildings">GEBOUWEN</string>
+    <string name="label_active">ACTIEF</string>
+    <string name="label_stopped">GESTOPT</string>
+    <string name="label_paused">GEPAUZEERD</string>
+    <string name="label_recipe">RECEPT</string>
+    <string name="label_speed">SNELHEID</string>
+    <string name="label_power">VERMOGEN</string>
+    <string name="label_current_prod">HUID. PROD.</string>
+    <string name="label_max_prod">MAX. PROD.</string>
+    <string name="label_efficiency">EFFICIËNTIE</string>
+    <string name="section_extractors">EXTRACTORS (%1$d)</string>
+    <string name="section_world_inventory">WERELDINVENTARIS</string>
+    <string name="section_resource_sink">AWESOME SINK</string>
+    <string name="label_coupons">COUPONS</string>
+    <string name="label_total_points">TOTAAL PUNTEN</string>
+    <string name="label_next_coupon">Volgende coupon:</string>
+    <string name="fallback_building">Gebouw</string>
+    <string name="fallback_generator">Generator</string>
+
+    <!-- Logistics Screen -->
+    <string name="section_logistics">LOGISTIEK</string>
+    <string name="label_drones">Drones</string>
+    <string name="label_trains_section">Treinen</string>
+    <string name="section_players">SPELERS (%1$d)</string>
+    <string name="empty_trains">Geen treinen geregistreerd</string>
+    <string name="empty_drones">Geen drones geregistreerd</string>
+    <string name="empty_players">Geen speler online</string>
+    <string name="fallback_train">Trein</string>
+    <string name="fallback_drone_station">Dronestation</string>
+    <string name="status_self_driving">AUTONOOM</string>
+    <string name="status_derailed">ONTSPOORD</string>
+    <string name="label_station">STATION</string>
+    <string name="label_paired">GEKOPPELD</string>
+    <string name="label_round_trip">RONDRIT</string>
+    <string name="idle">INACTIEF</string>
+
+    <!-- Live Screen -->
+    <string name="section_live_events">LIVE-GEBEURTENISSEN</string>
+    <string name="section_summary">SAMENVATTING</string>
+    <string name="empty_events">Nog geen gebeurtenissen</string>
+    <string name="summary_players_online">Spelers online</string>
+    <string name="summary_active_circuits">Actieve circuits</string>
+    <string name="summary_active_trains">Actieve treinen</string>
+    <string name="summary_items_in_production">Items in productie</string>
+    <string name="summary_fuses_triggered">Geactiveerde zekeringen</string>
+
+    <!-- Common -->
+    <string name="no_data">---</string>
+    <string name="satisfactory_server">Satisfactory-server</string>
+    <string name="common_saving">Bezig met opslaan…</string>
+    <string name="common_retry">Opnieuw proberen</string>
+    <string name="common_required">Verplicht veld</string>
+    <string name="common_invalid_email">Ongeldig e-mailadres</string>
+    <string name="common_password_mismatch">Wachtwoorden komen niet overeen</string>
+    <string name="common_password_too_short">Wachtwoord moet minstens 8 tekens bevatten</string>
+    <string name="common_error_network">Netwerkfout. Controleer je verbinding.</string>
+    <string name="common_error_generic">Onverwachte fout</string>
+    <string name="common_cancel">Annuleren</string>
+    <string name="common_confirm">Bevestigen</string>
+
+    <!-- Auth: login -->
+    <string name="auth_login_title">Inloggen</string>
+    <string name="auth_login_subtitle">Welkom terug</string>
+    <string name="auth_login_email">E-mail</string>
+    <string name="auth_login_password">Wachtwoord</string>
+    <string name="auth_login_submit">Inloggen</string>
+    <string name="auth_login_no_account">Nog geen account? Registreren</string>
+    <string name="auth_login_error_invalid">Ongeldige inloggegevens</string>
+
+    <!-- Auth: register -->
+    <string name="auth_register_title">Account aanmaken</string>
+    <string name="auth_register_name">Naam</string>
+    <string name="auth_register_password_confirm">Wachtwoord bevestigen</string>
+    <string name="auth_register_submit">Registreren</string>
+    <string name="auth_register_have_account">Heb je al een account? Inloggen</string>
+    <string name="auth_register_error_validation">Corrigeer de fouten en probeer het opnieuw</string>
+
+    <!-- Server form -->
+    <string name="server_form_title_add">Voeg je eerste server toe</string>
+    <string name="server_form_title_edit">Server bewerken</string>
+    <string name="server_form_subtitle">Configureer de verbinding met je Satisfactory-dedicated server. Het dashboard haalt periodiek gegevens op via de HTTPS-API en de FicsitRemoteMonitoring-mod.</string>
+    <string name="server_form_name">Beschrijvende naam</string>
+    <string name="server_form_host">Host of publiek IP</string>
+    <string name="server_form_host_hint">bijv. 46.224.182.211</string>
+    <string name="server_form_api_port">API-poort</string>
+    <string name="server_form_frm_http">FRM HTTP</string>
+    <string name="server_form_frm_ws">FRM WebSocket</string>
+    <string name="server_form_admin_password">Admin-wachtwoord</string>
+    <string name="server_form_admin_password_hint">Wordt eenmalig gebruikt om de verbinding op te zetten. Niet opgeslagen op je apparaat.</string>
+    <string name="server_form_submit_add">Opslaan en monitoring starten</string>
+    <string name="server_form_submit_edit">Wijzigingen opslaan</string>
+    <string name="server_form_connecting">Verbinden met je server…</string>
+    <string name="server_form_error_invalid_port">Poort moet tussen 1 en 65535 liggen</string>
+    <string name="server_form_error_admin_password_too_short">Wachtwoord moet minstens 8 tekens bevatten</string>
+    <string name="server_form_error_admin_password_invalid">Onjuist wachtwoord of door de server geweigerd</string>
+    <string name="server_form_error_server_unreachable">Server niet bereikbaar. Controleer host, poorten en admin-wachtwoord.</string>
+    <string name="server_form_error_provisioning_failed">Server kon niet worden geconfigureerd. Controleer het admin-wachtwoord en of de Satisfactory-server draait.</string>
+
+    <!-- Web viewer screen -->
+    <string name="web_viewer_title">Documentatie</string>
+
+    <!-- Add server help sheet -->
+    <string name="help_sheet_title">Configuratiegids</string>
+    <string name="help_sheet_fields_title">Wat betekent elk veld?</string>
+    <string name="help_field_name">Een alias om deze server in de app te identificeren. Bijvoorbeeld: \"Mijn server\" of \"Server van Pablo\".</string>
+    <string name="help_field_host">Het publieke IP-adres van de machine waarop je server draait. Moet bereikbaar zijn vanaf internet; lokale IP\'s (192.168.x.x) werken niet.</string>
+    <string name="help_field_api_port">Poort van de officiële Satisfactory-API. Standaard is 7777; wijzig alleen als je dit expliciet hebt aangepast bij het opzetten van de server.</string>
+    <string name="help_field_frm_http">HTTP-poort van de FicsitRemoteMonitoring (FRM)-mod. Standaard is 8080. Deze mod publiceert de statistieken van je fabriek: productie, vermogen, gebouwen enz.</string>
+    <string name="help_field_frm_ws">WebSocket-poort van dezelfde FRM-mod. Standaard is 8081. Maakt realtime streaming van statistieken uit je fabriek mogelijk.</string>
+    <string name="help_field_admin_password">Het wachtwoord dat je hebt ingesteld bij de eerste start van de server. Wordt eenmalig gebruikt voor authenticatie en niet opgeslagen op je apparaat.</string>
+    <string name="help_sheet_intro_title">Waar gaat dit over?</string>
+    <string name="help_sheet_intro_p1">Satisfactory is een fabrieksbouwspel van Coffee Stain Studios waarin je het winnen en verwerken van grondstoffen op een buitenaardse planeet automatiseert.</string>
+    <string name="help_sheet_intro_p2">Om met vrienden te spelen zonder dat een host continu online hoeft te zijn, kun je een dedicated server draaien: een zelfstandige instantie van het spel op een server of VPS.</string>
+    <string name="help_sheet_intro_p3">FICSIT Monitor verbindt via de FicsitRemoteMonitoring (FRM)-mod met je dedicated server en toont realtime de status van je fabriek: stroomcircuits, productietempo, verbonden spelers, treinen, drones, extractors en meer.</string>
+    <string name="help_sheet_intro_p4">Zonder een draaiende dedicated server met de FRM-mod kan de app geen gegevens tonen.</string>
+    <string name="help_sheet_docs_link">Volledige documentatie lezen</string>
+
+    <!-- Splash -->
+    <string name="splash_subtitle">SATISFACTORY-DASHBOARD</string>
+
+    <!-- Units -->
+    <string name="unit_speed_kmh_format">%1$s km/u</string>
+
+    <!-- Live event titles -->
+    <string name="live_event_title_power">Energie</string>
+    <string name="live_event_title_factory">Fabriek</string>
+    <string name="live_event_title_trains">Treinen</string>
+    <string name="live_event_title_drones">Drones</string>
+    <string name="live_event_title_players">Spelers</string>
+    <string name="live_event_title_production">Productie</string>
+    <string name="live_event_title_generators">Generatoren</string>
+    <string name="live_event_title_extractors">Extractors</string>
+    <string name="live_event_title_server">Server</string>
+    <string name="live_event_title_metrics">Statistieken</string>
+    <string name="live_event_title_inventory">Inventaris</string>
+    <string name="live_event_title_sink">Grondstoffensink</string>
+
+    <!-- Live event subtitles -->
+    <string name="live_event_server_status_format">Serverstatus: %1$s</string>
+    <string name="live_event_metrics_updated">Serverstatistieken bijgewerkt</string>
+    <string name="live_event_power_updated">Stroomcircuits bijgewerkt</string>
+    <string name="live_event_fuse_triggered_format">Zekering geactiveerd (%1$d circuits)</string>
+    <string name="live_event_production_updated">Productiegegevens bijgewerkt</string>
+    <string name="live_event_players_online_format">%1$d spelers online</string>
+    <string name="live_event_trains_updated">Treinen bijgewerkt</string>
+    <string name="live_event_trains_derailed_format">%1$d treinen ontspoord!</string>
+    <string name="live_event_drones_updated">Dronestations bijgewerkt</string>
+    <string name="live_event_generators_updated">Generatoren bijgewerkt</string>
+    <string name="live_event_factory_updated">Fabrieksgebouwen bijgewerkt</string>
+    <string name="live_event_extractors_updated">Extractors bijgewerkt</string>
+    <string name="live_event_inventory_updated">Wereldinventaris bijgewerkt</string>
+    <string name="live_event_sink_updated">Grondstoffensink bijgewerkt</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Instellingen</string>
+    <string name="settings_server_section">Satisfactory-server</string>
+    <string name="settings_advanced_section">Geavanceerd</string>
+    <string name="settings_base_url">API-basis-URL</string>
+    <string name="settings_base_url_hint">Overschrijf de basis-URL van het FicsitMonitor-backend (leeg laten voor standaard)</string>
+    <string name="settings_logout">Uitloggen</string>
+    <string name="settings_logout_confirm">Je keert terug naar het inlogscherm.</string>
+    <string name="settings_saved">Opgeslagen</string>
+    <string name="settings_select_server">Actieve server</string>
+</resources>

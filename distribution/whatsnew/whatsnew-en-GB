@@ -1,1 +1,3 @@
-First release of FicsitRemote! Monitor your Satisfactory factories in real-time, check production stats, and manage power grids directly from your device.
+New in this version:
+• German translation added (the app now adapts automatically to the device language).
+• Fixed several screens where texts appeared in English even with Spanish selected (live events, splash, error messages, train speed).

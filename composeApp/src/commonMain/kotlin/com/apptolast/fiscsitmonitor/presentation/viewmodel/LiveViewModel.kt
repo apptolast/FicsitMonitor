@@ -2,6 +2,7 @@ package com.apptolast.fiscsitmonitor.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.apptolast.fiscsitmonitor.data.remote.websocket.LiveWsEvent
 import com.apptolast.fiscsitmonitor.data.remote.websocket.WebSocketEventDispatcher
 import com.apptolast.fiscsitmonitor.domain.repository.LogisticsRepository
 import com.apptolast.fiscsitmonitor.domain.repository.ServerRepository
@@ -16,8 +17,7 @@ import kotlin.time.TimeSource
 
 data class LiveEvent(
     val icon: String,
-    val title: String,
-    val subtitle: String,
+    val kind: LiveWsEvent,
     val timestamp: String,
 )
 
@@ -57,21 +57,7 @@ class LiveViewModel(
     init {
         viewModelScope.launch {
             webSocketEventDispatcher.liveEvents.collect { wsEvent ->
-                val icon = when (wsEvent.type) {
-                    "power" -> "\u26A1"
-                    "factory" -> "\uD83C\uDFED"
-                    "trains" -> "\uD83D\uDE82"
-                    "drones" -> "\u2708\uFE0F"
-                    "players" -> "\uD83D\uDC64"
-                    "production" -> "\u2699\uFE0F"
-                    "generators" -> "\uD83D\uDD25"
-                    "extractors" -> "\u26CF\uFE0F"
-                    "server" -> "\uD83D\uDDA5\uFE0F"
-                    "metrics" -> "\uD83D\uDCCA"
-                    "inventory" -> "\uD83D\uDCE6"
-                    "sink" -> "\u2B50"
-                    else -> "\uD83D\uDD14"
-                }
+                val icon = iconFor(wsEvent)
                 val elapsed = startMark.elapsedNow()
                 val totalSecs = elapsed.inWholeSeconds
                 val h = (totalSecs / 3600).toString().padStart(2, '0')
@@ -81,13 +67,27 @@ class LiveViewModel(
                 addEvent(
                     LiveEvent(
                         icon = icon,
-                        title = wsEvent.type.replaceFirstChar { it.uppercase() },
-                        subtitle = wsEvent.summary,
+                        kind = wsEvent,
                         timestamp = timestamp,
                     )
                 )
             }
         }
+    }
+
+    private fun iconFor(event: LiveWsEvent): String = when (event) {
+        is LiveWsEvent.PowerUpdated, is LiveWsEvent.FuseTriggered -> "⚡"
+        is LiveWsEvent.FactoryUpdated -> "🏭"
+        is LiveWsEvent.TrainsUpdated, is LiveWsEvent.TrainsDerailed -> "🚂"
+        is LiveWsEvent.DronesUpdated -> "✈️"
+        is LiveWsEvent.PlayersOnline -> "👤"
+        is LiveWsEvent.ProductionUpdated -> "⚙️"
+        is LiveWsEvent.GeneratorsUpdated -> "🔥"
+        is LiveWsEvent.ExtractorsUpdated -> "⛏️"
+        is LiveWsEvent.ServerStatus -> "🖥️"
+        is LiveWsEvent.MetricsUpdated -> "📊"
+        is LiveWsEvent.InventoryUpdated -> "📦"
+        is LiveWsEvent.SinkUpdated -> "⭐"
     }
 
     private fun addEvent(event: LiveEvent) {
