@@ -7,4 +7,5 @@ interface AuthRepository {
     suspend fun login(email: String, password: String): User
     suspend fun logout()
     suspend fun refreshCurrentUser(): User?
+    suspend fun updateLocale(locale: String): User
 }
