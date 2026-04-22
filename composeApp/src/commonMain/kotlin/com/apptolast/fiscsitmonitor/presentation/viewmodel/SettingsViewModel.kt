@@ -11,6 +11,8 @@ import com.apptolast.fiscsitmonitor.domain.model.UserServer
 import com.apptolast.fiscsitmonitor.domain.repository.AuthRepository
 import com.apptolast.fiscsitmonitor.domain.repository.UserServerRepository
 import com.apptolast.fiscsitmonitor.domain.util.AuthError
+import com.apptolast.fiscsitmonitor.platform.applyAppLocale
+import com.apptolast.fiscsitmonitor.platform.supportedLocales
 import com.apptolast.fiscsitmonitor.presentation.ui.screens.onboarding.ServerFormError
 import com.apptolast.fiscsitmonitor.presentation.ui.screens.onboarding.ServerFormState
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,12 +20,18 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
+// Backend supports en/es/nl. Mobile also ships de.json; when the user picks de we still apply it
+// locally but skip the PATCH (backend would 422). Keep this list in sync with SetLocaleFromAcceptLanguage::SUPPORTED.
+private val backendSupportedLocales = setOf("en", "es", "nl")
+
 data class SettingsUiState(
     val isLoading: Boolean = true,
     val servers: List<UserServer> = emptyList(),
     val selectedServerId: Int? = null,
     val form: ServerFormState = ServerFormState(),
     val baseUrlOverride: String = "",
+    val currentLocale: String? = null,
+    val availableLocales: List<String> = supportedLocales,
     val isSaved: Boolean = false,
     val loadError: String? = null,
 )
@@ -65,6 +73,7 @@ class SettingsViewModel(
                     selectedServerId = current?.id,
                     form = current?.let { ServerFormState.fromUserServer(it) } ?: ServerFormState(),
                     baseUrlOverride = storage.overrideBaseUrl.orEmpty(),
+                    currentLocale = session.currentLocale(),
                 )
             } catch (t: Throwable) {
                 _state.value = _state.value.copy(isLoading = false, loadError = t.message)
@@ -149,6 +158,17 @@ class SettingsViewModel(
                     form = _state.value.form.copy(isSubmitting = false, error = ServerFormError.Generic),
                 )
             }
+        }
+    }
+
+    fun onLocaleSelected(tag: String) {
+        if (tag !in supportedLocales) return
+        session.setLocale(tag)
+        applyAppLocale(tag)
+        _state.value = _state.value.copy(currentLocale = tag)
+        if (tag !in backendSupportedLocales) return
+        viewModelScope.launch {
+            runCatching { authRepository.updateLocale(tag) }
         }
     }
 

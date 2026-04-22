@@ -60,6 +60,14 @@ class AuthRepositoryImpl(
         api.me().toDomain().also { session.onLogin(session.currentToken() ?: return null, it) }
     }.getOrNull()
 
+    override suspend fun updateLocale(locale: String): User {
+        val updated = runCatchingNetwork { api.updateLocale(locale) }.toDomain()
+        session.setLocale(locale)
+        val token = session.currentToken()
+        if (token != null) session.onLogin(token, updated)
+        return updated
+    }
+
     private suspend fun handleAuthResponse(response: HttpResponse): User {
         when (response.status) {
             HttpStatusCode.OK, HttpStatusCode.Created -> {

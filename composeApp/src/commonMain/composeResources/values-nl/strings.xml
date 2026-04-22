@@ -229,4 +229,9 @@
     <string name="settings_logout_confirm">Je keert terug naar het inlogscherm.</string>
     <string name="settings_saved">Opgeslagen</string>
     <string name="settings_select_server">Actieve server</string>
+    <string name="settings_language_section">Taal</string>
+    <string name="language_name_en" translatable="false">English</string>
+    <string name="language_name_es" translatable="false">Español</string>
+    <string name="language_name_nl" translatable="false">Nederlands</string>
+    <string name="language_name_de" translatable="false">Deutsch</string>
 </resources>

@@ -8,9 +8,15 @@ import com.apptolast.fiscsitmonitor.data.remote.Environment
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
+import io.ktor.client.request.patch
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import io.ktor.client.statement.HttpResponse
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+
+@Serializable
+private data class UpdateLocaleRequest(val locale: String)
 
 class AuthApiService(
     private val client: HttpClient,
@@ -29,4 +35,9 @@ class AuthApiService(
 
     suspend fun me(): UserDto =
         client.get("${environment.currentApiBase()}user").body<ApiResponse<UserDto>>().data
+
+    suspend fun updateLocale(locale: String): UserDto =
+        client.patch("${environment.currentApiV1Base()}me") {
+            setBody(UpdateLocaleRequest(locale))
+        }.body<ApiResponse<UserDto>>().data
 }

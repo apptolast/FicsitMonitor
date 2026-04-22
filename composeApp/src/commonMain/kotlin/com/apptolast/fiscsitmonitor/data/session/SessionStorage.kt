@@ -16,7 +16,7 @@ class SessionStorage(private val settings: Settings) {
             val id = settings.getIntOrNull(KEY_USER_ID) ?: return null
             val name = settings.getStringOrNull(KEY_USER_NAME) ?: return null
             val email = settings.getStringOrNull(KEY_USER_EMAIL) ?: return null
-            return User(id, name, email)
+            return User(id = id, name = name, email = email, locale = userLocale)
         }
         set(value) {
             if (value == null) {
@@ -27,6 +27,7 @@ class SessionStorage(private val settings: Settings) {
                 settings.putInt(KEY_USER_ID, value.id)
                 settings.putString(KEY_USER_NAME, value.name)
                 settings.putString(KEY_USER_EMAIL, value.email)
+                value.locale?.takeIf { it.isNotBlank() }?.let { userLocale = it }
             }
         }
 
@@ -46,6 +47,12 @@ class SessionStorage(private val settings: Settings) {
                 KEY_OVERRIDE_BASE_URL,
                 value
             )
+        }
+
+    var userLocale: String?
+        get() = settings.getStringOrNull(KEY_USER_LOCALE)?.takeIf { it.isNotBlank() }
+        set(value) {
+            if (value.isNullOrBlank()) settings.remove(KEY_USER_LOCALE) else settings.putString(KEY_USER_LOCALE, value)
         }
 
     fun clearSession() {
@@ -84,6 +91,7 @@ class SessionStorage(private val settings: Settings) {
         private const val KEY_USER_EMAIL = "auth_user_email"
         private const val KEY_SELECTED_SERVER_ID = "selected_server_id"
         private const val KEY_OVERRIDE_BASE_URL = "override_base_url"
+        private const val KEY_USER_LOCALE = "user_locale"
         private const val PREFIX_SHADOW = "shadow_server_"
         private const val SUFFIX_FRM_WS = "frm_ws_port"
     }

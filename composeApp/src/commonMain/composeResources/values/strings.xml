@@ -229,4 +229,9 @@
     <string name="settings_logout_confirm">You will be returned to the login screen.</string>
     <string name="settings_saved">Saved</string>
     <string name="settings_select_server">Active server</string>
+    <string name="settings_language_section">Language</string>
+    <string name="language_name_en" translatable="false">English</string>
+    <string name="language_name_es" translatable="false">Español</string>
+    <string name="language_name_nl" translatable="false">Nederlands</string>
+    <string name="language_name_de" translatable="false">Deutsch</string>
 </resources>
