@@ -163,6 +163,13 @@
     <string name="server_form_error_admin_password_invalid">Incorrect password or the server rejected it</string>
     <string name="server_form_error_server_unreachable">Could not reach the server. Check host, ports and admin password.</string>
     <string name="server_form_error_provisioning_failed">Could not provision the server. Double-check the admin password and make sure the Satisfactory server is running.</string>
+    <string name="server_form_error_path_prefix_leading_slash">Path prefix must start with /</string>
+    <string name="server_form_advanced_transport_title">Advanced transport options (reverse proxy, TLS)</string>
+    <string name="server_form_advanced_transport_hint">By default we talk HTTPS directly to your server\'s API port with the self-signed certificate Satisfactory ships. Only change these if you put a TLS proxy (Caddy, nginx) in front or serve the API under a subpath.</string>
+    <string name="server_form_scheme_label">Scheme</string>
+    <string name="server_form_path_prefix_label">Path prefix</string>
+    <string name="server_form_verify_tls_label">Verify TLS certificate</string>
+    <string name="server_form_verify_tls_hint">Enable only if your TLS proxy serves a valid certificate (Let\'s Encrypt, corporate CA). Leave off if you use Satisfactory\'s native self-signed certificate.</string>
 
     <!-- Web viewer screen -->
     <string name="web_viewer_title">Documentation</string>

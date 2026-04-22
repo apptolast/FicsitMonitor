@@ -163,6 +163,13 @@
     <string name="server_form_error_admin_password_invalid">Onjuist wachtwoord of door de server geweigerd</string>
     <string name="server_form_error_server_unreachable">Server niet bereikbaar. Controleer host, poorten en admin-wachtwoord.</string>
     <string name="server_form_error_provisioning_failed">Server kon niet worden geconfigureerd. Controleer het admin-wachtwoord en of de Satisfactory-server draait.</string>
+    <string name="server_form_error_path_prefix_leading_slash">Pad-prefix moet met / beginnen</string>
+    <string name="server_form_advanced_transport_title">Geavanceerde transportopties (reverse proxy, TLS)</string>
+    <string name="server_form_advanced_transport_hint">Standaard praten we HTTPS rechtstreeks met de API-poort van je server met het zelfondertekende certificaat dat Satisfactory meelevert. Wijzig deze alleen als je een TLS-proxy (Caddy, nginx) ervoor zet of de API onder een subpad aanbiedt.</string>
+    <string name="server_form_scheme_label">Schema</string>
+    <string name="server_form_path_prefix_label">Pad-prefix</string>
+    <string name="server_form_verify_tls_label">TLS-certificaat verifiëren</string>
+    <string name="server_form_verify_tls_hint">Alleen inschakelen als je TLS-proxy een geldig certificaat aanbiedt (Let\'s Encrypt, zakelijke CA). Laat uit als je het native zelfondertekende certificaat van Satisfactory gebruikt.</string>
 
     <!-- Web viewer screen -->
     <string name="web_viewer_title">Documentatie</string>
