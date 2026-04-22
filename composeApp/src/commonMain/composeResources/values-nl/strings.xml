@@ -169,7 +169,7 @@
     <string name="server_form_scheme_label">Schema</string>
     <string name="server_form_path_prefix_label">Pad-prefix</string>
     <string name="server_form_verify_tls_label">TLS-certificaat verifiëren</string>
-    <string name="server_form_verify_tls_hint">Alleen inschakelen als je TLS-proxy een geldig certificaat aanbiedt (Let\'s Encrypt, zakelijke CA). Laat uit als je het native zelfondertekende certificaat van Satisfactory gebruikt.</string>
+    <string name="server_form_verify_tls_hint">Alleen inschakelen als je TLS-proxy een geldig certificaat aanbiedt (Let's Encrypt, zakelijke CA). Laat uit als je het native zelfondertekende certificaat van Satisfactory gebruikt.</string>
 
     <!-- Web viewer screen -->
     <string name="web_viewer_title">Documentatie</string>
@@ -178,7 +178,7 @@
     <string name="help_sheet_title">Configuratiegids</string>
     <string name="help_sheet_fields_title">Wat betekent elk veld?</string>
     <string name="help_field_name">Een alias om deze server in de app te identificeren. Bijvoorbeeld: \"Mijn server\" of \"Server van Pablo\".</string>
-    <string name="help_field_host">Het publieke IP-adres van de machine waarop je server draait. Moet bereikbaar zijn vanaf internet; lokale IP\'s (192.168.x.x) werken niet.</string>
+    <string name="help_field_host">Het publieke IP-adres van de machine waarop je server draait. Moet bereikbaar zijn vanaf internet; lokale IP's (192.168.x.x) werken niet.</string>
     <string name="help_field_api_port">Poort van de officiële Satisfactory-API. Standaard is 7777; wijzig alleen als je dit expliciet hebt aangepast bij het opzetten van de server.</string>
     <string name="help_field_frm_http">HTTP-poort van de FicsitRemoteMonitoring (FRM)-mod. Standaard is 8080. Deze mod publiceert de statistieken van je fabriek: productie, vermogen, gebouwen enz.</string>
     <string name="help_field_frm_ws">WebSocket-poort van dezelfde FRM-mod. Standaard is 8081. Maakt realtime streaming van statistieken uit je fabriek mogelijk.</string>
