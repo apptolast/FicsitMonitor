@@ -169,7 +169,7 @@
     <string name="server_form_scheme_label">Schema</string>
     <string name="server_form_path_prefix_label">Pfadpräfix</string>
     <string name="server_form_verify_tls_label">TLS-Zertifikat verifizieren</string>
-    <string name="server_form_verify_tls_hint">Nur aktivieren, wenn dein TLS-Proxy ein gültiges Zertifikat ausliefert (Let\'s Encrypt, Unternehmens-CA). Deaktiviert lassen, wenn du das native, selbstsignierte Zertifikat von Satisfactory nutzt.</string>
+    <string name="server_form_verify_tls_hint">Nur aktivieren, wenn dein TLS-Proxy ein gültiges Zertifikat ausliefert (Let's Encrypt, Unternehmens-CA). Deaktiviert lassen, wenn du das native, selbstsignierte Zertifikat von Satisfactory nutzt.</string>
 
     <!-- Web viewer screen -->
     <string name="web_viewer_title">Dokumentation</string>
