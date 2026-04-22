@@ -42,6 +42,18 @@ class AddServerViewModel(
     fun onFrmWsPortChange(value: String) =
         update { it.copy(frmWsPort = value, error = null, fieldErrors = it.fieldErrors - "frm_ws_port") }
 
+    fun onSchemeChange(value: String) =
+        update { it.copy(scheme = value, error = null) }
+
+    fun onPathPrefixChange(value: String) =
+        update { it.copy(pathPrefix = value, error = null, fieldErrors = it.fieldErrors - "path_prefix") }
+
+    fun onVerifyTlsChange(value: Boolean) =
+        update { it.copy(verifyTls = value, error = null) }
+
+    fun onAdvancedExpandedChange(value: Boolean) =
+        update { it.copy(advancedExpanded = value) }
+
     fun onAdminPasswordChange(value: String) =
         update { it.copy(adminPassword = value, error = null, fieldErrors = it.fieldErrors - "admin_password") }
 
@@ -63,7 +75,10 @@ class AddServerViewModel(
                 val created = userServerRepository.create(
                     name = current.name.trim(),
                     host = current.host.trim(),
+                    scheme = current.scheme,
                     apiPort = current.apiPortInt ?: 7777,
+                    pathPrefix = current.pathPrefix.trim(),
+                    verifyTls = current.verifyTls,
                     frmHttpPort = current.frmHttpPortInt ?: 8080,
                     frmWsPort = current.frmWsPortInt ?: 8081,
                     adminPassword = current.adminPassword,

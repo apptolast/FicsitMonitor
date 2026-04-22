@@ -61,28 +61,7 @@ class SessionStorage(private val settings: Settings) {
         settings.remove(KEY_USER_NAME)
         settings.remove(KEY_USER_EMAIL)
         settings.remove(KEY_SELECTED_SERVER_ID)
-        clearAllShadows()
     }
-
-    fun putShadow(serverId: Int, frmWsPort: Int?) {
-        if (frmWsPort == null) {
-            settings.remove(shadowKey(serverId, SUFFIX_FRM_WS))
-        } else {
-            settings.putInt(shadowKey(serverId, SUFFIX_FRM_WS), frmWsPort)
-        }
-    }
-
-    fun getShadowFrmWsPort(serverId: Int): Int? = settings.getIntOrNull(shadowKey(serverId, SUFFIX_FRM_WS))
-
-    fun removeShadow(serverId: Int) {
-        settings.remove(shadowKey(serverId, SUFFIX_FRM_WS))
-    }
-
-    private fun clearAllShadows() {
-        settings.keys.filter { it.startsWith(PREFIX_SHADOW) }.forEach { settings.remove(it) }
-    }
-
-    private fun shadowKey(serverId: Int, suffix: String) = "${PREFIX_SHADOW}${serverId}_$suffix"
 
     companion object {
         private const val KEY_AUTH_TOKEN = "auth_token"

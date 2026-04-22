@@ -38,12 +38,12 @@
     <string name="subtitle_server_idle">Server inaktiv</string>
     <string name="subtitle_running">Läuft</string>
     <string name="tier_format">Stufe %1$d</string>
-    <string name="players_format">%1$d / 8</string>
+    <string name="players_format">%1$s / %2$s</string>
     <string name="items_format">%1$d Objekte</string>
     <string name="max_per_min_format">Max: %1$d/min</string>
     <string name="current_per_min_format">Aktuell: %1$d/min</string>
     <string name="fuse_triggered_format">%1$d Sicherung ausgelöst</string>
-    <string name="of_max_format">von 8 max.</string>
+    <string name="of_max_format">von %1$s max.</string>
     <string name="derailed_format">%1$d entgleist</string>
     <string name="producing_format">%1$d produzieren</string>
     <string name="mw_cap_format">%1$s MW Kap.</string>
@@ -163,6 +163,13 @@
     <string name="server_form_error_admin_password_invalid">Falsches Passwort oder vom Server abgelehnt</string>
     <string name="server_form_error_server_unreachable">Server nicht erreichbar. Überprüfe Host, Ports und Admin-Passwort.</string>
     <string name="server_form_error_provisioning_failed">Server konnte nicht eingerichtet werden. Prüfe das Admin-Passwort und stelle sicher, dass der Satisfactory-Server läuft.</string>
+    <string name="server_form_error_path_prefix_leading_slash">Pfadpräfix muss mit / beginnen</string>
+    <string name="server_form_advanced_transport_title">Erweiterte Transportoptionen (Reverse-Proxy, TLS)</string>
+    <string name="server_form_advanced_transport_hint">Standardmäßig sprechen wir HTTPS direkt mit dem API-Port deines Servers über das selbstsignierte Zertifikat, das Satisfactory mitliefert. Ändere dies nur, wenn du einen TLS-Proxy (Caddy, nginx) davor schaltest oder die API unter einem Unterpfad anbietest.</string>
+    <string name="server_form_scheme_label">Schema</string>
+    <string name="server_form_path_prefix_label">Pfadpräfix</string>
+    <string name="server_form_verify_tls_label">TLS-Zertifikat verifizieren</string>
+    <string name="server_form_verify_tls_hint">Nur aktivieren, wenn dein TLS-Proxy ein gültiges Zertifikat ausliefert (Let\'s Encrypt, Unternehmens-CA). Deaktiviert lassen, wenn du das native, selbstsignierte Zertifikat von Satisfactory nutzt.</string>
 
     <!-- Web viewer screen -->
     <string name="web_viewer_title">Dokumentation</string>
