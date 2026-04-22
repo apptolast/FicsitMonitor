@@ -38,12 +38,12 @@
     <string name="subtitle_server_idle">Server idle</string>
     <string name="subtitle_running">Running</string>
     <string name="tier_format">Tier %1$d</string>
-    <string name="players_format">%1$d / 8</string>
+    <string name="players_format">%1$s / %2$s</string>
     <string name="items_format">%1$d items</string>
     <string name="max_per_min_format">Max: %1$d/min</string>
     <string name="current_per_min_format">Current: %1$d/min</string>
     <string name="fuse_triggered_format">%1$d fuse triggered</string>
-    <string name="of_max_format">of 8 max</string>
+    <string name="of_max_format">of %1$s max</string>
     <string name="derailed_format">%1$d derailed</string>
     <string name="producing_format">%1$d producing</string>
     <string name="mw_cap_format">%1$s MW cap.</string>

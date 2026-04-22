@@ -38,12 +38,12 @@
     <string name="subtitle_server_idle">Server inactief</string>
     <string name="subtitle_running">Actief</string>
     <string name="tier_format">Niveau %1$d</string>
-    <string name="players_format">%1$d / 8</string>
+    <string name="players_format">%1$s / %2$s</string>
     <string name="items_format">%1$d items</string>
     <string name="max_per_min_format">Max: %1$d/min</string>
     <string name="current_per_min_format">Huidig: %1$d/min</string>
     <string name="fuse_triggered_format">%1$d zekering geactiveerd</string>
-    <string name="of_max_format">van 8 max.</string>
+    <string name="of_max_format">van %1$s max.</string>
     <string name="derailed_format">%1$d ontspoord</string>
     <string name="producing_format">%1$d produceren</string>
     <string name="mw_cap_format">%1$s MW cap.</string>
