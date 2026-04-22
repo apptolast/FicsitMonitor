@@ -236,4 +236,9 @@
     <string name="settings_logout_confirm">Du kehrst zum Anmeldebildschirm zurück.</string>
     <string name="settings_saved">Gespeichert</string>
     <string name="settings_select_server">Aktiver Server</string>
+    <string name="settings_language_section">Sprache</string>
+    <string name="language_name_en" translatable="false">English</string>
+    <string name="language_name_es" translatable="false">Español</string>
+    <string name="language_name_nl" translatable="false">Nederlands</string>
+    <string name="language_name_de" translatable="false">Deutsch</string>
 </resources>

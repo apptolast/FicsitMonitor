@@ -45,4 +45,10 @@ class AuthSession(private val storage: SessionStorage) {
         (state.value as? SessionState.Authenticated)?.selectedServerId ?: storage.selectedServerId
 
     fun currentUser(): User? = (state.value as? SessionState.Authenticated)?.user ?: storage.user
+
+    fun currentLocale(): String? = storage.userLocale
+
+    fun setLocale(tag: String?) {
+        storage.userLocale = tag
+    }
 }

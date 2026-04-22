@@ -58,6 +58,7 @@ kotlin {
     sourceSets {
         androidMain.dependencies {
             implementation(libs.androidx.activity.compose)
+            implementation(libs.androidx.appcompat)
             implementation(libs.ktor.client.okhttp)
             implementation(libs.koin.android)
             implementation(libs.play.services.ads)
