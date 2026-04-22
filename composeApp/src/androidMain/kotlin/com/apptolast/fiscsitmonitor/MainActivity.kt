@@ -5,9 +5,15 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import com.apptolast.fiscsitmonitor.ads.ConsentManager
+import com.apptolast.fiscsitmonitor.data.session.SessionStorage
+import com.apptolast.fiscsitmonitor.platform.applyAppLocale
+import org.koin.android.ext.android.inject
 
 class MainActivity : ComponentActivity() {
+    private val storage: SessionStorage by inject()
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        applyAppLocale(storage.userLocale)
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
 

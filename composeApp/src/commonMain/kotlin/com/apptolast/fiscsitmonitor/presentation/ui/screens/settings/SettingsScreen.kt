@@ -14,6 +14,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
@@ -39,8 +40,13 @@ import com.apptolast.fiscsitmonitor.presentation.viewmodel.SettingsUiState
 import com.apptolast.fiscsitmonitor.presentation.viewmodel.SettingsViewModel
 import ficsitmonitor.composeapp.generated.resources.Res
 import ficsitmonitor.composeapp.generated.resources.common_error_generic
+import ficsitmonitor.composeapp.generated.resources.language_name_en
+import ficsitmonitor.composeapp.generated.resources.language_name_es
+import ficsitmonitor.composeapp.generated.resources.language_name_nl
+import ficsitmonitor.composeapp.generated.resources.language_name_de
 import ficsitmonitor.composeapp.generated.resources.server_form_submit_edit
 import ficsitmonitor.composeapp.generated.resources.server_form_title_edit
+import ficsitmonitor.composeapp.generated.resources.settings_language_section
 import ficsitmonitor.composeapp.generated.resources.settings_logout
 import ficsitmonitor.composeapp.generated.resources.settings_saved
 import ficsitmonitor.composeapp.generated.resources.settings_select_server
@@ -71,9 +77,14 @@ fun SettingsScreen(
         onApiPortChange = viewModel::onApiPortChange,
         onFrmHttpPortChange = viewModel::onFrmHttpPortChange,
         onFrmWsPortChange = viewModel::onFrmWsPortChange,
+        onSchemeChange = viewModel::onSchemeChange,
+        onPathPrefixChange = viewModel::onPathPrefixChange,
+        onVerifyTlsChange = viewModel::onVerifyTlsChange,
+        onAdvancedExpandedChange = viewModel::onAdvancedExpandedChange,
         onSubmit = viewModel::saveServer,
         onLogout = viewModel::logout,
         onSelectServer = viewModel::onSelectServer,
+        onLocaleSelected = viewModel::onLocaleSelected,
     )
 }
 
@@ -85,9 +96,14 @@ private fun SettingsContent(
     onApiPortChange: (String) -> Unit = {},
     onFrmHttpPortChange: (String) -> Unit = {},
     onFrmWsPortChange: (String) -> Unit = {},
+    onSchemeChange: (String) -> Unit = {},
+    onPathPrefixChange: (String) -> Unit = {},
+    onVerifyTlsChange: (Boolean) -> Unit = {},
+    onAdvancedExpandedChange: (Boolean) -> Unit = {},
     onSubmit: () -> Unit = {},
     onLogout: () -> Unit = {},
     onSelectServer: (Int) -> Unit = {},
+    onLocaleSelected: (String) -> Unit = {},
 ) {
     // No Scaffold / TopAppBar here on purpose — the title "Ajustes" and back button are
     // rendered by the root FicsitNavHost Scaffold's topBar slot, which already consumes the
@@ -144,6 +160,10 @@ private fun SettingsContent(
                     onApiPortChange = onApiPortChange,
                     onFrmHttpPortChange = onFrmHttpPortChange,
                     onFrmWsPortChange = onFrmWsPortChange,
+                    onSchemeChange = onSchemeChange,
+                    onPathPrefixChange = onPathPrefixChange,
+                    onVerifyTlsChange = onVerifyTlsChange,
+                    onAdvancedExpandedChange = onAdvancedExpandedChange,
                     onAdminPasswordChange = {},
                     onSubmit = onSubmit,
                 ),
@@ -156,6 +176,12 @@ private fun SettingsContent(
                     style = MaterialTheme.typography.bodySmall,
                 )
             }
+
+            LocaleSection(
+                current = state.currentLocale,
+                available = state.availableLocales,
+                onSelect = onLocaleSelected,
+            )
 
             OutlinedButton(
                 onClick = onLogout,
@@ -207,6 +233,42 @@ private fun ServerPicker(
     }
 }
 
+@Composable
+private fun LocaleSection(
+    current: String?,
+    available: List<String>,
+    onSelect: (String) -> Unit,
+) {
+    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        Text(
+            text = stringResource(Res.string.settings_language_section),
+            style = MaterialTheme.typography.titleMedium,
+            color = MaterialTheme.colorScheme.primary,
+        )
+        androidx.compose.foundation.layout.FlowRow(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
+            available.forEach { tag ->
+                FilterChip(
+                    selected = tag == current,
+                    onClick = { onSelect(tag) },
+                    label = { Text(localeDisplayName(tag)) },
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun localeDisplayName(tag: String): String = when (tag) {
+    "en" -> stringResource(Res.string.language_name_en)
+    "es" -> stringResource(Res.string.language_name_es)
+    "nl" -> stringResource(Res.string.language_name_nl)
+    "de" -> stringResource(Res.string.language_name_de)
+    else -> tag
+}
+
 @Preview
 @Composable
 private fun PreviewSettingsScreen() {
@@ -219,10 +281,15 @@ private fun PreviewSettingsScreen() {
                         id = 1,
                         name = "My Factory",
                         host = "46.224.182.211",
+                        scheme = "https",
                         apiPort = 7777,
+                        pathPrefix = "/api/v1",
+                        verifyTls = false,
                         frmHttpPort = 8080,
                         frmWsPort = 8081,
+                        maxPlayers = 4,
                         status = "online",
+                        isActive = true,
                         lastSeenAt = null,
                         createdAt = null,
                     ),

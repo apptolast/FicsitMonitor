@@ -38,12 +38,12 @@
     <string name="subtitle_server_idle">Server idle</string>
     <string name="subtitle_running">Running</string>
     <string name="tier_format">Tier %1$d</string>
-    <string name="players_format">%1$d / 8</string>
+    <string name="players_format">%1$s / %2$s</string>
     <string name="items_format">%1$d items</string>
     <string name="max_per_min_format">Max: %1$d/min</string>
     <string name="current_per_min_format">Current: %1$d/min</string>
     <string name="fuse_triggered_format">%1$d fuse triggered</string>
-    <string name="of_max_format">of 8 max</string>
+    <string name="of_max_format">of %1$s max</string>
     <string name="derailed_format">%1$d derailed</string>
     <string name="producing_format">%1$d producing</string>
     <string name="mw_cap_format">%1$s MW cap.</string>
@@ -163,6 +163,13 @@
     <string name="server_form_error_admin_password_invalid">Incorrect password or the server rejected it</string>
     <string name="server_form_error_server_unreachable">Could not reach the server. Check host, ports and admin password.</string>
     <string name="server_form_error_provisioning_failed">Could not provision the server. Double-check the admin password and make sure the Satisfactory server is running.</string>
+    <string name="server_form_error_path_prefix_leading_slash">Path prefix must start with /</string>
+    <string name="server_form_advanced_transport_title">Advanced transport options (reverse proxy, TLS)</string>
+    <string name="server_form_advanced_transport_hint">By default we talk HTTPS directly to your server's API port with the self-signed certificate Satisfactory ships. Only change these if you put a TLS proxy (Caddy, nginx) in front or serve the API under a subpath.</string>
+    <string name="server_form_scheme_label">Scheme</string>
+    <string name="server_form_path_prefix_label">Path prefix</string>
+    <string name="server_form_verify_tls_label">Verify TLS certificate</string>
+    <string name="server_form_verify_tls_hint">Enable only if your TLS proxy serves a valid certificate (Let's Encrypt, corporate CA). Leave off if you use Satisfactory's native self-signed certificate.</string>
 
     <!-- Web viewer screen -->
     <string name="web_viewer_title">Documentation</string>
@@ -170,8 +177,8 @@
     <!-- Add server help sheet -->
     <string name="help_sheet_title">Configuration guide</string>
     <string name="help_sheet_fields_title">What is each field?</string>
-    <string name="help_field_name">An alias to identify this server in the app. For example: \"My server\" or \"Pablo\'s server\".</string>
-    <string name="help_field_host">The public IP address of the machine running your server. It must be accessible from the internet; local IPs (192.168.x.x) won\'t work.</string>
+    <string name="help_field_name">An alias to identify this server in the app. For example: \"My server\" or \"Pablo's server\".</string>
+    <string name="help_field_host">The public IP address of the machine running your server. It must be accessible from the internet; local IPs (192.168.x.x) won't work.</string>
     <string name="help_field_api_port">Port for the official Satisfactory API. Default is 7777; only change this if you explicitly remapped it when setting up the server.</string>
     <string name="help_field_frm_http">HTTP port of the FicsitRemoteMonitoring (FRM) mod. Default is 8080. This mod exposes your factory metrics: production, power, buildings, etc.</string>
     <string name="help_field_frm_ws">WebSocket port of the same FRM mod. Default is 8081. Enables real-time metric streaming from your factory.</string>
@@ -229,4 +236,9 @@
     <string name="settings_logout_confirm">You will be returned to the login screen.</string>
     <string name="settings_saved">Saved</string>
     <string name="settings_select_server">Active server</string>
+    <string name="settings_language_section">Language</string>
+    <string name="language_name_en" translatable="false">English</string>
+    <string name="language_name_es" translatable="false">Español</string>
+    <string name="language_name_nl" translatable="false">Nederlands</string>
+    <string name="language_name_de" translatable="false">Deutsch</string>
 </resources>

@@ -11,6 +11,8 @@ import com.apptolast.fiscsitmonitor.domain.model.UserServer
 import com.apptolast.fiscsitmonitor.domain.repository.AuthRepository
 import com.apptolast.fiscsitmonitor.domain.repository.UserServerRepository
 import com.apptolast.fiscsitmonitor.domain.util.AuthError
+import com.apptolast.fiscsitmonitor.platform.applyAppLocale
+import com.apptolast.fiscsitmonitor.platform.supportedLocales
 import com.apptolast.fiscsitmonitor.presentation.ui.screens.onboarding.ServerFormError
 import com.apptolast.fiscsitmonitor.presentation.ui.screens.onboarding.ServerFormState
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,12 +20,18 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
+// Backend supports en/es/nl. Mobile also ships de.json; when the user picks de we still apply it
+// locally but skip the PATCH (backend would 422). Keep this list in sync with SetLocaleFromAcceptLanguage::SUPPORTED.
+private val backendSupportedLocales = setOf("en", "es", "nl")
+
 data class SettingsUiState(
     val isLoading: Boolean = true,
     val servers: List<UserServer> = emptyList(),
     val selectedServerId: Int? = null,
     val form: ServerFormState = ServerFormState(),
     val baseUrlOverride: String = "",
+    val currentLocale: String? = null,
+    val availableLocales: List<String> = supportedLocales,
     val isSaved: Boolean = false,
     val loadError: String? = null,
 )
@@ -65,6 +73,7 @@ class SettingsViewModel(
                     selectedServerId = current?.id,
                     form = current?.let { ServerFormState.fromUserServer(it) } ?: ServerFormState(),
                     baseUrlOverride = storage.overrideBaseUrl.orEmpty(),
+                    currentLocale = session.currentLocale(),
                 )
             } catch (t: Throwable) {
                 _state.value = _state.value.copy(isLoading = false, loadError = t.message)
@@ -86,6 +95,18 @@ class SettingsViewModel(
 
     fun onFrmWsPortChange(value: String) =
         updateForm { it.copy(frmWsPort = value, fieldErrors = it.fieldErrors - "frm_ws_port", error = null) }
+
+    fun onSchemeChange(value: String) =
+        updateForm { it.copy(scheme = value, error = null) }
+
+    fun onPathPrefixChange(value: String) =
+        updateForm { it.copy(pathPrefix = value, fieldErrors = it.fieldErrors - "path_prefix", error = null) }
+
+    fun onVerifyTlsChange(value: Boolean) =
+        updateForm { it.copy(verifyTls = value, error = null) }
+
+    fun onAdvancedExpandedChange(value: Boolean) =
+        updateForm { it.copy(advancedExpanded = value) }
 
     fun onBaseUrlChange(value: String) {
         _state.value = _state.value.copy(baseUrlOverride = value, isSaved = false)
@@ -122,7 +143,10 @@ class SettingsViewModel(
                     serverId = serverId,
                     name = current.form.name.trim(),
                     host = current.form.host.trim(),
+                    scheme = current.form.scheme,
                     apiPort = current.form.apiPortInt ?: 7777,
+                    pathPrefix = current.form.pathPrefix.trim(),
+                    verifyTls = current.form.verifyTls,
                     frmHttpPort = current.form.frmHttpPortInt ?: 8080,
                     frmWsPort = current.form.frmWsPortInt ?: 8081,
                 )
@@ -149,6 +173,17 @@ class SettingsViewModel(
                     form = _state.value.form.copy(isSubmitting = false, error = ServerFormError.Generic),
                 )
             }
+        }
+    }
+
+    fun onLocaleSelected(tag: String) {
+        if (tag !in supportedLocales) return
+        session.setLocale(tag)
+        applyAppLocale(tag)
+        _state.value = _state.value.copy(currentLocale = tag)
+        if (tag !in backendSupportedLocales) return
+        viewModelScope.launch {
+            runCatching { authRepository.updateLocale(tag) }
         }
     }
 

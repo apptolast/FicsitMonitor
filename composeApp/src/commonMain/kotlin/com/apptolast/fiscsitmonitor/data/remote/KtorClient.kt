@@ -51,6 +51,9 @@ fun createHttpClient(
     defaultRequest {
         contentType(ContentType.Application.Json)
         headers.append(HttpHeaders.Accept, ContentType.Application.Json.toString())
+        session.currentLocale()?.let { tag ->
+            headers.append(HttpHeaders.AcceptLanguage, tag)
+        }
         session.currentToken()?.let { token ->
             headers.append(HttpHeaders.Authorization, "Bearer $token")
         }

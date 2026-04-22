@@ -126,9 +126,18 @@ fun HomeContent(
             )
             InfoRow(stringResource(Res.string.label_phase), metrics?.gamePhase ?: noData)
             InfoRow(stringResource(Res.string.label_tick_rate), metrics?.tickRate?.formatTPS() ?: "0.0 TPS")
+            val maxPlayersText = server?.maxPlayers?.toString()
             InfoRow(
                 stringResource(Res.string.label_players),
-                stringResource(Res.string.players_format, metrics?.playerCount ?: 0)
+                if (maxPlayersText == null) {
+                    "—"
+                } else {
+                    stringResource(
+                        Res.string.players_format,
+                        metrics?.playerCount?.toString() ?: "—",
+                        maxPlayersText,
+                    )
+                }
             )
             InfoRow(stringResource(Res.string.label_session), metrics?.totalDuration?.formatDuration() ?: "0h 00m")
         }
@@ -210,7 +219,10 @@ fun HomeContent(
                 MetricCard(
                     label = stringResource(Res.string.label_players),
                     value = "$onlinePlayers",
-                    subtitle = stringResource(Res.string.of_max_format),
+                    subtitle = stringResource(
+                        Res.string.of_max_format,
+                        server?.maxPlayers?.toString() ?: "—",
+                    ),
                     icon = Icons.Default.Group,
                     iconTint = FicsitTheme.colors.accentPurple,
                 )
@@ -245,6 +257,7 @@ private fun HomeContentPreview() {
                 host = "192.168.1.100",
                 apiPort = 8080,
                 frmHttpPort = 8081,
+                maxPlayers = 4,
                 status = "online",
             ),
             metrics = ServerMetricsDto(
