@@ -169,7 +169,7 @@
     <string name="server_form_scheme_label">Esquema</string>
     <string name="server_form_path_prefix_label">Prefijo de ruta</string>
     <string name="server_form_verify_tls_label">Verificar certificado TLS</string>
-    <string name="server_form_verify_tls_hint">Actívalo solo si tu proxy TLS sirve un certificado válido (Let\'s Encrypt, CA corporativa). Déjalo desactivado si usas el certificado autofirmado nativo de Satisfactory.</string>
+    <string name="server_form_verify_tls_hint">Actívalo solo si tu proxy TLS sirve un certificado válido (Let's Encrypt, CA corporativa). Déjalo desactivado si usas el certificado autofirmado nativo de Satisfactory.</string>
 
     <!-- Web viewer screen -->
     <string name="web_viewer_title">Documentación</string>
