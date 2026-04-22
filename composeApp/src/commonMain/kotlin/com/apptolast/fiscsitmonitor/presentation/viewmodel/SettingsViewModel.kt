@@ -87,6 +87,18 @@ class SettingsViewModel(
     fun onFrmWsPortChange(value: String) =
         updateForm { it.copy(frmWsPort = value, fieldErrors = it.fieldErrors - "frm_ws_port", error = null) }
 
+    fun onSchemeChange(value: String) =
+        updateForm { it.copy(scheme = value, error = null) }
+
+    fun onPathPrefixChange(value: String) =
+        updateForm { it.copy(pathPrefix = value, fieldErrors = it.fieldErrors - "path_prefix", error = null) }
+
+    fun onVerifyTlsChange(value: Boolean) =
+        updateForm { it.copy(verifyTls = value, error = null) }
+
+    fun onAdvancedExpandedChange(value: Boolean) =
+        updateForm { it.copy(advancedExpanded = value) }
+
     fun onBaseUrlChange(value: String) {
         _state.value = _state.value.copy(baseUrlOverride = value, isSaved = false)
     }
@@ -122,7 +134,10 @@ class SettingsViewModel(
                     serverId = serverId,
                     name = current.form.name.trim(),
                     host = current.form.host.trim(),
+                    scheme = current.form.scheme,
                     apiPort = current.form.apiPortInt ?: 7777,
+                    pathPrefix = current.form.pathPrefix.trim(),
+                    verifyTls = current.form.verifyTls,
                     frmHttpPort = current.form.frmHttpPortInt ?: 8080,
                     frmWsPort = current.form.frmWsPortInt ?: 8081,
                 )

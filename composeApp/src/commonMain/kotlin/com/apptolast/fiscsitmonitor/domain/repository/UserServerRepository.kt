@@ -8,7 +8,10 @@ interface UserServerRepository {
     suspend fun create(
         name: String,
         host: String,
+        scheme: String,
         apiPort: Int,
+        pathPrefix: String,
+        verifyTls: Boolean,
         frmHttpPort: Int,
         frmWsPort: Int,
         adminPassword: String,
@@ -18,7 +21,10 @@ interface UserServerRepository {
         serverId: Int,
         name: String,
         host: String,
+        scheme: String,
         apiPort: Int,
+        pathPrefix: String,
+        verifyTls: Boolean,
         frmHttpPort: Int,
         frmWsPort: Int,
     ): UserServer

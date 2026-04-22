@@ -163,6 +163,13 @@
     <string name="server_form_error_admin_password_invalid">Falsches Passwort oder vom Server abgelehnt</string>
     <string name="server_form_error_server_unreachable">Server nicht erreichbar. Überprüfe Host, Ports und Admin-Passwort.</string>
     <string name="server_form_error_provisioning_failed">Server konnte nicht eingerichtet werden. Prüfe das Admin-Passwort und stelle sicher, dass der Satisfactory-Server läuft.</string>
+    <string name="server_form_error_path_prefix_leading_slash">Pfadpräfix muss mit / beginnen</string>
+    <string name="server_form_advanced_transport_title">Erweiterte Transportoptionen (Reverse-Proxy, TLS)</string>
+    <string name="server_form_advanced_transport_hint">Standardmäßig sprechen wir HTTPS direkt mit dem API-Port deines Servers über das selbstsignierte Zertifikat, das Satisfactory mitliefert. Ändere dies nur, wenn du einen TLS-Proxy (Caddy, nginx) davor schaltest oder die API unter einem Unterpfad anbietest.</string>
+    <string name="server_form_scheme_label">Schema</string>
+    <string name="server_form_path_prefix_label">Pfadpräfix</string>
+    <string name="server_form_verify_tls_label">TLS-Zertifikat verifizieren</string>
+    <string name="server_form_verify_tls_hint">Nur aktivieren, wenn dein TLS-Proxy ein gültiges Zertifikat ausliefert (Let\'s Encrypt, Unternehmens-CA). Deaktiviert lassen, wenn du das native, selbstsignierte Zertifikat von Satisfactory nutzt.</string>
 
     <!-- Web viewer screen -->
     <string name="web_viewer_title">Dokumentation</string>

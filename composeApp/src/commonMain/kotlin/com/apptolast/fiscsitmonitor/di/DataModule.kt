@@ -17,7 +17,6 @@ import com.apptolast.fiscsitmonitor.data.repository.ServerRepositoryImpl
 import com.apptolast.fiscsitmonitor.data.repository.UserServerRepositoryImpl
 import com.apptolast.fiscsitmonitor.data.server.ServerApiService
 import com.apptolast.fiscsitmonitor.data.session.AuthSession
-import com.apptolast.fiscsitmonitor.data.session.ServerShadowStore
 import com.apptolast.fiscsitmonitor.data.session.SessionStorage
 import com.apptolast.fiscsitmonitor.domain.repository.AuthRepository
 import com.apptolast.fiscsitmonitor.domain.repository.EnergyRepository
@@ -33,7 +32,6 @@ val dataModule = module {
     single<Settings> { Settings() }
     single { SessionStorage(get()) }
     single { AuthSession(get()) }
-    single { ServerShadowStore(get()) }
 
     // Env + HTTP
     single { Environment(get()) }
@@ -53,7 +51,7 @@ val dataModule = module {
     single { AuthRepositoryImpl(get(), get()) }
     single<AuthRepository> { get<AuthRepositoryImpl>() }
 
-    single { UserServerRepositoryImpl(get(), get()) }
+    single { UserServerRepositoryImpl(get()) }
     single<UserServerRepository> { get<UserServerRepositoryImpl>() }
 
     single { ServerRepositoryImpl() }
